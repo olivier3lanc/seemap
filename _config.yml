@@ -3,9 +3,9 @@
 # More info at https://jekyllrb.com/docs/configuration/options/
 # ---------
 
-title: Standalone map embed # title of the documentation
+title: Standalone Embeddable Map # title of the documentation
 description: >- # Description of the docs. (>- means to ignore newlines until next param)
-  Embed maps using a simple HTML file with custom controls and parameters in URL
+  Embed Leaflet/OSM maps on your own server using a single HTML file with customizable settings overridable through URL GET parameters
 # IMPORTANT: on Github Pages deploys, url and baseurl must be commented or set to proper settings, otherwise links and resources URL are wrong
 # url: http://localhost # the base hostname & protocol for your site, e.g. http://example.com
 # baseurl: /Jekyll-LibDoc/_site # the subpath of your site, e.g. /blog
