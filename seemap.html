@@ -1,0 +1,533 @@
+---
+unlisted: false
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        // SEEMAP USER SETTINGS
+        const userSettings = {
+            // Number - Default latitude applied if no GET view parameter `view=` is set nor any marker
+            lat: 48.8588548,
+            // Number - Default longitude applied if no GET view parameter `view=` is set nor any marker
+            lng: 2.347035,
+            // Number - Default zoom level applied if GET parameter `zoom=` is not set into URL
+            zoom: 11,
+            // String - Tile provider applied
+            // Available tile providers
+            // * OpenStreetMap_Mapnik
+            // * OpenStreetMap_DE
+            // * OpenStreetMap_CH
+            // * OpenStreetMap_France
+            // * OpenStreetMap_HOT
+            // * OpenStreetMap_BZH
+            // * OPNVKarte
+            // * OpenTopoMap
+            // * CyclOSM
+            // * CartoDB_Voyager
+            // * GeoportailFrance_plan
+            // * GeoportailFrance_orthos
+            // * Stamen_TonerLite
+            // * Stamen_Terrain
+            // * Stamen_Watercolor
+            layer: 'OpenStreetMap_Mapnik',
+            // Boolean - Enable or disable gesture handling
+            gesture: true,
+            // Boolean - Enable or disable automatic fit to the view of markers bounds
+            fit: true,
+            // Boolean - Enable or disable marker cluster
+            cluster: true,
+            // Boolean - Enable or disable routing by default if at least 2 markers are set
+            routing: false,
+            // String - Routing style back line CSS color
+            routingBackLineColor: 'dodgerblue',
+            // Number - Routing style back line CSS opacity
+            routingBackLineOpacity: 0,
+            // Number - Routing style back line CSS weight
+            routingBackLineWeight: 10,
+            // String - Routing style middle line CSS color
+            routingMidLineColor: 'dodgerblue',
+            // Number - Routing style middle line CSS opacity
+            routingMidLineOpacity: 0.5,
+            // Number - Routing style middle line CSS weight
+            routingMidLineWeight: 6,
+            // String - Routing style front line CSS color
+            routingFrontLineColor: 'fuchsia',
+            // Number - Routing style front line CSS opacity
+            routingFrontLineOpacity: 1,
+            // Number - Routing style front line CSS weight
+            routingFrontLineWeight: 2,
+            // String - Marker icon URL, can be base64 (recommended) or public remote URL
+            markerIconUrl: 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDUwIDgwIiB3aWR0aD0iNTAiIGhlaWdodD0iODAiPjx0aXRsZT5tYXJrZXItc3ZnPC90aXRsZT48c3R5bGU+LnMwIHsgZmlsbDogIzFlOTBmZiB9IC5zMSB7IGZpbGw6ICNmZmZmZmYgfSA8L3N0eWxlPjxwYXRoIGlkPSJMYXllciIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGFzcz0iczAiIGQ9Im00OC41IDMyLjZjLTEuNiA1LjUtMjIuNCA0Ny40LTIzLjUgNDcuNC0xLjEgMC0yMS45LTQxLjktMjMuNS00Ny40LTMuNC0xMS43IDAuNy0yMi4xIDExLjYtMjkgMS41LTAuOSA0LjYtMiA3LTIuNSAxOC43LTMuNCAzMy43IDEzLjIgMjguNCAzMS41em0tMjguOS0xM2MtNS4xIDUuMi0xLjkgMTMuNCA1LjMgMTMuNCA3LjQgMCAxMC45LTguMyA1LjYtMTMuNS0zLjItMy4zLTcuNS0zLjMtMTAuOSAwLjF6Ii8+PHBhdGggaWQ9IkZvcm1lIDEiIGNsYXNzPSJzMSIgZD0ibTI1LjUgMzZjLTYuNCAwLTExLjUtNS4xLTExLjUtMTEuNSAwLTYuNCA1LjEtMTEuNSAxMS41LTExLjUgNi40IDAgMTEuNSA1LjEgMTEuNSAxMS41IDAgNi40LTUuMSAxMS41LTExLjUgMTEuNXoiLz48L3N2Zz4=',
+            // Array - Marker icon size [x, y] in pixels
+            markerIconSize: [25, 40],
+            // Array - Marker icon anchor position [x, y]. Origin is top left.
+            markerIconAnchor: [12, 40],
+            // Array - Marker popup anchor position [x, y]. Origin is bottom center.
+            markerPopupAnchor: [0, -40],
+            // String - Marker shadow URL, can be base64 (recommended) or public remote URL
+            markerShadowUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAABQCAMAAABs3dbSAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAASZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABtb08QAAAGJ0Uk5TAAECAwQFBgcICQoLDA4QEQ8NEhQWFxUTGBscHRofISIZJScmIyArLCkvMC4kLTI0MzE1ODcqOjs5KD49NkE/PEJDREZFQB5HSElKS0xOTVBPUlFUU1ZVWFdaWVxbXl1fYWBMI8PjAAADDUlEQVRIx+3US3IbRxAE0MzqavwIRijCluwr+P638QHskB0yie98urvSC5jgAIRI7bxBbadfZNVUzwD3ute97nWve93r/y/+2An9EOHp2YvQmX2HkCB5figJgvRdQpBmL+R0WAj9h/xGAM0s8dSYYM0LFKJCgG6k0JK5G0lA1ry0k1JIEZKuU8iUljE3koLVCjQAQTGPEhC4JrSU3XMiITXvU9cMlUCkOithkCheCp8tPRtBcFBfbAzA7NQkMUSLkF+IvFg8RiJkI9s4tqogMYsFSgujiVdvjL745JwRsoJxdmglBJBaCFyUaqdjE8K08jVJkMPcGiSStJTnjWLNiNNOJ8TclswEo3l59H+ysSDLnGvggAooQtMUms9W2QlWtNw/7hA1gckDI/RwsMEiLrfPtJqZO1i9PO6wXTqJfoFhiT5QQQ4tJMAmKZEWnlLyearZE93SzzkizUWDsyuthQCkM0mr2Wo9Twyr85rElGAFn+rnzVJN/Ri1nq7yOYWUp2Tmbg/yuXHts9SsV/1yKL9Fa6UpcEFAs5nlnJIVpbpM1Yy+qL4B4neNpUbgktDons3Maa5VWcr56FoEvjZ1h1cxbYxfjGZmOScvD/J5qqZmP9Uoh7HG+fOfNOZ1mY2JxlNzZRlCaX/YcT+2VzEli17JzMySOd3NC6l1x6f+QkxXOSyVDBQDykKT19pvhmMpoelPyc+jZMvZDFSYxAAqa9d3faltCiYplJE0UCAaTBGHvY5tOvg1CcszMxCgLFRrl7rjcDnGZWNws5QJyghG4/64q/3YdC0mKfyVbgSBUNT2bf7ncSzn/d0m336hEWGIKPvtvnVDedPU5RvznLMRUNM47rbdcGw3xWuKucxkjGjH526/a4cawLuEMU9yRS37bjM+9WMT3iVkRiMC47B9sqe+uzn4mwsDRK3D8/NGx/724NdEKFXd7u+6vbW/mwTFuvHYNofxnaYuSHlYd3V47g5vL9VVvXwviv5r++vzdvfuGC9DAwCSL329H8sHTU0Jkzuito8ipoRGKPSxwL8ZgPYg0cE6jQAAAABJRU5ErkJggg==',
+            // Array - Marker shadow size [x, y] in pixels
+            markerShadowSize: [25, 40],
+            // Array - Marker shadow anchor position. Origin is top left.
+            markerShadowAnchor: [4, 40]
+        }
+    </script>
+    <title>{{ page.title | default:site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <meta itemprop="name" content="{{ page.title | default: site.title }}">
+    <meta name="description" itemprop="description" content="{{ page.description | default: site.description }}">
+    <meta name="application-name" content="{{ page.title | default: site.title }}">
+    <meta name="author" content="{{ site.playground.metadata.author }}">
+
+    <!-- Favicons -->
+    {% assign favicon_path_or_url = page.metadata.favicon | default: page.metadata.favicon_auto | default: site.metadata.favicon | default: site.metadata.favicon_auto %}
+    {% if favicon_path_or_url contains 'http://' or favicon_path_or_url contains 'https://' %}
+    {% else %}
+        {% assign favicon_path_or_url = site.url | append: site.baseurl | append: favicon_path_or_url %}
+    {% endif %}
+    {% if favicon_path_or_url.size > 9 %}
+        {% assign ico_split = favicon_path_or_url | split: '.ico' %}
+        {% assign ico_split_size = ico_split | size %}
+        {% assign favicon_path_or_url_size = favicon_path_or_url | size %}
+        {% assign is_image_x_icon = false %}
+        {% if ico_split_size == 1 and favicon_path_or_url_size > ico_split[0].size %}
+            {% assign is_image_x_icon = true %}
+        {% endif %}
+        {% if favicon_path_or_url contains 'data:image' %}
+            {% assign is_image_x_icon = true %}
+        {% endif %}
+        {% if favicon_path_or_url contains 'data:image/svg+xml' or favicon_path_or_url contains '.svg' %}
+            <link rel="icon" type="image/svg+xml" href="{{ favicon_path_or_url }}">
+        {% elsif is_image_x_icon == true %}
+            <link rel="icon" href="{{ favicon_path_or_url }}" type="image/x-icon">
+            <link rel="shortcut icon" href="{{ favicon_path_or_url }}" type="image/x-icon">
+        {% else %}
+            {% if site.metadata.favicon_auto.size > 0 %}
+                <link rel="icon" type="image/png" href="https://images.weserv.nl/?url={{ favicon_path_or_url }}&w=32&h=32&fit=cover&cbg=transparent&output=png">
+                {% assign favicon_base_url = 'https://images.weserv.nl/?url=' | append: favicon_path_or_url %}
+                {% unless favicon_path_or_url contains 'data:image' %}
+                    <link rel="icon" type="image/png" href="{{ favicon_path_or_url }}">
+                    <link rel="apple-touch-icon" sizes="57x57" href="{{ favicon_base_url }}&w=57&h=57&fit=cover&cbg=transparent&output=png">
+                    <link rel="apple-touch-icon" sizes="60x60" href="{{ favicon_base_url }}&w=60&h=60&fit=cover&cbg=transparent&output=png">
+                    <link rel="apple-touch-icon" sizes="72x72" href="{{ favicon_base_url }}&w=72&h=72&fit=cover&cbg=transparent&output=png">
+                    <link rel="apple-touch-icon" sizes="76x76" href="{{ favicon_base_url }}&w=76&h=76&fit=cover&cbg=transparent&output=png">
+                    <link rel="apple-touch-icon" sizes="114x114" href="{{ favicon_base_url }}&w=114&h=114&fit=cover&cbg=transparent&output=png">
+                    <link rel="apple-touch-icon" sizes="120x120" href="{{ favicon_base_url }}&w=120&h=120&fit=cover&cbg=transparent&output=png">
+                    <link rel="apple-touch-icon" sizes="144x144" href="{{ favicon_base_url }}&w=144&h=144&fit=cover&cbg=transparent&output=png">
+                    <link rel="apple-touch-icon" sizes="152x152" href="{{ favicon_base_url }}&w=152&h=152&fit=cover&cbg=transparent&output=png">
+                    <link rel="apple-touch-icon" sizes="180x180" href="{{ favicon_base_url }}&w=180&h=180&fit=cover&cbg=transparent&output=png">
+                    <link rel="icon" type="image/png" sizes="192x192"  href="{{ favicon_base_url }}&w=192&h=192&fit=cover&cbg=transparent&output=png">
+                    <link rel="icon" type="image/png" sizes="32x32" href="{{ favicon_base_url }}&w=32&h=32&fit=cover&cbg=transparent&output=png">
+                    <link rel="icon" type="image/png" sizes="96x96" href="{{ favicon_base_url }}&w=96&h=96&fit=cover&cbg=transparent&output=png">
+                    <link rel="icon" type="image/png" sizes="16x16" href="{{ favicon_base_url }}&w=16&h=16&fit=cover&cbg=transparent&output=png">
+                    <meta name="msapplication-TileImage" content="{{ favicon_base_url }}&w=144&h=144&fit=cover&cbg=transparent&output=png">
+                {% endunless %}
+            {% else %}
+                <link rel="icon" type="image/png" href="{{ favicon_path_or_url }}">
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    <meta name="msapplication-TileColor" content="{{ site.metadata.color | default: '#ffffff' }}">
+    <meta name="theme-color" content="{{ page.metadata.color | default: site.metadata.color | default: '#FFFFFF' }}">
+
+    <!-- Microsoft -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="msapplication-starturl" content="{{ site_url }}{{ page.url }}">
+    <meta name="msapplication-tooltip" content="{{ page.title | default: site.title }}">
+    <meta name="msapplication-TileColor" content="{{ page.metadata.color | default: site.metadata.color | default: '#FFFFFF' }}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site_url }}{{ page.url }}">
+    <meta property="og:title" content="{{ page.title | default: site.title }}">
+    <meta property="og:description" content="{{ page.description | default: site.description }}">
+    {% if page.metadata.image contains 'https://' or site.metadata.image contains 'https://' or page.metadata.image contains 'http://' or site.metadata.image contains 'http://' %}
+        <meta property="og:image" content="{{ page.metadata.image | default: site.metadata.image }}">
+    {% else %}
+        {% if page.metadata.image.size > 0 or site.metadata.image.size > 0 %}
+            <meta property="og:image" content="{{ site_url }}{{ page.metadata.image | default: site.metadata.image }}">
+        {% endif %}
+    {% endif %}
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title | default: site.title }}">
+    <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+    <meta name="twitter:url" content="{{ site_url }}{{ page.url }}">
+    {% if page.metadata.image contains 'https://' or page.metadata.image contains 'http://' %}
+        <meta name="twitter:image" content="{{ page.metadata.image | default: site.metadata.image }}">
+    {% else %}
+        {% if page.metadata.image.size > 0 or site.metadata.image.size > 0 %}
+            <meta name="twitter:image" content="{{ site_url }}{{ page.metadata.image | default: site.metadata.image }}">
+        {% endif %}
+    {% endif %}
+
+    <!-- iOS -->
+    <meta name="apple-mobile-web-app-title" content="{{ page.title | default: site.title }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="{{ page.metadata.color | default: site.metadata.color | default: '#FFFFFF' }}">
+
+    <!-- Android -->
+    <meta name="theme-color" content="{{ page.metadata.color | default: site.metadata.color | default: '#FFFFFF' }}">
+    <meta name="color-scheme" content="light">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    {% include _leaflet.css.html %}
+    {% include _leaflet-gesture-handling.css.html %}
+    {% include _leaflet-marker-cluster.css.html %}
+    {% include _leaflet-routing-machine.css.html %}
+    {% include _leaflet-overrides.css.html %}
+    {% include _page-style.css.html %}
+</head>
+
+<body>
+    <!-- Map container -->
+    <div id="mapid"></div>
+
+    {% include _leaflet.js.html %}
+    {% include _leaflet-gesture-handling.js.html %}
+    {% include _leaflet-marker-cluster.js.html %}
+    {% include _leaflet-routing-machine.js.html %}
+
+    <script>
+        const seemap = {
+            defaults: {
+                lat: userSettings.lat,
+                lng: userSettings.lng,
+                zoom: userSettings.zoom,
+                layer: userSettings.layer,
+                gesture: userSettings.gesture,
+                cluster: userSettings.cluster,
+                routing: userSettings.routing,
+                routingStyles: [
+                    // Back line
+                    {
+                        color: userSettings.routingBackLineColor, 
+                        opacity: userSettings.routingBackLineOpacity, 
+                        weight: userSettings.routingBackLineWeight
+                    }, 
+                    // Middle line
+                    {
+                        color: userSettings.routingMidLineColor, 
+                        opacity: userSettings.routingMidLineOpacity, 
+                        weight: userSettings.routingMidLineWeight
+                    }, 
+                    // Front line
+                    {
+                        color: userSettings.routingFrontLineColor, 
+                        opacity: userSettings.routingFrontLineOpacity, 
+                        weight: userSettings.routingFrontLineWeight
+                    }
+                ],
+                fit: userSettings.fit,
+                icon: {
+                    iconUrl: userSettings.markerIconUrl,
+                    iconSize: userSettings.markerIconSize,
+                    iconAnchor: userSettings.markerIconAnchor,
+                    popupAnchor: userSettings.markerPopupAnchor,
+                    shadowUrl: userSettings.markerShadowUrl,
+                    shadowSize: userSettings.markerShadowSize,
+                    shadowAnchor: userSettings.markerShadowAnchor
+                },
+                // Object - Available layers that can be set from 'layer' setting
+                layers: {
+                    OpenStreetMap_Mapnik: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }),
+                    OpenStreetMap_DE: L.tileLayer('https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+                        maxZoom: 18,
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }),
+                    OpenStreetMap_CH: L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
+                        maxZoom: 18,
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        bounds: [[45, 5], [48, 11]]
+                    }),
+                    OpenStreetMap_France: L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }),
+                    OpenStreetMap_HOT: L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+                    }),
+                    OpenStreetMap_BZH: L.tileLayer('https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://www.openstreetmap.bzh/" target="_blank">Breton OpenStreetMap Team</a>',
+                        bounds: [[46.2, -5.5], [50, 0.7]]
+                    }),
+                    OPNVKarte: L.tileLayer('https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png', {
+                        maxZoom: 18,
+                        attribution: 'Map <a href="https://memomaps.de/">memomaps.de</a> <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }),
+                    OpenTopoMap: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 17,
+                        attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                    }),
+                    CyclOSM: L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
+                        maxZoom: 20,
+                        attribution: '<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }),
+                    CartoDB_Voyager: L.tileLayer('https://{s}.baseemapaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                        subdomains: 'abcd',
+                        maxZoom: 20
+                    }),
+                    GeoportailFrance_plan: L.tileLayer('https://wxs.ign.fr/{apikey}/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+                        attribution: '<a target="_blank" href="https://www.geoportail.gouv.fr/">Geoportail France</a>',
+                        bounds: [[-75, -180], [81, 180]],
+                        minZoom: 2,
+                        maxZoom: 18,
+                        apikey: 'choisirgeoportail',
+                        format: 'image/png',
+                        style: 'normal'
+                    }),
+                    GeoportailFrance_orthos: L.tileLayer('https://wxs.ign.fr/{apikey}/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+                        attribution: '<a target="_blank" href="https://www.geoportail.gouv.fr/">Geoportail France</a>',
+                        bounds: [[-75, -180], [81, 180]],
+                        minZoom: 2,
+                        maxZoom: 19,
+                        apikey: 'choisirgeoportail',
+                        format: 'image/jpeg',
+                        style: 'normal'
+                    }),
+                    Stamen_TonerLite: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+                        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        subdomains: 'abcd',
+                        minZoom: 0,
+                        maxZoom: 20,
+                        ext: 'png'
+                    }),
+                    Stamen_Terrain: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
+                        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        subdomains: 'abcd',
+                        minZoom: 0,
+                        maxZoom: 18,
+                        ext: 'png'
+                    }),
+                    Stamen_Watercolor: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        subdomains: 'abcd',
+                        minZoom: 1,
+                        maxZoom: 16,
+                        ext: 'jpg'
+                    })
+                }
+            },
+            markers: {},
+            clusterGroup: L.markerClusterGroup(),
+            addMarker: function (options) {
+                // Set marker id
+                const id = Object.keys(this.markers).length + 1;
+                let marker_id = 'marker_' + id;
+                const marker_options = {
+                    icon: L.icon(this.defaults.icon)
+                };
+
+                // L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);
+
+                // Render the marker
+                this.markers[marker_id] = L.marker([options.lat, options.lng], marker_options);
+                // Marker cluster from GET or default
+                let map_cluster = this.defaults.cluster;
+                if (this.getParameter('cluster') == 'false') { map_cluster = false };
+                if (this.getParameter('cluster') == 'true') { map_cluster = true };
+                // If marker cluster is enabled
+                if (map_cluster) {
+                    // Add to cluster
+                    this.clusterGroup.addLayer(this.markers[marker_id]);
+                    // Add cluster to map
+                    this.instance.addLayer(this.clusterGroup);
+                }
+                // Otherwise add marker to map
+                else {
+                    this.markers[marker_id].addTo(this.instance);
+                }
+
+                // If content is set, enable popup
+                if (options.content.length > 0) {
+                    this.markers[marker_id].bindPopup(options.content);
+                }
+            },
+            getSearchParameters: function () {
+                return new URLSearchParams(location.search);
+            },
+            isGetParameter: function (str) {
+                try {
+                    return seemap.getSearchParameters().get(str);
+                } catch (e) {
+                    return null;
+                }
+            },
+            getParameter: function (str) {
+                const str_is_a_get = seemap.isGetParameter(str);
+                let value = '';
+                if (str_is_a_get !== null) {
+                    value = str_is_a_get;
+                }
+                return value;
+            },
+            update: function () {
+                if (typeof this.instance == 'object') {
+                    this.instance.remove();
+                }
+                // View from GET or default
+                let map_view_lat = this.defaults.lat;
+                let map_view_lng = this.defaults.lng;
+                const getp_map_view = this.getParameter('view').split(',');
+                // If 2 data
+                if (getp_map_view.length == 2) { 
+                    const parsed_int_getp_map_view_lat = parseInt(getp_map_view[0]);
+                    const parsed_int_getp_map_view_lng = parseInt(getp_map_view[1]);
+                    if (!isNaN(parsed_int_getp_map_view_lat) && !isNaN(parsed_int_getp_map_view_lng)) {
+                        map_view_lat = parsed_int_getp_map_view_lat;
+                        map_view_lng = parsed_int_getp_map_view_lng;
+                    }
+                };
+                // Zoom level from GET or default
+                let map_zoom_level = this.defaults.zoom;
+                const getp_map_zoom_level = this.getParameter('zoom');
+                // If zoom GET is a stringified number
+                if (getp_map_zoom_level.length > 0) { 
+                    const parsed_int_getp_map_zoom_level = parseInt(getp_map_zoom_level);
+                    if (!isNaN(parsed_int_getp_map_zoom_level)) {
+                        map_zoom_level = parsed_int_getp_map_zoom_level;
+                    }
+                };
+                // Layer from GET or default
+                let map_layer = this.defaults.layer;
+                const getp_map_layer = this.getParameter('layer');
+                if (getp_map_layer.length > 0) {
+                    if (this.defaults.layers[getp_map_layer] !== undefined) {
+                        map_layer = getp_map_layer;
+                    }
+                };
+                // Gesture handling from GET or default
+                let map_gesture = this.defaults.gesture;
+                if (this.getParameter('gesture') == 'false') { map_gesture = false };
+                if (this.getParameter('gesture') == 'true') { map_gesture = true };
+                // Routing from GET or default
+                let map_routing = this.defaults.routing;
+                if (this.getParameter('routing') == 'false') { map_routing = false };
+                if (this.getParameter('routing') == 'true') { map_routing = true };
+                // Fit bounds from GET or default
+                let map_fit = this.defaults.fit;
+                if (this.getParameter('fit') == 'false') { map_fit = false };
+                if (this.getParameter('fit') == 'true') { map_fit = true };
+                
+                // Init Leaflet
+                this.instance = L.map('mapid', {
+                    center: new L.LatLng(map_view_lat, map_view_lng),
+                    zoom: map_zoom_level,
+                    layers: [this.defaults.layers[map_layer]],
+                    gestureHandling: map_gesture // requires https://github.com/elmarquis/Leaflet.GestureHandling
+                    // dragging: !L.Browser.mobile,
+                    // tap: !L.Browser.mobile
+                });
+
+                // Coordinates in URL
+                const getp_markers = this.isGetParameter('marker');
+                if (getp_markers !== null) {
+                    // Markers
+                    let waypoints = [];
+                    const markers_array_raw = this.getSearchParameters();
+                    const marker_all = markers_array_raw.getAll('marker');
+                    const markers_array = [];
+                    const markers_array_coords_only = [];
+                    marker_all.forEach(function (marker_data) {
+                        const marker_data_array = marker_data.split(',');
+                        const lat = marker_data_array[0];
+                        const lng = marker_data_array[1];
+                        const content = marker_data_array[2] || '';
+                        if (lat !== undefined && lng !== undefined) {
+                            seemap.addMarker({
+                                lat: lat,
+                                lng: lng,
+                                content: content
+                            });
+                        }
+                        markers_array_coords_only.push([lat, lng]);
+                        waypoints.push(L.latLng(lat, lng));
+                    });
+                    
+                    // Zoom fit to bounds if no zoom in URL
+                    // console.log('map_fit',map_fit,'default',this.defaults.fit);
+                    if (map_fit) {
+                        if (this.getParameter('view').length > 0 && marker_all.length > 0) {
+                            seemap.instance.setView([map_view_lat, map_view_lng]);
+                        } else {
+                            seemap.instance.fitBounds(markers_array_coords_only);
+                        }
+                        if (this.getParameter('zoom').length > 0 && marker_all.length > 0) {
+                            setTimeout(function() {
+                                seemap.instance.setZoom(map_zoom_level);
+                            },500)
+                        }
+                    }
+                    // Routing
+                    if (waypoints.length > 1 && map_routing) {
+                        const routeControl = L.Routing.control({
+                            // waypoints: [
+                            //     L.latLng(45.3603179, 1.5041424),
+                            //     L.latLng(46.3279067, 2.5248145)
+                            // ],
+                            waypoints: waypoints,
+                            routeWhileDragging: false,
+                            lineOptions: {
+                                styles: seemap.defaults.routingStyles
+                            },
+                            createMarker: function() { return null; },
+                            // createMarker: function (i, waypoint, n) {
+                            //     const marker = L.marker(waypoint.latLng, {
+                            //         draggable: true,
+                            //         bounceOnAdd: false,
+                            //         bounceOnAddOptions: {
+                            //             duration: 1000,
+                            //             height: 800,
+                            //             function() {
+                            //             (bindPopup(myPopup).openOn(seemap.instance))
+                            //             }
+                            //         },
+                                    // icon: L.icon({
+                                    //     iconUrl: '{{site.url}}{{site.baseurl}}/img/goa-map-marker.svg',
+                                        // iconSize: [38, 95],
+                                        // iconAnchor: [22, 94],
+                                        // popupAnchor: [-3, -76],
+                                        // shadowUrl: './assets/global/img/marker-shadow.png',
+                                        // shadowSize: [68, 95],
+                                        // shadowAnchor: [22, 94]
+                                //     })
+                                // });
+                                // return marker;
+                            // }
+                        }).addTo(seemap.instance);
+
+                        
+                        routeControl.on('routesfound', function(e) {
+                            const routes = e.routes;
+                            const summary = routes[0].summary;
+                            const total_distance = summary.totalDistance / 1000;
+                            const total_distance_rounded = total_distance.toFixed(3);
+                            const el_top_right_container = document.querySelector('.leaflet-top.leaflet-right');
+                            const el_leaflet_summary = document.querySelector('.leaflet-top.leaflet-right .leaflet-routing-summary');
+                            if (el_leaflet_summary !== null) {
+                                el_leaflet_summary.remove();
+                            }
+                            if (el_top_right_container !== null) {
+                                el_top_right_container.insertAdjacentHTML('beforeend', `<ul class="leaflet-routing-summary"><li><strong>${total_distance_rounded}</strong> km</li></ul>`);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        seemap.update();
+    </script>
+</body>
+
+</html>

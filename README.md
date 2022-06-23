@@ -1,16 +1,19 @@
 ---
 layout: libdoc/page
-permalink: documentation.html
+permalink: index.html
+unlisted: true
 ---
-# Standalone Embeddable Map
+# <abbr title="Standalone EmbEddable Map">SEEMAP</abbr> for Standalone EmbEddabl Map
+
+Popular Leaflet plugins and map providers bundled into a single customizable HTML file with its API.
 
 Embed Leaflet/OSM maps on your own server using a single HTML file with customizable settings overridable through URL GET parameters. 
 
-<abbr title="Standalone Embeddable Map">SEM</abbr> is helper for [Leaflet.js](https://leafletjs.com/) accessible from URL GET parameters.
+<abbr title="Standalone EmbEddable Map">SEEMAP</abbr> is helper for [Leaflet.js](https://leafletjs.com/) accessible from URL GET parameters.
 
 Set your own default settings in sem.defaults and override it through URL GET parameters if needed.
 
-SEM concatenates the following resources into a single HTML file to bring a simple UI/API helper interface:
+SEEMAP concatenates the following resources into a single HTML file to bring a simple UI/API helper interface:
 
 * [Leaflet.js](https://leafletjs.com/) an open-source JavaScript library
 for mobile-friendly interactive maps
@@ -29,19 +32,19 @@ for mobile-friendly interactive maps
 ## Key features
 
 * **Single file**<br> Only one HTML file is necessary
-* **Iframe**<br> Include the SEM file as *iframe* anywhere on your pages
+* **Iframe**<br> Include the SEEMAP file as *iframe* anywhere on your pages
 * **Customizable settings**<br> Set your own settings, override it to your needs through URL GET parameters.
 * **Markers**<br> Add as much markers with latitude and longitude through URL GET parameters.
 * **Marker clusters**<br> When markers density is to high, provides beautiful animated marker clustering.
 * **Gesture handling**<br> Brings the basic functionality of Google Maps Gesture Handling into Leaflet. Prevents users from getting trapped on the map when scrolling a long page. 
-* **Routing Machine**<br> Easy way to add routing from markers. Quickly get distance between multiple markers.
+* **Routing Machine**<br> Easy way to get distance between multiple markers.
 
 ## Installation
 
-Download index.html, rename if needed, use it as iframe tag or and embed SEM is supposed to be included as an iframe:
+Download index.html, rename if needed, use it as iframe tag or and embed SEEMAP is supposed to be included as an iframe:
 
 ```html
-<iframe src="../index.html"></iframe>
+<iframe src="../seemap.html"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -63,13 +66,13 @@ Add as much markers as you want through URL GET parameters.
 ### Simple marker
 
 ```html
-[SEM_URL]?marker=<lat>,<lng>[,<popup content>]
+[SEEMAP_URL]?marker=<lat>,<lng>[,<popup content>]
 ```
 
 [Simple marker example](https://olivier3lanc.github.io/standalone-embeddable-map/?marker=48.85830,2.29435)
 
 ```html
-<iframe src="../index.html?marker=48.85830,2.29435"></iframe>
+<iframe src="../seemap.html?marker=48.85830,2.29435"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -89,13 +92,13 @@ Add as much markers as you want through URL GET parameters.
 Multiple markers are automatically clustered.
 
 ```html
-[SEM_URL]?marker=<lat1>,<lng1>[,<popup content 1>]&marker=<lat2>,<lng2>[,<popup content 2>]...
+[SEEMAP_URL]?marker=<lat1>,<lng1>[,<popup content 1>]&marker=<lat2>,<lng2>[,<popup content 2>]...
 ```
 
 [Multiple markers example](https://olivier3lanc.github.io/standalone-embeddable-map/?marker=48.85830,2.29435,Paris&marker=45.7560,4.8340,Lyon&marker=43.2962,5.3696,Marseille)
 
 ```html
-<iframe src="../index.html?marker=48.85830,2.29435,Paris&marker=45.7560,4.8340,Lyon&marker=43.2962,5.3696,Marseille"></iframe>
+<iframe src="../seemap.html?marker=48.85830,2.29435,Paris&marker=45.7560,4.8340,Lyon&marker=43.2962,5.3696,Marseille"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
