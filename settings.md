@@ -4,7 +4,7 @@ description: List and description of all available settings
 layout: libdoc/page
 ---
 
-Once [downloaded](installation-and-usage.html), edit the settings - located at the bottom of the page - according to your needs. Global principle is: Default settings can be overridden by URL GET parameters.
+[Download SEEMAP](installation-and-usage.html), adjust the default settings located at the top of the page according to your needs.
 
 | Name | Type | Description |
 | :- | :- | :- |

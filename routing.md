@@ -3,7 +3,11 @@ title: Routing
 description: Get distance and itinerary between multiple markers
 layout: libdoc/page
 ---
-SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leaflet-routing-machine) 
+SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leaflet-routing-machine). Routing requires at least 2 markers to work. 
+
+If [default routing](settings.html) is set to `false`, just add GET parameter `routing=true` to enable routing.
+
+If default routing is set to `true`, just add GET parameter `routing=false` to disable routing.
 
 ```html
 <iframe src="../seemap.html?routing=true&marker=48.852855084244275,2.3482764253351434,Paris&marker=47.05692600913301,2.309900469185777&marker=43.348569315109174,5.374661932049889,Marseille"></iframe>
