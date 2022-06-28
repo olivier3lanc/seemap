@@ -5,9 +5,12 @@ layout: libdoc/page
 ---
 SEEMAP integrates [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.markercluster).
 
-If [default marker cluster](settings.html) is set to `true`, just add GET parameter `cluster=false` to disable marker cluster.
+```html
+<SEEMAP_FILE_URL>?cluster=<true or false>
+```
 
-If default marker cluster is set to `false`, just add GET parameter `cluster=true` to enable marker cluster.
+* If [default marker cluster](settings.html) is set to `true`, just add GET parameter `cluster=false` to disable marker cluster.
+* If default marker cluster is set to `false`, just add GET parameter `cluster=true` to enable marker cluster.
 
 
 ```html

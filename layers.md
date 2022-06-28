@@ -4,7 +4,7 @@ description: Set your Leaflet tile provider
 layout: libdoc/page-split
 ---
 
-SEEMAP comes with common [Leaflet tile providers](https://github.com/leaflet-extras/leaflet-providers) that are ready to be used without an API key. Just add the GET parameter `layer=tileProviderName` into the URL.
+SEEMAP comes with common [Leaflet tile providers](https://github.com/leaflet-extras/leaflet-providers) that are ready to be used without an API key. Just add the GET parameter `layer=<tileProviderName>` into the URL.
 
 ```html
 <SEEMAP_FILE_URL>?layer=<tileProviderName>

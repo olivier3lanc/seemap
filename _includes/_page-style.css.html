@@ -29,4 +29,33 @@
         padding: 1em;
         border-right: 1px solid lightgray;
     }
+    .auto-search-wrapper {
+        display: flex;
+        pointer-events: all;
+        margin-left: 10px;
+        margin-top: 10px;
+        background-color: white;
+        border-radius: 4px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+    }
+    .auto-search-wrapper input {
+        border: 1px solid transparent;
+        border-radius: 4px;
+        padding: 12px 10px;
+        background: 97% 50% / 20px no-repeat var(--loupe-icon);
+    }
+    .auto-search-wrapper input:focus {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    .auto-results-wrapper.auto-is-active {
+        top: 100%;
+    }
+    .auto-results-wrapper > ul > li {
+        border-top: px solid rgba(0, 0, 0, 0.2);
+    }
+    .auto-clear {
+        height: calc(100% - 2px);
+        right: 2px;
+        background-color: white;
+    }
 </style>

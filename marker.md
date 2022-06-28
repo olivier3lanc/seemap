@@ -1,5 +1,5 @@
 ---
-title: Marker
+title: Single marker
 description: Adding a single marker on the map through URL GET parameters
 layout: libdoc/page-split
 ---

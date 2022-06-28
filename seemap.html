@@ -33,7 +33,7 @@ unlisted: false
             // * Stamen_TonerLite
             // * Stamen_Terrain
             // * Stamen_Watercolor
-            layer: 'OpenStreetMap_Mapnik',
+            layer: 'OpenStreetMap_HOT',
             // Boolean - Enable or disable gesture handling
             gesture: true,
             // Boolean - Enable or disable automatic fit to the view of markers bounds
@@ -42,6 +42,8 @@ unlisted: false
             cluster: true,
             // Boolean - Enable or disable routing by default if at least 2 markers are set
             routing: false,
+            // Boolean - Enable or disable autcomplete search
+            autocomplete: false,
             // String - Routing style back line CSS color
             routingBackLineColor: 'dodgerblue',
             // Number - Routing style back line CSS opacity
@@ -182,18 +184,18 @@ unlisted: false
     {% include _leaflet-marker-cluster.css.html %}
     {% include _leaflet-routing-machine.css.html %}
     {% include _leaflet-overrides.css.html %}
+    {% include _leaflet-autocomplete.css.html %}
     {% include _page-style.css.html %}
 </head>
 
 <body>
     <!-- Map container -->
     <div id="mapid"></div>
-
     {% include _leaflet.js.html %}
     {% include _leaflet-gesture-handling.js.html %}
     {% include _leaflet-marker-cluster.js.html %}
     {% include _leaflet-routing-machine.js.html %}
-
+    {% include _leaflet-autocomplete.js.html %}
     <script>
         const seemap = {
             defaults: {
@@ -204,6 +206,7 @@ unlisted: false
                 gesture: userSettings.gesture,
                 cluster: userSettings.cluster,
                 routing: userSettings.routing,
+                autocomplete: userSettings.autocomplete,
                 routingStyles: [
                     // Back line
                     {
@@ -415,6 +418,10 @@ unlisted: false
                 let map_routing = this.defaults.routing;
                 if (this.getParameter('routing') == 'false') { map_routing = false };
                 if (this.getParameter('routing') == 'true') { map_routing = true };
+                // Autocomplete from GET or default
+                let map_autocomplete = this.defaults.autocomplete;
+                if (this.getParameter('autocomplete') == 'false') { map_autocomplete = false };
+                if (this.getParameter('autocomplete') == 'true') { map_autocomplete = true };
                 // Fit bounds from GET or default
                 let map_fit = this.defaults.fit;
                 if (this.getParameter('fit') == 'false') { map_fit = false };
@@ -429,6 +436,113 @@ unlisted: false
                     // dragging: !L.Browser.mobile,
                     // tap: !L.Browser.mobile
                 });
+
+                // Autocomplete
+                if (map_autocomplete) {
+                    document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left').insertAdjacentHTML('afterbegin', `
+                        <div class="auto-search-wrapper">
+                            <input type="text" autocomplete="off" id="search" placeholder="Enter the city name">
+                        </div>
+                    `);
+                    // minimal configure
+                    new Autocomplete("search", {
+                        // default selects the first item in
+                        // the list of results
+                        selectFirst: true,
+
+                        // The number of characters entered should start searching
+                        howManyCharacters: 2,
+
+                        // onSearch
+                        onSearch: ({currentValue}) => {
+                            // You can also use static files
+                            // const api = '../static/search.json'
+                            const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
+
+                            /**
+                             * Promise
+                             */
+                            return new Promise((resolve) => {
+                                fetch(api)
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                        resolve(data.features);
+                                    })
+                                    .catch((error) => {
+                                        console.error(error);
+                                    });
+                            });
+                        },
+                        // nominatim GeoJSON format parse this part turns json into the list of
+                        // records that appears when you type.
+                        onResults: ({
+                            currentValue,
+                            matches,
+                            template
+                        }) => {
+                            const regex = new RegExp(currentValue, "gi");
+
+                            // if the result returns 0 we
+                            // show the no results element
+                            return matches === 0 ?
+                                template :
+                                matches
+                                .map((element) => {
+                                    return `
+                                <li>
+                                    ${element.properties.display_name.replace(
+                                        regex,
+                                        (str) => `<b>${str}</b>`
+                                    )}
+                                </li> `;
+                                })
+                                .join("");
+                        },
+
+                        // we add an action to enter or click
+                        onSubmit: ({
+                            object
+                        }) => {
+                            // remove all layers from the map
+                            seemap.instance.eachLayer(function (layer) {
+                                if (!!layer.toGeoJSON) {
+                                    seemap.instance.removeLayer(layer);
+                                }
+                            });
+
+                            const {
+                                display_name
+                            } = object.properties;
+                            const [lng, lat] = object.geometry.coordinates;
+
+                            // const marker = L.marker([lng, lat], {
+                            //     title: display_name,
+                            // });
+
+                            // marker.addTo(seemap.instance).bindPopup(display_name);
+                            seemap.addMarker({lat: lat, lng: lng, content: display_name});
+                            seemap.instance.setView([lat, lng], map_zoom_level);
+                        },
+
+                        // get index and data from li element after
+                        // hovering over li with the mouse or using
+                        // arrow keys ↓ | ↑
+                        onSelectedItem: ({
+                            index,
+                            element,
+                            object
+                        }) => {
+                            console.log("onSelectedItem:", index, element, object);
+                        },
+
+                        // the method presents no results element
+                        noResults: ({
+                            currentValue,
+                            template
+                        }) =>
+                        template(`<li>No results found: "${currentValue}"</li>`),
+                    });
+                }
 
                 // Coordinates in URL
                 const getp_markers = this.isGetParameter('marker');

@@ -6,16 +6,25 @@ layout: libdoc/page
 
 [Download SEEMAP](installation-and-usage.html), adjust the default settings located at the top of the page according to your needs.
 
+
+## Overridable parameters
+
+| Name | Type | GET parameter | Description |
+| :- | :- | :- | :- |
+| lat | Float | `?lat=<Float>` | Latitude applied if no GET view parameter `view=` is set nor any marker |
+| lng | Float | `?lng=<Float>` | Longitude applied if no GET view parameter `view=` is set nor any marker |
+| zoom | Integer | `?zoom=<Number>` | Zoom level |
+| layer | String | `?layer=<LAYER_NAME>` | Tile provider applied - [view all](layers.html) |
+| gesture | Boolean | `?gesture=<true or false>` | [Gesture handling](gesture-handling.html) |
+| fit | Boolean | `?fit=<true or false>` | Fit to markers bounds |
+| cluster | Boolean | `?cluster=<true or false>` | [Marker cluster](marker-cluster.html) |
+| routing | Boolean | `?routing=<true or false>` | [Routing](routing.html) |
+| autocomplete | Boolean | `?autocomplete=<true or false>` | [Autocomplete](autocomplete.html) |
+
+## Others parameters
+
 | Name | Type | Description |
 | :- | :- | :- |
-| lat | Float | Default latitude applied if no GET view parameter `view=` is set nor any marker |
-| lng | Float | Default longitude applied if no GET view parameter `view=` is set nor any marker |
-| zoom | Integer | Default zoom level applied if GET parameter `zoom=` is not set into URL |
-| layer | String | Default tile provider applied - [view all](layers.html) - if GET parameter `layer=` is not set into URL |
-| gesture | Boolean | Default [gesture handling](gesture-handling.html) setting applied if GET parameter `gesture=` is not set into URL |
-| fit | Boolean | Default fit to markers bounds setting applied if GET parameter `fit=` is not set into URL |
-| cluster | Boolean | Default [marker cluster](marker-cluster.html) setting applied if GET parameter `cluster=` is not set into URL |
-| routing | Boolean | Default [routing](routing.html) setting applied if GET parameter `routing=` is not set into URL |
 | routingBackLineColor | String | Routing style back line CSS color |
 | routingBackLineOpacity | Float | Routing style back line CSS opacity |
 | routingBackLineWeight | Integer | Routing style back line CSS weight |
