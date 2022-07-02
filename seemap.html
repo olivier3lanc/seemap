@@ -3,20 +3,14 @@ unlisted: false
 ---
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
         // SEEMAP USER SETTINGS
+        // Feel free to edit according to your needs
         const userSettings = {
-            // Number - Default latitude applied if no GET view parameter `view=` is set nor any marker
-            lat: 48.8588548,
-            // Number - Default longitude applied if no GET view parameter `view=` is set nor any marker
-            lng: 2.347035,
-            // Number - Default zoom level applied if GET parameter `zoom=` is not set into URL
-            zoom: 11,
-            // String - Tile provider applied
+            lat: null, // Float or null - Default latitude
+            lng: null, // Float or null - Default longitude
+            zoom: 1, // Integer or null - Default map zoom level
+            layer: 'CartoDB_Voyager', // String - Tile provider applied
             // Available tile providers
             // * OpenStreetMap_Mapnik
             // * OpenStreetMap_DE
@@ -33,51 +27,35 @@ unlisted: false
             // * Stamen_TonerLite
             // * Stamen_Terrain
             // * Stamen_Watercolor
-            layer: 'CartoDB_Voyager',
-            // Boolean - Enable or disable gesture handling
-            gesture: true,
-            // Boolean - Enable or disable automatic fit to the view of markers bounds
-            fit: true,
-            // Boolean - Enable or disable marker cluster
-            cluster: true,
-            // Boolean - Enable or disable routing by default if at least 2 markers are set
-            routing: false,
-            // Boolean - Enable or disable autcomplete search
-            autocomplete: false,
-            // String - Routing style back line CSS color
-            routingBackLineColor: 'dodgerblue',
-            // Number - Routing style back line CSS opacity
-            routingBackLineOpacity: 0,
-            // Number - Routing style back line CSS weight
-            routingBackLineWeight: 10,
-            // String - Routing style middle line CSS color
-            routingMidLineColor: 'dodgerblue',
-            // Number - Routing style middle line CSS opacity
-            routingMidLineOpacity: 0.5,
-            // Number - Routing style middle line CSS weight
-            routingMidLineWeight: 6,
-            // String - Routing style front line CSS color
-            routingFrontLineColor: 'fuchsia',
-            // Number - Routing style front line CSS opacity
-            routingFrontLineOpacity: 1,
-            // Number - Routing style front line CSS weight
-            routingFrontLineWeight: 2,
+            gesture: true, // Boolean - Enable or disable gesture handling
+            fit: true, // Boolean - Enable or disable automatic fit to the view of markers bounds
+            cluster: true, // Boolean - Enable or disable marker cluster
+            routing: false, // Boolean - Enable or disable routing by default - Requires at least 2 markers
+            autocomplete: true, // Boolean - Enable or disable autocomplete search
+            routingBackLineColor: 'dodgerblue', // String - Routing style back line CSS color
+            routingBackLineOpacity: 0, // Number - Routing style back line CSS opacity
+            routingBackLineWeight: 10, // Number - Routing style back line CSS weight
+            routingMidLineColor: 'dodgerblue', // String - Routing style middle line CSS color
+            routingMidLineOpacity: 0.5, // Number - Routing style middle line CSS opacity
+            routingMidLineWeight: 6, // Number - Routing style middle line CSS weight
+            routingFrontLineColor: 'fuchsia', // String - Routing style front line CSS color
+            routingFrontLineOpacity: 1, // Number - Routing style front line CSS opacity
+            routingFrontLineWeight: 2, // Number - Routing style front line CSS weight
             // String - Marker icon URL, can be base64 (recommended) or public remote URL
             markerIconUrl: 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDUwIDgwIiB3aWR0aD0iNTAiIGhlaWdodD0iODAiPjx0aXRsZT5tYXJrZXItc3ZnPC90aXRsZT48c3R5bGU+LnMwIHsgZmlsbDogIzFlOTBmZiB9IC5zMSB7IGZpbGw6ICNmZmZmZmYgfSA8L3N0eWxlPjxwYXRoIGlkPSJMYXllciIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGFzcz0iczAiIGQ9Im00OC41IDMyLjZjLTEuNiA1LjUtMjIuNCA0Ny40LTIzLjUgNDcuNC0xLjEgMC0yMS45LTQxLjktMjMuNS00Ny40LTMuNC0xMS43IDAuNy0yMi4xIDExLjYtMjkgMS41LTAuOSA0LjYtMiA3LTIuNSAxOC43LTMuNCAzMy43IDEzLjIgMjguNCAzMS41em0tMjguOS0xM2MtNS4xIDUuMi0xLjkgMTMuNCA1LjMgMTMuNCA3LjQgMCAxMC45LTguMyA1LjYtMTMuNS0zLjItMy4zLTcuNS0zLjMtMTAuOSAwLjF6Ii8+PHBhdGggaWQ9IkZvcm1lIDEiIGNsYXNzPSJzMSIgZD0ibTI1LjUgMzZjLTYuNCAwLTExLjUtNS4xLTExLjUtMTEuNSAwLTYuNCA1LjEtMTEuNSAxMS41LTExLjUgNi40IDAgMTEuNSA1LjEgMTEuNSAxMS41IDAgNi40LTUuMSAxMS41LTExLjUgMTEuNXoiLz48L3N2Zz4=',
-            // Array - Marker icon size [x, y] in pixels
-            markerIconSize: [25, 40],
-            // Array - Marker icon anchor position [x, y]. Origin is top left.
-            markerIconAnchor: [12, 40],
-            // Array - Marker popup anchor position [x, y]. Origin is bottom center.
-            markerPopupAnchor: [0, -40],
+            markerIconSize: [25, 40], // Array - Marker icon size [x, y] in pixels
+            markerIconAnchor: [12, 40], // Array - Marker icon anchor position [x, y]. Origin is top left.
+            markerPopupAnchor: [0, -40], // Array - Marker popup anchor position [x, y]. Origin is bottom center.
             // String - Marker shadow URL, can be base64 (recommended) or public remote URL
             markerShadowUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAABQCAMAAABs3dbSAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAASZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABtb08QAAAGJ0Uk5TAAECAwQFBgcICQoLDA4QEQ8NEhQWFxUTGBscHRofISIZJScmIyArLCkvMC4kLTI0MzE1ODcqOjs5KD49NkE/PEJDREZFQB5HSElKS0xOTVBPUlFUU1ZVWFdaWVxbXl1fYWBMI8PjAAADDUlEQVRIx+3US3IbRxAE0MzqavwIRijCluwr+P638QHskB0yie98urvSC5jgAIRI7bxBbadfZNVUzwD3ute97nWve93r/y/+2An9EOHp2YvQmX2HkCB5figJgvRdQpBmL+R0WAj9h/xGAM0s8dSYYM0LFKJCgG6k0JK5G0lA1ry0k1JIEZKuU8iUljE3koLVCjQAQTGPEhC4JrSU3XMiITXvU9cMlUCkOithkCheCp8tPRtBcFBfbAzA7NQkMUSLkF+IvFg8RiJkI9s4tqogMYsFSgujiVdvjL745JwRsoJxdmglBJBaCFyUaqdjE8K08jVJkMPcGiSStJTnjWLNiNNOJ8TclswEo3l59H+ysSDLnGvggAooQtMUms9W2QlWtNw/7hA1gckDI/RwsMEiLrfPtJqZO1i9PO6wXTqJfoFhiT5QQQ4tJMAmKZEWnlLyearZE93SzzkizUWDsyuthQCkM0mr2Wo9Twyr85rElGAFn+rnzVJN/Ri1nq7yOYWUp2Tmbg/yuXHts9SsV/1yKL9Fa6UpcEFAs5nlnJIVpbpM1Yy+qL4B4neNpUbgktDons3Maa5VWcr56FoEvjZ1h1cxbYxfjGZmOScvD/J5qqZmP9Uoh7HG+fOfNOZ1mY2JxlNzZRlCaX/YcT+2VzEli17JzMySOd3NC6l1x6f+QkxXOSyVDBQDykKT19pvhmMpoelPyc+jZMvZDFSYxAAqa9d3faltCiYplJE0UCAaTBGHvY5tOvg1CcszMxCgLFRrl7rjcDnGZWNws5QJyghG4/64q/3YdC0mKfyVbgSBUNT2bf7ncSzn/d0m336hEWGIKPvtvnVDedPU5RvznLMRUNM47rbdcGw3xWuKucxkjGjH526/a4cawLuEMU9yRS37bjM+9WMT3iVkRiMC47B9sqe+uzn4mwsDRK3D8/NGx/724NdEKFXd7u+6vbW/mwTFuvHYNofxnaYuSHlYd3V47g5vL9VVvXwviv5r++vzdvfuGC9DAwCSL329H8sHTU0Jkzuito8ipoRGKPSxwL8ZgPYg0cE6jQAAAABJRU5ErkJggg==',
-            // Array - Marker shadow size [x, y] in pixels
-            markerShadowSize: [25, 40],
-            // Array - Marker shadow anchor position. Origin is top left.
-            markerShadowAnchor: [4, 40]
+            markerShadowSize: [25, 40], // Array - Marker shadow size [x, y] in pixels
+            markerShadowAnchor: [4, 40] // Array - Marker shadow anchor position. Origin is top left.
         }
     </script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page.title | default:site.title }}</title>
     <meta name="description" content="{{ page.description | default: site.description }}">
     <meta itemprop="name" content="{{ page.title | default: site.title }}">

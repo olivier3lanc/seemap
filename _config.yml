@@ -5,7 +5,7 @@
 
 title: SEEMAP # title of the documentation
 description: >- # Description of the docs. (>- means to ignore newlines until next param)
-  Popular Leaflet plugins and map providers bundled into a single customizable HTML file with its API
+  A single HTML map file bundled with customizable popular Leaflet plugins and map providers with its own API
 # IMPORTANT: on Github Pages deploys, url and baseurl must be commented or set to proper settings, otherwise links and resources URL are wrong
 # url: http://localhost # the base hostname & protocol for your site, e.g. http://example.com
 # baseurl: /Jekyll-LibDoc/_site # the subpath of your site, e.g. /blog
