@@ -31,6 +31,7 @@ SEEMAP comes with common [Leaflet tile providers](https://github.com/leaflet-ext
 ```html
 <iframe src="../seemap.html"></iframe>
 <select onchange="document.querySelector('iframe').src = this.value">
+    <option value="../seemap.html?layer=CartoDB_Voyager">CartoDB_Voyager</option>
     <option value="../seemap.html?layer=OpenStreetMap_Mapnik">OpenStreetMap_Mapnik</option>
     <option value="../seemap.html?layer=OpenStreetMap_DE">OpenStreetMap_DE</option>
     <option value="../seemap.html?layer=OpenStreetMap_CH">OpenStreetMap_CH</option>
@@ -40,7 +41,6 @@ SEEMAP comes with common [Leaflet tile providers](https://github.com/leaflet-ext
     <option value="../seemap.html?layer=OPNVKarte">OPNVKarte</option>
     <option value="../seemap.html?layer=OpenTopoMap">OpenTopoMap</option>
     <option value="../seemap.html?layer=CyclOSM">CyclOSM</option>
-    <option value="../seemap.html?layer=CartoDB_Voyager">CartoDB_Voyager</option>
     <option value="../seemap.html?layer=GeoportailFrance_plan">GeoportailFrance_plan</option>
     <option value="../seemap.html?layer=GeoportailFrance_orthos">GeoportailFrance_orthos</option>
     <option value="../seemap.html?layer=Stamen_TonerLite">Stamen_TonerLite</option>

@@ -10,7 +10,7 @@ Here are the default settings located at the top of the page `seemap.html`, feel
 | :- | :- | :- | :- |
 | lat | *null* | *Float* or *null* | Default latitude |
 | lng | *null* | *Float* or *null* | Default longitude |
-| zoom | *1* | *Integer* or *null* | Default map zoom level |
+| zoom | *2* | *Integer* or *null* | Default map zoom level |
 | layer | *CartoDB_Voyager* | *String* | Default tile provider applied, [view all available](layers.html) |
 | gesture | *true* | *Boolean* | Enable or disable gesture handling |
 | fit | *true* | *Boolean* | Enable or disable automatic fit to the view of markers bounds |
