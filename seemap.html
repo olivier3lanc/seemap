@@ -11,6 +11,7 @@ unlisted: false
             lng: 2.6072057, // Float or null - Default longitude
             zoom: 4, // Integer or null - Default map zoom level
             zoomControl: true, // Boolean - Enable or disable map zoom control
+            zoomResetControl: true, // Boolean - Enable or disable map zoom reset control.
             layer: 'CartoDB_Voyager', // String - Tile provider applied
             // Available tile providers
             // * CartoDB_Voyager
@@ -182,6 +183,7 @@ unlisted: false
                 lng: userSettings.lng,
                 zoom: userSettings.zoom,
                 zoomControl: userSettings.zoomControl,
+                zoomResetControl: userSettings.zoomResetControl,
                 layer: userSettings.layer,
                 gesture: userSettings.gesture,
                 cluster: userSettings.cluster,
@@ -482,6 +484,7 @@ unlisted: false
                 }
             },
             markers: {},
+            routeControl: {},
             clusterGroup: L.markerClusterGroup(),
             addMarker: function (options) {
                 // Set marker id
@@ -534,6 +537,82 @@ unlisted: false
                 }
                 return value;
             },
+            // Returns an object with the settings of the current view
+            getCurrentViewSettings: function() {
+                let current_settings = {
+                    center: {
+                        lat: null,
+                        lng: null
+                    }
+                };
+                // The view
+                const get_center = this.instance.getCenter();
+                current_settings.center.lat = get_center.lat;
+                current_settings.center.lng = get_center.lng;
+
+                // Zoom level
+                current_settings.zoom = this.instance.getZoom();
+
+                // Zoom control
+                current_settings.zoomControl = this.defaults.zoomControl;
+                if (this.getParameter('zoomControl') == 'false') { current_settings.zoomControl = false };
+                if (this.getParameter('zoomControl') == 'true') { current_settings.zoomControl = true };
+
+                // Zoom reset control 
+                current_settings.zoomResetControl = this.defaults.zoomResetControl;
+                if (this.getParameter('zoomResetControl') == 'false') { current_settings.zoomResetControl = false };
+                if (this.getParameter('zoomResetControl') == 'true') { current_settings.zoomResetControl = true };
+
+                // Marker cluster 
+                current_settings.cluster = this.defaults.cluster;
+                if (this.getParameter('cluster') == 'false') { current_settings.cluster = false };
+                if (this.getParameter('cluster') == 'true') { current_settings.cluster = true };
+
+                // Layer 
+                current_settings.layer = this.defaults.layer;
+                const getp_map_layer = this.getParameter('layer');
+                if (getp_map_layer.length > 0) {
+                    if (this.defaults.layers[getp_map_layer] !== undefined) {
+                        current_settings.layer = getp_map_layer;
+                    }
+                };
+                // Gesture handling 
+                current_settings.gesture = this.defaults.gesture;
+                if (this.getParameter('gesture') == 'false') { current_settings.gesture = false };
+                if (this.getParameter('gesture') == 'true') { current_settings.gesture = true };
+                // Routing 
+                current_settings.routing = this.defaults.routing;
+                if (this.getParameter('routing') == 'false') { current_settings.routing = false };
+                if (this.getParameter('routing') == 'true') { current_settings.routing = true };
+                // Autocomplete 
+                current_settings.autocomplete = this.defaults.autocomplete;
+                if (this.getParameter('autocomplete') == 'false') { current_settings.autocomplete = false };
+                if (this.getParameter('autocomplete') == 'true') { current_settings.autocomplete = true };
+                // Fit bounds 
+                current_settings.fit = this.defaults.fit;
+                if (this.getParameter('fit') == 'false') { current_settings.fit = false };
+                if (this.getParameter('fit') == 'true') { current_settings.fit = true };
+                // Markers
+                current_settings.markers = [];
+                Object.keys(this.markers).forEach(function (marker_data) {
+                    const marker_lat_lng = seemap.markers[marker_data].getLatLng();
+                    const lat = marker_lat_lng.lat;
+                    const lng = marker_lat_lng.lng;
+                    const popup = seemap.markers[marker_data].getPopup();
+                    let content = '';
+                    if (popup !== undefined) {
+                        content = popup._content;
+                    }
+                    current_settings.markers.push({
+                        lat: lat,
+                        lng: lng,
+                        content: content
+                    })
+                });
+
+                // Return settings
+                return current_settings;
+            },
             update: function () {
                 if (typeof this.instance == 'object') {
                     this.instance.remove();
@@ -565,6 +644,14 @@ unlisted: false
                 let map_zoom_control = this.defaults.zoomControl;
                 if (this.getParameter('zoomControl') == 'false') { map_zoom_control = false };
                 if (this.getParameter('zoomControl') == 'true') { map_zoom_control = true };
+                // Zoom reset control from GET or default
+                let map_zoom_reset_control = this.defaults.zoomResetControl;
+                if (this.getParameter('zoomResetControl') == 'false') { map_zoom_reset_control = false };
+                if (this.getParameter('zoomResetControl') == 'true') { map_zoom_reset_control = true };
+                // Marker cluster from GET or default
+                let map_cluster = this.defaults.cluster;
+                if (this.getParameter('cluster') == 'false') { map_cluster = false };
+                if (this.getParameter('cluster') == 'true') { map_cluster = true };
                 // Layer from GET or default
                 let map_layer = this.defaults.layer;
                 const getp_map_layer = this.getParameter('layer');
@@ -589,7 +676,7 @@ unlisted: false
                 let map_fit = this.defaults.fit;
                 if (this.getParameter('fit') == 'false') { map_fit = false };
                 if (this.getParameter('fit') == 'true') { map_fit = true };
-                console.log(map_zoom_control);
+                // console.log(map_zoom_control);
                 // Init Leaflet
                 this.instance = L.map('mapid', {
                     center: new L.LatLng(map_view_lat, map_view_lng),
@@ -602,19 +689,21 @@ unlisted: false
                 });
                 this.instance.whenReady(function() {
                     // Zoom reset
-                    const el_leaflet_control_top_left = document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left');
-                    if (el_leaflet_control_top_left !== null) {
-                        el_leaflet_control_top_left.insertAdjacentHTML('afterbegin', `
-                            <div class="leaflet-bar leaflet-control">
-                                <a  class="leaflet-control-zoom-reset"
-                                    href="#"
-                                    title="Reset zoom"
-                                    role="button"
-                                    aria-label="Reset zoom"
-                                    aria-disabled="false"
-                                    onclick="seemap.instance.setView([seemap.defaults.lat, seemap.defaults.lng], seemap.defaults.zoom)">0</a>
-                            </div>
-                        `);
+                    if (map_zoom_reset_control) {
+                        const el_leaflet_control_top_left = document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left');
+                        if (el_leaflet_control_top_left !== null) {
+                            el_leaflet_control_top_left.insertAdjacentHTML('afterbegin', `
+                                <div class="leaflet-bar leaflet-control">
+                                    <a  class="leaflet-control-zoom-reset"
+                                        href="#"
+                                        title="Reset zoom"
+                                        role="button"
+                                        aria-label="Reset zoom"
+                                        aria-disabled="false"
+                                        onclick="seemap.instance.setView([seemap.defaults.lat, seemap.defaults.lng], seemap.defaults.zoom)">0</a>
+                                </div>
+                            `);
+                        }
                     }
                     // Autocomplete
                     if (map_autocomplete) {
@@ -766,7 +855,7 @@ unlisted: false
                     }
                     // Routing
                     if (waypoints.length > 1 && map_routing) {
-                        const routeControl = L.Routing.control({
+                        seemap.routeControl = L.Routing.control({
                             // waypoints: [
                             //     L.latLng(45.3603179, 1.5041424),
                             //     L.latLng(46.3279067, 2.5248145)
@@ -803,7 +892,7 @@ unlisted: false
                         }).addTo(seemap.instance);
 
                         
-                        routeControl.on('routesfound', function(e) {
+                        seemap.routeControl.on('routesfound', function(e) {
                             const routes = e.routes;
                             const summary = routes[0].summary;
                             const total_distance = summary.totalDistance / 1000;
@@ -819,18 +908,67 @@ unlisted: false
                         });
                     }
                 }
-                
-                // Build permanent link
-                // var url = new URL("http://foo.bar/?x=1&y=2");
-                // If your expected result is "http://foo.bar/?x=1&y=2&x=42"
-                // url.searchParams.append('x', 42);
-                // If your expected result is "http://foo.bar/?x=42&y=2"
-                // url.searchParams.set('x', 42);
 
-                let permanent_link = location.origin+location.pathname;
-                permanent_link += '?view='+map_view_lat+','+map_view_lng;
-                permanent_link += '?zoom='+map_zoom_level;
-                permanent_link += '?zoomControl='+map_zoom_control;
+                this.instance.on('zoomend', function() {
+                    seemap.updatePermalink();
+                });
+                this.instance.on('moveend', function() {
+                    seemap.updatePermalink();
+                });
+            },
+            updatePermalink: function() {
+                if (typeof this.instance == 'object') {
+                    // SEEMAP FILE URL
+                    let permanent_link = location.origin+location.pathname;
+                    // CURRENT VIEW SETTINGS
+                    const current_view_settings = this.getCurrentViewSettings();
+                    // The view
+                    permanent_link += '?view='+current_view_settings.center.lat+','+current_view_settings.center.lng;
+                    // Zoom level
+                    permanent_link += '&zoom='+current_view_settings.zoom;
+                    // Zoom control
+                    permanent_link += '&zoomControl='+current_view_settings.zoomControl;
+                    // Zoom reset control
+                    permanent_link += '&zoomResetControl='+current_view_settings.zoomResetControl;
+                    // Layer
+                    permanent_link += '&layer='+current_view_settings.layer;
+                    // Gesture
+                    permanent_link += '&gesture='+current_view_settings.gesture;
+                    // Fit
+                    permanent_link += '&fit='+current_view_settings.fit;
+                    // Marker cluster
+                    permanent_link += '&cluster='+current_view_settings.cluster;
+                    // Routinf
+                    permanent_link += '&routing='+current_view_settings.routing;
+                    // Autocomplete
+                    permanent_link += '&autocomplete='+current_view_settings.autocomplete;
+                    // Markers
+                    current_view_settings.markers.forEach(function(marker_data) {
+                        permanent_link += '&marker='+marker_data.lat+','+marker_data.lng;
+                        if (marker_data.content.length > 0) {
+                            permanent_link += ','+marker_data.content;
+                        }
+                    });
+                    const el_seemap_permalink = document.querySelector('#seemap-permalink');
+                    if (el_seemap_permalink === null) {
+                        document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left').insertAdjacentHTML('beforeend', `
+                            <div class="leaflet-bar leaflet-control">
+                                <a  class="leaflet-control-permalink"
+                                    href="${permanent_link}"
+                                    id="seemap-permalink"
+                                    title="Direct link to the current view"
+                                    role="button"
+                                    aria-label="Direct link to the current view"
+                                    aria-disabled="false"
+                                    target="_blank">P</a>
+                            </div>
+                            
+                        `);
+                    } else {
+                        el_seemap_permalink.href = permanent_link;
+                    }
+                    return permanent_link;
+                }
             }
         }
         seemap.update();
