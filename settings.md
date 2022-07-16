@@ -12,6 +12,8 @@ Here are the default settings located at the top of the page `seemap.html`, feel
 | lng | *2.6072057* | *Float* or *null* | Default longitude |
 | zoom | *4* | *Integer* or *null* | Default map zoom level |
 | zoomControl | *true* | *Boolean* | Enable or disable map zoom control |
+| viewResetControl | *true* | *Boolean* | Enable or disable map view reset control |
+| viewResetGoesToFirstView | *true* | *Boolean* | If true, the destination of view reset is the first view, if false, destination is based on user settings (lat, lng, zoom) |
 | layer | *CartoDB_Voyager* | *String* | Default tile provider applied, [view all available](layers.html) |
 | gesture | *true* | *Boolean* | Enable or disable gesture handling |
 | fit | *true* | *Boolean* | Enable or disable automatic fit to the view of markers bounds |

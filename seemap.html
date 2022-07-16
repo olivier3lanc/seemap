@@ -11,8 +11,9 @@ unlisted: false
             lng: 2.6072057, // Float or null - Default longitude
             zoom: 4, // Integer or null - Default map zoom level
             zoomControl: true, // Boolean - Enable or disable map zoom control
-            zoomResetControl: true, // Boolean - Enable or disable map zoom reset control.
-            layer: 'CartoDB_Voyager', // String - Tile provider applied
+            viewResetControl: true, // Boolean - Enable or disable map view reset control.
+            viewResetGoesToFirstView: true, // Boolean - If true, the destination of view reset is the first view, if false, destination is based on user settings (lat, lng, zoom)
+            layer: 'OpenStreetMap_Mapnik', // String - Tile provider applied
             // Available tile providers
             // * CartoDB_Voyager
             // * OpenStreetMap_Mapnik
@@ -183,7 +184,8 @@ unlisted: false
                 lng: userSettings.lng,
                 zoom: userSettings.zoom,
                 zoomControl: userSettings.zoomControl,
-                zoomResetControl: userSettings.zoomResetControl,
+                viewResetControl: userSettings.viewResetControl,
+                viewResetGoesToFirstView: userSettings.viewResetGoesToFirstView,
                 layer: userSettings.layer,
                 gesture: userSettings.gesture,
                 cluster: userSettings.cluster,
@@ -547,8 +549,15 @@ unlisted: false
                 };
                 // The view
                 const get_center = this.instance.getCenter();
+                // const north_east = seemap.instance.getBounds()._northEast;
+                // const south_west = seemap.instance.getBounds()._southWest;
+                // const get_center = {
+                //     lat: (north_east.lat + south_west.lat) / 2,
+                //     lng: (north_east.lng + south_west.lng) / 2
+                // }
                 current_settings.center.lat = get_center.lat;
                 current_settings.center.lng = get_center.lng;
+                // console.log(get_center.lat, get_center.lng);
 
                 // Zoom level
                 current_settings.zoom = this.instance.getZoom();
@@ -558,10 +567,15 @@ unlisted: false
                 if (this.getParameter('zoomControl') == 'false') { current_settings.zoomControl = false };
                 if (this.getParameter('zoomControl') == 'true') { current_settings.zoomControl = true };
 
-                // Zoom reset control 
-                current_settings.zoomResetControl = this.defaults.zoomResetControl;
-                if (this.getParameter('zoomResetControl') == 'false') { current_settings.zoomResetControl = false };
-                if (this.getParameter('zoomResetControl') == 'true') { current_settings.zoomResetControl = true };
+                // View reset control 
+                current_settings.viewResetControl = this.defaults.viewResetControl;
+                if (this.getParameter('viewResetControl') == 'false') { current_settings.viewResetControl = false };
+                if (this.getParameter('viewResetControl') == 'true') { current_settings.viewResetControl = true };
+
+                // View reset behavior 
+                current_settings.viewResetGoesToFirstView = this.defaults.viewResetGoesToFirstView;
+                if (this.getParameter('viewResetGoesToFirstView') == 'false') { current_settings.viewResetGoesToFirstView = false };
+                if (this.getParameter('viewResetGoesToFirstView') == 'true') { current_settings.viewResetGoesToFirstView = true };
 
                 // Marker cluster 
                 current_settings.cluster = this.defaults.cluster;
@@ -623,8 +637,8 @@ unlisted: false
                 const getp_map_view = this.getParameter('view').split(',');
                 // If 2 data
                 if (getp_map_view.length == 2) { 
-                    const parsed_int_getp_map_view_lat = parseInt(getp_map_view[0]);
-                    const parsed_int_getp_map_view_lng = parseInt(getp_map_view[1]);
+                    const parsed_int_getp_map_view_lat = parseFloat(getp_map_view[0]);
+                    const parsed_int_getp_map_view_lng = parseFloat(getp_map_view[1]);
                     if (!isNaN(parsed_int_getp_map_view_lat) && !isNaN(parsed_int_getp_map_view_lng)) {
                         map_view_lat = parsed_int_getp_map_view_lat;
                         map_view_lng = parsed_int_getp_map_view_lng;
@@ -644,10 +658,14 @@ unlisted: false
                 let map_zoom_control = this.defaults.zoomControl;
                 if (this.getParameter('zoomControl') == 'false') { map_zoom_control = false };
                 if (this.getParameter('zoomControl') == 'true') { map_zoom_control = true };
-                // Zoom reset control from GET or default
-                let map_zoom_reset_control = this.defaults.zoomResetControl;
-                if (this.getParameter('zoomResetControl') == 'false') { map_zoom_reset_control = false };
-                if (this.getParameter('zoomResetControl') == 'true') { map_zoom_reset_control = true };
+                // View reset control from GET or default
+                let map_view_reset_control = this.defaults.viewResetControl;
+                if (this.getParameter('viewResetControl') == 'false') { map_view_reset_control = false };
+                if (this.getParameter('viewResetControl') == 'true') { map_view_reset_control = true };
+                // View reset behavior from GET or default
+                let map_view_reset_control_goes_to_first_view = this.defaults.viewResetGoesToFirstView;
+                if (this.getParameter('viewResetGoesToFirstView') == 'false') { map_view_reset_control_goes_to_first_view = false };
+                if (this.getParameter('viewResetGoesToFirstView') == 'true') { map_view_reset_control_goes_to_first_view = true };
                 // Marker cluster from GET or default
                 let map_cluster = this.defaults.cluster;
                 if (this.getParameter('cluster') == 'false') { map_cluster = false };
@@ -688,19 +706,31 @@ unlisted: false
                     // tap: !L.Browser.mobile
                 });
                 this.instance.whenReady(function() {
-                    // Zoom reset
-                    if (map_zoom_reset_control) {
+                    // Save current settings at start
+                    seemap.firstViewSettingsAtStart = seemap.getCurrentViewSettings();
+                    // View reset
+                    if (map_view_reset_control) {
                         const el_leaflet_control_top_left = document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left');
                         if (el_leaflet_control_top_left !== null) {
+                            let view_reset_title_label = 'Reset view';
+                            let view_reset_lat = seemap.defaults.lat;
+                            let view_reset_lng = seemap.defaults.lng;
+                            let view_reset_zoom = seemap.defaults.zoom;
+                            if (map_view_reset_control_goes_to_first_view) {
+                                view_reset_title_label = 'Reset first view';
+                                view_reset_lat = seemap.firstViewSettingsAtStart.center.lat;
+                                view_reset_lng = seemap.firstViewSettingsAtStart.center.lng;
+                                view_reset_zoom = seemap.firstViewSettingsAtStart.zoom;
+                            }
                             el_leaflet_control_top_left.insertAdjacentHTML('afterbegin', `
                                 <div class="leaflet-bar leaflet-control">
                                     <a  class="leaflet-control-zoom-reset"
                                         href="#"
-                                        title="Reset zoom"
+                                        title="${view_reset_title_label}"
                                         role="button"
-                                        aria-label="Reset zoom"
+                                        aria-label="${view_reset_title_label}"
                                         aria-disabled="false"
-                                        onclick="seemap.instance.setView([seemap.defaults.lat, seemap.defaults.lng], seemap.defaults.zoom)">0</a>
+                                        onclick="seemap.instance.setView([${view_reset_lat}, ${view_reset_lng}], ${view_reset_zoom})">0</a>
                                 </div>
                             `);
                         }
@@ -782,13 +812,13 @@ unlisted: false
                                     display_name
                                 } = object.properties;
                                 const [lng, lat] = object.geometry.coordinates;
-                                console.log(object.properties);
+                                // console.log(object.properties);
                                 // const marker = L.marker([lng, lat], {
                                 //     title: display_name,
                                 // });
 
                                 // marker.addTo(seemap.instance).bindPopup(display_name);
-                                seemap.addMarker({lat: lat, lng: lng, content: display_name});
+                                // seemap.addMarker({lat: lat, lng: lng, content: display_name});
                                 map_zoom_level = seemap.instance.getZoom();
                                 seemap.instance.setView([lat, lng], map_zoom_level);
                             },
@@ -801,7 +831,7 @@ unlisted: false
                                 element,
                                 object
                             }) => {
-                                console.log("onSelectedItem:", index, element, object);
+                                // console.log("onSelectedItem:", index, element, object);
                             },
 
                             // the method presents no results element
@@ -847,11 +877,11 @@ unlisted: false
                         } else {
                             seemap.instance.fitBounds(markers_array_coords_only);
                         }
-                        if (this.getParameter('zoom').length > 0 && marker_all.length > 0) {
-                            setTimeout(function() {
-                                seemap.instance.setZoom(map_zoom_level);
-                            },500)
-                        }
+                        // if (this.getParameter('zoom').length > 0 && marker_all.length > 0) {
+                        //     setTimeout(function() {
+                        //         seemap.instance.setZoom(map_zoom_level);
+                        //     },500)
+                        // }
                     }
                     // Routing
                     if (waypoints.length > 1 && map_routing) {
@@ -866,29 +896,6 @@ unlisted: false
                                 styles: seemap.defaults.routingStyles
                             },
                             createMarker: function() { return null; },
-                            // createMarker: function (i, waypoint, n) {
-                            //     const marker = L.marker(waypoint.latLng, {
-                            //         draggable: true,
-                            //         bounceOnAdd: false,
-                            //         bounceOnAddOptions: {
-                            //             duration: 1000,
-                            //             height: 800,
-                            //             function() {
-                            //             (bindPopup(myPopup).openOn(seemap.instance))
-                            //             }
-                            //         },
-                                    // icon: L.icon({
-                                    //     iconUrl: '{{site.url}}{{site.baseurl}}/img/goa-map-marker.svg',
-                                        // iconSize: [38, 95],
-                                        // iconAnchor: [22, 94],
-                                        // popupAnchor: [-3, -76],
-                                        // shadowUrl: './assets/global/img/marker-shadow.png',
-                                        // shadowSize: [68, 95],
-                                        // shadowAnchor: [22, 94]
-                                //     })
-                                // });
-                                // return marker;
-                            // }
                         }).addTo(seemap.instance);
 
                         
@@ -908,7 +915,6 @@ unlisted: false
                         });
                     }
                 }
-
                 this.instance.on('zoomend', function() {
                     seemap.updatePermalink();
                 });
@@ -929,16 +935,18 @@ unlisted: false
                     // Zoom control
                     permanent_link += '&zoomControl='+current_view_settings.zoomControl;
                     // Zoom reset control
-                    permanent_link += '&zoomResetControl='+current_view_settings.zoomResetControl;
+                    permanent_link += '&viewResetControl='+current_view_settings.viewResetControl;
+                    // Zoom reset behavior
+                    permanent_link += '&viewResetGoesToFirstView='+current_view_settings.viewResetGoesToFirstView;
                     // Layer
                     permanent_link += '&layer='+current_view_settings.layer;
                     // Gesture
-                    permanent_link += '&gesture='+current_view_settings.gesture;
+                    permanent_link += '&gesture=false';
                     // Fit
-                    permanent_link += '&fit='+current_view_settings.fit;
+                    permanent_link += '&fit=false';
                     // Marker cluster
                     permanent_link += '&cluster='+current_view_settings.cluster;
-                    // Routinf
+                    // Routing
                     permanent_link += '&routing='+current_view_settings.routing;
                     // Autocomplete
                     permanent_link += '&autocomplete='+current_view_settings.autocomplete;
@@ -967,6 +975,7 @@ unlisted: false
                     } else {
                         el_seemap_permalink.href = permanent_link;
                     }
+                    // console.log(permanent_link);
                     return permanent_link;
                 }
             }
