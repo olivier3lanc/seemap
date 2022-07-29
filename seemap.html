@@ -35,6 +35,7 @@ unlisted: false
             cluster: true, // Boolean - Enable or disable marker cluster
             routing: false, // Boolean - Enable or disable routing by default - Requires at least 2 markers
             autocomplete: true, // Boolean - Enable or disable autocomplete search
+            autocompleteZoom: 18, // Integer or null - Zoom level applied on aucomplete selection
             routingBackLineColor: 'dodgerblue', // String - Routing style back line CSS color
             routingBackLineOpacity: 0, // Number - Routing style back line CSS opacity
             routingBackLineWeight: 10, // Number - Routing style back line CSS weight
@@ -191,6 +192,7 @@ unlisted: false
                 cluster: userSettings.cluster,
                 routing: userSettings.routing,
                 autocomplete: userSettings.autocomplete,
+                autocompleteZoom: userSettings.autocompleteZoom,
                 routingStyles: [
                     // Back line
                     {
@@ -602,6 +604,16 @@ unlisted: false
                 current_settings.autocomplete = this.defaults.autocomplete;
                 if (this.getParameter('autocomplete') == 'false') { current_settings.autocomplete = false };
                 if (this.getParameter('autocomplete') == 'true') { current_settings.autocomplete = true };
+                // Autocomplete zoom
+                current_settings.autocompleteZoom = this.defaults.autocompleteZoom;
+                const getp_map_autocomplete_zoom = this.getParameter('autocompleteZoom');
+                // If autocomplete zoom GET is a stringified number
+                if (getp_map_autocomplete_zoom.length > 0) { 
+                    const parsed_int_getp_map_autocomplete_zoom = parseInt(getp_map_autocomplete_zoom);
+                    if (!isNaN(parsed_int_getp_map_autocomplete_zoom)) {
+                        current_settings.autocompleteZoom = parsed_int_getp_map_autocomplete_zoom;
+                    }
+                };
                 // Fit bounds 
                 current_settings.fit = this.defaults.fit;
                 if (this.getParameter('fit') == 'false') { current_settings.fit = false };
@@ -690,6 +702,16 @@ unlisted: false
                 let map_autocomplete = this.defaults.autocomplete;
                 if (this.getParameter('autocomplete') == 'false') { map_autocomplete = false };
                 if (this.getParameter('autocomplete') == 'true') { map_autocomplete = true };
+                // Autocomplete zoom from GET or default
+                let map_autocomplete_zoom = this.defaults.autocompleteZoom;
+                const getp_map_autocomplete_zoom = this.getParameter('autocompleteZoom');
+                // If autocomplete zoom GET is a stringified number
+                if (getp_map_autocomplete_zoom.length > 0) { 
+                    const parsed_int_getp_map_autocomplete_zoom = parseInt(getp_map_autocomplete_zoom);
+                    if (!isNaN(parsed_int_getp_map_autocomplete_zoom)) {
+                        map_autocomplete_zoom = parsed_int_getp_map_autocomplete_zoom;
+                    }
+                };
                 // Fit bounds from GET or default
                 let map_fit = this.defaults.fit;
                 if (this.getParameter('fit') == 'false') { map_fit = false };
@@ -756,6 +778,7 @@ unlisted: false
                                 // You can also use static files
                                 // const api = '../static/search.json'
                                 const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
+                                // const api = `https://api-adresse.data.gouv.fr/search/?q=${encodeURI(currentValue)}`;
 
                                 /**
                                  * Promise
@@ -773,28 +796,13 @@ unlisted: false
                             },
                             // nominatim GeoJSON format parse this part turns json into the list of
                             // records that appears when you type.
-                            onResults: ({
-                                currentValue,
-                                matches,
-                                template
-                            }) => {
-                                const regex = new RegExp(currentValue, "gi");
-
-                                // if the result returns 0 we
-                                // show the no results element
-                                return matches === 0 ?
-                                    template :
-                                    matches
-                                    .map((element) => {
-                                        return `
-                                    <li>
-                                        ${element.properties.display_name.replace(
-                                            regex,
-                                            (str) => `<b>${str}</b>`
-                                        )}
-                                    </li> `;
+                            onResults: ({ matches }) => {
+                                return matches
+                                    .map((el) => {
+                                    return `
+                                        <li>${el.properties.label || el.properties.display_name}</li>`;
                                     })
-                                    .join("");
+                                    .join('');
                             },
 
                             // we add an action to enter or click
@@ -820,6 +828,9 @@ unlisted: false
                                 // marker.addTo(seemap.instance).bindPopup(display_name);
                                 // seemap.addMarker({lat: lat, lng: lng, content: display_name});
                                 map_zoom_level = seemap.instance.getZoom();
+                                if (typeof map_autocomplete_zoom == 'number') {
+                                    map_zoom_level = map_autocomplete_zoom;
+                                }
                                 seemap.instance.setView([lat, lng], map_zoom_level);
                             },
 
@@ -950,6 +961,8 @@ unlisted: false
                     permanent_link += '&routing='+current_view_settings.routing;
                     // Autocomplete
                     permanent_link += '&autocomplete='+current_view_settings.autocomplete;
+                    // Autocomplete zoom
+                    permanent_link += '&autocompleteZoom='+current_view_settings.autocompleteZoom;
                     // Markers
                     current_view_settings.markers.forEach(function(marker_data) {
                         permanent_link += '&marker='+marker_data.lat+','+marker_data.lng;
