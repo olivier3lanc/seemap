@@ -53,7 +53,24 @@ unlisted: false
             // String - Marker shadow URL, can be base64 (recommended) or public remote URL
             markerShadowUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAABQCAMAAABs3dbSAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAASZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABtb08QAAAGJ0Uk5TAAECAwQFBgcICQoLDA4QEQ8NEhQWFxUTGBscHRofISIZJScmIyArLCkvMC4kLTI0MzE1ODcqOjs5KD49NkE/PEJDREZFQB5HSElKS0xOTVBPUlFUU1ZVWFdaWVxbXl1fYWBMI8PjAAADDUlEQVRIx+3US3IbRxAE0MzqavwIRijCluwr+P638QHskB0yie98urvSC5jgAIRI7bxBbadfZNVUzwD3ute97nWve93r/y/+2An9EOHp2YvQmX2HkCB5figJgvRdQpBmL+R0WAj9h/xGAM0s8dSYYM0LFKJCgG6k0JK5G0lA1ry0k1JIEZKuU8iUljE3koLVCjQAQTGPEhC4JrSU3XMiITXvU9cMlUCkOithkCheCp8tPRtBcFBfbAzA7NQkMUSLkF+IvFg8RiJkI9s4tqogMYsFSgujiVdvjL745JwRsoJxdmglBJBaCFyUaqdjE8K08jVJkMPcGiSStJTnjWLNiNNOJ8TclswEo3l59H+ysSDLnGvggAooQtMUms9W2QlWtNw/7hA1gckDI/RwsMEiLrfPtJqZO1i9PO6wXTqJfoFhiT5QQQ4tJMAmKZEWnlLyearZE93SzzkizUWDsyuthQCkM0mr2Wo9Twyr85rElGAFn+rnzVJN/Ri1nq7yOYWUp2Tmbg/yuXHts9SsV/1yKL9Fa6UpcEFAs5nlnJIVpbpM1Yy+qL4B4neNpUbgktDons3Maa5VWcr56FoEvjZ1h1cxbYxfjGZmOScvD/J5qqZmP9Uoh7HG+fOfNOZ1mY2JxlNzZRlCaX/YcT+2VzEli17JzMySOd3NC6l1x6f+QkxXOSyVDBQDykKT19pvhmMpoelPyc+jZMvZDFSYxAAqa9d3faltCiYplJE0UCAaTBGHvY5tOvg1CcszMxCgLFRrl7rjcDnGZWNws5QJyghG4/64q/3YdC0mKfyVbgSBUNT2bf7ncSzn/d0m336hEWGIKPvtvnVDedPU5RvznLMRUNM47rbdcGw3xWuKucxkjGjH526/a4cawLuEMU9yRS37bjM+9WMT3iVkRiMC47B9sqe+uzn4mwsDRK3D8/NGx/724NdEKFXd7u+6vbW/mwTFuvHYNofxnaYuSHlYd3V47g5vL9VVvXwviv5r++vzdvfuGC9DAwCSL329H8sHTU0Jkzuito8ipoRGKPSxwL8ZgPYg0cE6jQAAAABJRU5ErkJggg==',
             markerShadowSize: [25, 40], // Array - Marker shadow size [x, y] in pixels
-            markerShadowAnchor: [4, 40] // Array - Marker shadow anchor position. Origin is top left.
+            markerShadowAnchor: [4, 40], // Array - Marker shadow anchor position. Origin is top left.
+            language: 'fr_FR',
+            i18n: {
+                en_GB: {
+                    autocompletePlaceholder: 'Enter the city name',
+                    resetView: 'Reset to the first view',
+                    permalink: 'Direct link to the current view',
+                    zoomIn: 'Zoom in',
+                    zoomOut: 'Zoom out'
+                },
+                fr_FR: {
+                    autocompletePlaceholder: 'Nom de la ville',
+                    resetView: 'Réinitialiser la vue d\'origine',
+                    permalink: 'Lien direct vers la vue actuelle',
+                    zoomIn: 'Zoomer',
+                    zoomOut: 'Dézoomer'
+                }
+            }
         }
     </script>
 <head>
@@ -193,6 +210,7 @@ unlisted: false
                 routing: userSettings.routing,
                 autocomplete: userSettings.autocomplete,
                 autocompleteZoom: userSettings.autocompleteZoom,
+                language: userSettings.language,
                 routingStyles: [
                     // Back line
                     {
@@ -635,7 +653,8 @@ unlisted: false
                         content: content
                     })
                 });
-
+                // Language 
+                current_settings.language = this.defaults.language;
                 // Return settings
                 return current_settings;
             },
@@ -716,7 +735,11 @@ unlisted: false
                 let map_fit = this.defaults.fit;
                 if (this.getParameter('fit') == 'false') { map_fit = false };
                 if (this.getParameter('fit') == 'true') { map_fit = true };
-                // console.log(map_zoom_control);
+                // Language from GET or default
+                const getp_map_language = this.getParameter('language');
+                if (userSettings.i18n[getp_map_language] !== undefined) {
+                    this.defaults.language = getp_map_language;
+                };
                 // Init Leaflet
                 this.instance = L.map('mapid', {
                     center: new L.LatLng(map_view_lat, map_view_lng),
@@ -734,12 +757,11 @@ unlisted: false
                     if (map_view_reset_control) {
                         const el_leaflet_control_top_left = document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left');
                         if (el_leaflet_control_top_left !== null) {
-                            let view_reset_title_label = 'Reset view';
+                            let view_reset_title_label = seemap.text('resetView');
                             let view_reset_lat = seemap.defaults.lat;
                             let view_reset_lng = seemap.defaults.lng;
                             let view_reset_zoom = seemap.defaults.zoom;
                             if (map_view_reset_control_goes_to_first_view) {
-                                view_reset_title_label = 'Reset first view';
                                 view_reset_lat = seemap.firstViewSettingsAtStart.center.lat;
                                 view_reset_lng = seemap.firstViewSettingsAtStart.center.lng;
                                 view_reset_zoom = seemap.firstViewSettingsAtStart.zoom;
@@ -761,7 +783,7 @@ unlisted: false
                     if (map_autocomplete) {
                         document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left').insertAdjacentHTML('afterbegin', `
                             <div class="auto-search-wrapper">
-                                <input type="text" autocomplete="off" id="search" placeholder="Enter the city name">
+                                <input type="text" autocomplete="off" id="search" placeholder="${seemap.text('autocompletePlaceholder')}">
                             </div>
                         `);
                         // minimal configure
@@ -932,6 +954,17 @@ unlisted: false
                 this.instance.on('moveend', function() {
                     seemap.updatePermalink();
                 });
+                // i18n custom text strings
+                const el_zoom_in_btn = document.querySelector('.leaflet-control-zoom-in');
+                if (el_zoom_in_btn !== null) {
+                    el_zoom_in_btn.setAttribute('title', seemap.text('zoomIn'));
+                    el_zoom_in_btn.setAttribute('aria-label', seemap.text('zoomIn'));
+                }
+                const el_zoom_out_btn = document.querySelector('.leaflet-control-zoom-out');
+                if (el_zoom_out_btn !== null) {
+                    el_zoom_out_btn.setAttribute('title', seemap.text('zoomOut'));
+                    el_zoom_out_btn.setAttribute('aria-label', seemap.text('zoomOut'));
+                }
             },
             updatePermalink: function() {
                 if (typeof this.instance == 'object') {
@@ -963,6 +996,8 @@ unlisted: false
                     permanent_link += '&autocomplete='+current_view_settings.autocomplete;
                     // Autocomplete zoom
                     permanent_link += '&autocompleteZoom='+current_view_settings.autocompleteZoom;
+                    // Language
+                    permanent_link += '&language='+current_view_settings.language;
                     // Markers
                     current_view_settings.markers.forEach(function(marker_data) {
                         permanent_link += '&marker='+marker_data.lat+','+marker_data.lng;
@@ -977,9 +1012,9 @@ unlisted: false
                                 <a  class="leaflet-control-permalink"
                                     href="${permanent_link}"
                                     id="seemap-permalink"
-                                    title="Direct link to the current view"
+                                    title="${this.text('permalink')}"
                                     role="button"
-                                    aria-label="Direct link to the current view"
+                                    aria-label="${this.text('permalink')}"
                                     aria-disabled="false"
                                     target="_blank">P</a>
                             </div>
@@ -991,6 +1026,12 @@ unlisted: false
                     // console.log(permanent_link);
                     return permanent_link;
                 }
+            },
+            // Multilanguage text strings
+            text: function(string_id) {
+                const current_language = this.defaults.language;
+                // console.log(current_language);
+                return userSettings.i18n[current_language][string_id] || '';
             }
         }
         seemap.update();
