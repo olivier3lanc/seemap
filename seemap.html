@@ -35,7 +35,7 @@ unlisted: false
             cluster: true, // Boolean - Enable or disable marker cluster
             routing: false, // Boolean - Enable or disable routing by default - Requires at least 2 markers
             autocomplete: true, // Boolean - Enable or disable autocomplete search
-            autocompleteZoom: 18, // Integer or null - Zoom level applied on aucomplete selection
+            autocompleteZoom: 14, // Integer or null - Zoom level applied on aucomplete selection
             routingBackLineColor: 'dodgerblue', // String - Routing style back line CSS color
             routingBackLineOpacity: 0, // Number - Routing style back line CSS opacity
             routingBackLineWeight: 10, // Number - Routing style back line CSS weight
@@ -908,14 +908,13 @@ unlisted: false
                         if (this.getParameter('view').length > 0 && marker_all.length > 0) {
                             seemap.instance.setView([map_view_lat, map_view_lng]);
                         } else {
-                            seemap.instance.fitBounds(markers_array_coords_only);
+                            seemap.instance.fitBounds(markers_array_coords_only, { animate: false });
                         }
-                        // if (this.getParameter('zoom').length > 0 && marker_all.length > 0) {
-                        //     setTimeout(function() {
-                        //         seemap.instance.setZoom(map_zoom_level);
-                        //     },500)
-                        // }
+                        if (this.getParameter('zoom').length > 0 && marker_all.length > 0) {
+                            seemap.instance.setZoom(map_zoom_level);
+                        }
                     }
+
                     // Routing
                     if (waypoints.length > 1 && map_routing) {
                         seemap.routeControl = L.Routing.control({
@@ -925,6 +924,7 @@ unlisted: false
                             // ],
                             waypoints: waypoints,
                             routeWhileDragging: false,
+                            fitSelectedRoutes: false,
                             lineOptions: {
                                 styles: seemap.defaults.routingStyles
                             },
@@ -944,6 +944,9 @@ unlisted: false
                             }
                             if (el_top_right_container !== null) {
                                 el_top_right_container.insertAdjacentHTML('beforeend', `<ul class="leaflet-routing-summary"><li><strong>${total_distance_rounded}</strong> km</li></ul>`);
+                            }
+                            if (seemap.getParameter('zoom').length > 0) {
+                                seemap.instance.setZoom(map_zoom_level);
                             }
                         });
                     }
