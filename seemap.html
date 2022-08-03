@@ -665,6 +665,7 @@ unlisted: false
                 // View from GET or default
                 let map_view_lat = this.defaults.lat;
                 let map_view_lng = this.defaults.lng;
+                let map_view_custom_enabled = false;
                 const getp_map_view = this.getParameter('view').split(',');
                 // If 2 data
                 if (getp_map_view.length == 2) { 
@@ -673,16 +674,19 @@ unlisted: false
                     if (!isNaN(parsed_int_getp_map_view_lat) && !isNaN(parsed_int_getp_map_view_lng)) {
                         map_view_lat = parsed_int_getp_map_view_lat;
                         map_view_lng = parsed_int_getp_map_view_lng;
+                        map_view_custom_enabled = true;
                     }
                 };
                 // Zoom level from GET or default
                 let map_zoom_level = this.defaults.zoom;
+                let map_zoom_level_custom_enabled = false;
                 const getp_map_zoom_level = this.getParameter('zoom');
                 // If zoom GET is a stringified number
                 if (getp_map_zoom_level.length > 0) { 
                     const parsed_int_getp_map_zoom_level = parseInt(getp_map_zoom_level);
                     if (!isNaN(parsed_int_getp_map_zoom_level)) {
                         map_zoom_level = parsed_int_getp_map_zoom_level;
+                        map_zoom_level_custom_enabled = true;
                     }
                 };
                 // Zoom control from GET or default
@@ -901,18 +905,20 @@ unlisted: false
                         markers_array_coords_only.push([lat, lng]);
                         waypoints.push(L.latLng(lat, lng));
                     });
-                    
-                    // Zoom fit to bounds if no zoom in URL
-                    // console.log('map_fit',map_fit,'default',this.defaults.fit);
-                    if (map_fit) {
-                        if (this.getParameter('view').length > 0 && marker_all.length > 0) {
-                            seemap.instance.setView([map_view_lat, map_view_lng]);
-                        } else {
+
+                    // If a custom view is set throught GET parameters, no map fit
+                    if (map_view_custom_enabled) {
+                        seemap.instance.setView([map_view_lat, map_view_lng]);
+                    }
+                    // Otherwise, no custom view, apply map fit in accordance
+                    else {
+                        if (map_fit) {
                             seemap.instance.fitBounds(markers_array_coords_only, { animate: false });
                         }
-                        if (this.getParameter('zoom').length > 0 && marker_all.length > 0) {
-                            seemap.instance.setZoom(map_zoom_level);
-                        }
+                    }
+                    // If a custom zoom level is set through GET parameters
+                    if (map_zoom_level_custom_enabled) {
+                        seemap.instance.setZoom(map_zoom_level);
                     }
 
                     // Routing
@@ -951,13 +957,15 @@ unlisted: false
                         });
                     }
                 }
+                // Update permalink on zoomend event
                 this.instance.on('zoomend', function() {
                     seemap.updatePermalink();
                 });
+                // Update permalink on moveend event
                 this.instance.on('moveend', function() {
                     seemap.updatePermalink();
                 });
-                // i18n custom text strings
+                // Multilanguage on zoom control buttons
                 const el_zoom_in_btn = document.querySelector('.leaflet-control-zoom-in');
                 if (el_zoom_in_btn !== null) {
                     el_zoom_in_btn.setAttribute('title', seemap.text('zoomIn'));
