@@ -19,7 +19,7 @@ unlisted: false
             cluster: true, // Boolean - Enable or disable marker cluster
             routing: false, // Boolean - Enable or disable routing by default - Requires at least 2 markers
             autocomplete: true, // Boolean - Enable or disable autocomplete search
-            autocompleteZoom: 14, // Integer or null - Zoom level applied on aucomplete selection
+            autocompleteZoom: 12, // Integer or null - Zoom level applied on autocomplete selection
             routingBackLineColor: 'dodgerblue', // String - Routing style back line CSS color
             routingBackLineOpacity: 0, // Number - Routing style back line CSS opacity
             routingBackLineWeight: 10, // Number - Routing style back line CSS weight
@@ -614,6 +614,8 @@ unlisted: false
                     const parsed_int_getp_map_autocomplete_zoom = parseInt(getp_map_autocomplete_zoom);
                     if (!isNaN(parsed_int_getp_map_autocomplete_zoom)) {
                         current_settings.autocompleteZoom = parsed_int_getp_map_autocomplete_zoom;
+                    } else {
+                        current_settings.autocompleteZoom = null;
                     }
                 };
                 // Fit bounds 
@@ -671,6 +673,8 @@ unlisted: false
                     if (!isNaN(parsed_int_getp_map_zoom_level)) {
                         map_zoom_level = parsed_int_getp_map_zoom_level;
                         map_zoom_level_custom_enabled = true;
+                    } else {
+                        map_zoom_level = null;
                     }
                 };
                 // Zoom control from GET or default
@@ -717,6 +721,8 @@ unlisted: false
                     const parsed_int_getp_map_autocomplete_zoom = parseInt(getp_map_autocomplete_zoom);
                     if (!isNaN(parsed_int_getp_map_autocomplete_zoom)) {
                         map_autocomplete_zoom = parsed_int_getp_map_autocomplete_zoom;
+                    } else {
+                        map_autocomplete_zoom = null;
                     }
                 };
                 // Fit bounds from GET or default

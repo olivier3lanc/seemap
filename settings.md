@@ -20,6 +20,7 @@ Here are the default settings located at the top of the page `seemap.html`, feel
 | cluster | *true* | *Boolean* | Enable or disable marker cluster |
 | routing | *false* | *Boolean* | Enable or disable routing by default - Requires at least 2 markers |
 | autocomplete | *true* | *Boolean* | Enable or disable autocomplete search |
+| autocompleteZoom | *12* | *Integer* or *null* | Zoom level applied on autocomplete selection |
 | routingBackLineColor | *dodgerblue* | *String* | Routing style back line CSS color |
 | routingBackLineOpacity | *0* |  *Number* | Routing style back line CSS opacity |
 | routingBackLineWeight | *10* |  *Number* | Routing style back line CSS weight |
