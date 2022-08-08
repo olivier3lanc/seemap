@@ -29,6 +29,14 @@ unlisted: false
             routingFrontLineColor: 'fuchsia', // String - Routing style front line CSS color
             routingFrontLineOpacity: 1, // Number - Routing style front line CSS opacity
             routingFrontLineWeight: 2, // Number - Routing style front line CSS weight
+            // String - Map view reset control icon URL, can be base64 (recommended) or public remote URL
+            controlViewResetControlIconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItaG9tZSI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=',
+            // String - Permalink control icon URL, can be base64 (recommended) or public remote URL
+            controlPermalinkIconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItbGluayI+PHBhdGggZD0iTTEwIDEzYTUgNSAwIDAgMCA3LjU0LjU0bDMtM2E1IDUgMCAwIDAtNy4wNy03LjA3bC0xLjcyIDEuNzEiPjwvcGF0aD48cGF0aCBkPSJNMTQgMTFhNSA1IDAgMCAwLTcuNTQtLjU0bC0zIDNhNSA1IDAgMCAwIDcuMDcgNy4wN2wxLjcxLTEuNzEiPjwvcGF0aD48L3N2Zz4=',
+            // String - Zoom in control icon URL, can be base64 (recommended) or public remote URL
+            controlZoomInIconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItcGx1cyI+PGxpbmUgeDE9IjEyIiB5MT0iNSIgeDI9IjEyIiB5Mj0iMTkiPjwvbGluZT48bGluZSB4MT0iNSIgeTE9IjEyIiB4Mj0iMTkiIHkyPSIxMiI+PC9saW5lPjwvc3ZnPg==',
+            // String - Zoom out control icon URL, can be base64 (recommended) or public remote URL
+            controlZoomOutIconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItbWludXMiPjxsaW5lIHgxPSI1IiB5MT0iMTIiIHgyPSIxOSIgeTI9IjEyIj48L2xpbmU+PC9zdmc+',
             // String - Marker icon URL, can be base64 (recommended) or public remote URL
             markerIconUrl: 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDUwIDgwIiB3aWR0aD0iNTAiIGhlaWdodD0iODAiPjx0aXRsZT5tYXJrZXItc3ZnPC90aXRsZT48c3R5bGU+LnMwIHsgZmlsbDogIzFlOTBmZiB9IC5zMSB7IGZpbGw6ICNmZmZmZmYgfSA8L3N0eWxlPjxwYXRoIGlkPSJMYXllciIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGFzcz0iczAiIGQ9Im00OC41IDMyLjZjLTEuNiA1LjUtMjIuNCA0Ny40LTIzLjUgNDcuNC0xLjEgMC0yMS45LTQxLjktMjMuNS00Ny40LTMuNC0xMS43IDAuNy0yMi4xIDExLjYtMjkgMS41LTAuOSA0LjYtMiA3LTIuNSAxOC43LTMuNCAzMy43IDEzLjIgMjguNCAzMS41em0tMjguOS0xM2MtNS4xIDUuMi0xLjkgMTMuNCA1LjMgMTMuNCA3LjQgMCAxMC45LTguMyA1LjYtMTMuNS0zLjItMy4zLTcuNS0zLjMtMTAuOSAwLjF6Ii8+PHBhdGggaWQ9IkZvcm1lIDEiIGNsYXNzPSJzMSIgZD0ibTI1LjUgMzZjLTYuNCAwLTExLjUtNS4xLTExLjUtMTEuNSAwLTYuNCA1LjEtMTEuNSAxMS41LTExLjUgNi40IDAgMTEuNSA1LjEgMTEuNSAxMS41IDAgNi40LTUuMSAxMS41LTExLjUgMTEuNXoiLz48L3N2Zz4=',
             markerIconSize: [25, 40], // Array - Marker icon size [x, y] in pixels
@@ -38,7 +46,7 @@ unlisted: false
             markerShadowUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAABQCAMAAABs3dbSAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAASZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABtb08QAAAGJ0Uk5TAAECAwQFBgcICQoLDA4QEQ8NEhQWFxUTGBscHRofISIZJScmIyArLCkvMC4kLTI0MzE1ODcqOjs5KD49NkE/PEJDREZFQB5HSElKS0xOTVBPUlFUU1ZVWFdaWVxbXl1fYWBMI8PjAAADDUlEQVRIx+3US3IbRxAE0MzqavwIRijCluwr+P638QHskB0yie98urvSC5jgAIRI7bxBbadfZNVUzwD3ute97nWve93r/y/+2An9EOHp2YvQmX2HkCB5figJgvRdQpBmL+R0WAj9h/xGAM0s8dSYYM0LFKJCgG6k0JK5G0lA1ry0k1JIEZKuU8iUljE3koLVCjQAQTGPEhC4JrSU3XMiITXvU9cMlUCkOithkCheCp8tPRtBcFBfbAzA7NQkMUSLkF+IvFg8RiJkI9s4tqogMYsFSgujiVdvjL745JwRsoJxdmglBJBaCFyUaqdjE8K08jVJkMPcGiSStJTnjWLNiNNOJ8TclswEo3l59H+ysSDLnGvggAooQtMUms9W2QlWtNw/7hA1gckDI/RwsMEiLrfPtJqZO1i9PO6wXTqJfoFhiT5QQQ4tJMAmKZEWnlLyearZE93SzzkizUWDsyuthQCkM0mr2Wo9Twyr85rElGAFn+rnzVJN/Ri1nq7yOYWUp2Tmbg/yuXHts9SsV/1yKL9Fa6UpcEFAs5nlnJIVpbpM1Yy+qL4B4neNpUbgktDons3Maa5VWcr56FoEvjZ1h1cxbYxfjGZmOScvD/J5qqZmP9Uoh7HG+fOfNOZ1mY2JxlNzZRlCaX/YcT+2VzEli17JzMySOd3NC6l1x6f+QkxXOSyVDBQDykKT19pvhmMpoelPyc+jZMvZDFSYxAAqa9d3faltCiYplJE0UCAaTBGHvY5tOvg1CcszMxCgLFRrl7rjcDnGZWNws5QJyghG4/64q/3YdC0mKfyVbgSBUNT2bf7ncSzn/d0m336hEWGIKPvtvnVDedPU5RvznLMRUNM47rbdcGw3xWuKucxkjGjH526/a4cawLuEMU9yRS37bjM+9WMT3iVkRiMC47B9sqe+uzn4mwsDRK3D8/NGx/724NdEKFXd7u+6vbW/mwTFuvHYNofxnaYuSHlYd3V47g5vL9VVvXwviv5r++vzdvfuGC9DAwCSL329H8sHTU0Jkzuito8ipoRGKPSxwL8ZgPYg0cE6jQAAAABJRU5ErkJggg==',
             markerShadowSize: [25, 40], // Array - Marker shadow size [x, y] in pixels
             markerShadowAnchor: [4, 40], // Array - Marker shadow anchor position. Origin is top left.
-            language: 'fr_FR',
+            language: 'en_GB', // String - Interface language
             i18n: {
                 en_GB: {
                     autocompletePlaceholder: 'Enter the city name',
@@ -168,7 +176,7 @@ unlisted: false
     {% include _leaflet-routing-machine.css.html %}
     {% include _leaflet-overrides.css.html %}
     {% include _leaflet-autocomplete.css.html %}
-    {% include _page-style.css.html %}
+    {% include _seemap-style.css.html %}
 </head>
 
 <body>
@@ -194,6 +202,10 @@ unlisted: false
                 routing: userSettings.routing,
                 autocomplete: userSettings.autocomplete,
                 autocompleteZoom: userSettings.autocompleteZoom,
+                controlViewResetControlIconUrl: userSettings.controlViewResetControlIconUrl,
+                controlPermalinkIconUrl: userSettings.controlPermalinkIconUrl,
+                controlZoomInIconUrl: userSettings.controlZoomInIconUrl,
+                controlZoomOutIconUrl: userSettings.controlZoomOutIconUrl,
                 language: userSettings.language,
                 routingStyles: [
                     // Back line
@@ -768,7 +780,8 @@ unlisted: false
                                         role="button"
                                         aria-label="${view_reset_title_label}"
                                         aria-disabled="false"
-                                        onclick="seemap.instance.setView([${view_reset_lat}, ${view_reset_lng}], ${view_reset_zoom})">0</a>
+                                        onclick="seemap.instance.setView([${view_reset_lat}, ${view_reset_lng}], ${view_reset_zoom})"
+                                        style="background-image: url(${userSettings.controlViewResetControlIconUrl})">0</a>
                                 </div>
                             `);
                         }
@@ -960,11 +973,15 @@ unlisted: false
                 if (el_zoom_in_btn !== null) {
                     el_zoom_in_btn.setAttribute('title', seemap.text('zoomIn'));
                     el_zoom_in_btn.setAttribute('aria-label', seemap.text('zoomIn'));
+                    // Icon
+                    el_zoom_in_btn.style.backgroundImage = 'url('+userSettings.controlZoomInIconUrl+')';
                 }
                 const el_zoom_out_btn = document.querySelector('.leaflet-control-zoom-out');
                 if (el_zoom_out_btn !== null) {
                     el_zoom_out_btn.setAttribute('title', seemap.text('zoomOut'));
                     el_zoom_out_btn.setAttribute('aria-label', seemap.text('zoomOut'));
+                    // Icon
+                    el_zoom_out_btn.style.backgroundImage = 'url('+userSettings.controlZoomOutIconUrl+')';
                 }
             },
             updatePermalink: function() {
@@ -1017,7 +1034,8 @@ unlisted: false
                                     role="button"
                                     aria-label="${this.text('permalink')}"
                                     aria-disabled="false"
-                                    target="_blank">P</a>
+                                    target="_blank"
+                                    style="background-image: url(${userSettings.controlPermalinkIconUrl})">P</a>
                             </div>
                             
                         `);
