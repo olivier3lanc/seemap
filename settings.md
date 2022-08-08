@@ -37,3 +37,5 @@ Here are the default settings located at the top of the page `seemap.html`, feel
 | markerShadowUrl | *data:image/png;base64,...* | *String* | Marker shadow URL, can be base64 (recommended) or public remote URL |
 | markerShadowSize | *[25, 40]* | *Array* | Marker shadow size [x, y] in pixels |
 | markerShadowAnchor | *[4, 40]* | *Array* | Marker shadow anchor position. Origin is top left. |
+| language | *en_GB* | *String* | Interface language |
+| i18n | - | *Object* | Object containing languages strings tokens |
