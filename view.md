@@ -2,7 +2,7 @@
 title: View
 description: Center the view to specific latitude and longitude
 layout: libdoc/page-split
-order: 100
+order: 900
 ---
 
 Discrete from marker and zoom, it is possible to adjust the center of the view on specific latitude and longitude coordinates.

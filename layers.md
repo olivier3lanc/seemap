@@ -77,68 +77,68 @@ Presets of paid layers which require API keys are ready to be used: Enter your o
 <nav id="selects">
     <label for="no-api-required">NO API KEY REQUIRED</label>
     <select id="no-api-required" onchange="document.querySelector('iframe').src = this.value">
-        <option value="../seemap.html">Default</option>
-        <option value="../seemap.html?layer=OpenStreetMap_Mapnik">OpenStreetMap_Mapnik</option>
-        <option value="../seemap.html?layer=OpenStreetMap_DE">OpenStreetMap_DE</option>
-        <option value="../seemap.html?layer=OpenStreetMap_CH">OpenStreetMap_CH</option>
-        <option value="../seemap.html?layer=OpenStreetMap_France">OpenStreetMap_France</option>
-        <option value="../seemap.html?layer=OpenStreetMap_HOT">OpenStreetMap_HOT</option>
-        <option value="../seemap.html?layer=OpenStreetMap_BZH">OpenStreetMap_BZH</option>
-        <option value="../seemap.html?layer=OPNVKarte">OPNVKarte</option>
-        <option value="../seemap.html?layer=OpenTopoMap">OpenTopoMap</option>
-        <option value="../seemap.html?layer=CyclOSM">CyclOSM</option>
-        <option value="../seemap.html?layer=CartoDB_Voyager">CartoDB_Voyager</option>
-        <option value="../seemap.html?layer=CartoDB_VoyagerLabelsUnder">CartoDB_VoyagerLabelsUnder</option>
-        <option value="../seemap.html?layer=CartoDB_Positron">CartoDB_Positron</option>
-        <option value="../seemap.html?layer=CartoDB_PositronNoLabels">CartoDB_PositronNoLabels</option>
-        <option value="../seemap.html?layer=CartoDB_DarkMatter">CartoDB_DarkMatter</option>
-        <option value="../seemap.html?layer=CartoDB_VoyagerNoLabels">CartoDB_VoyagerNoLabels</option>
-        <option value="../seemap.html?layer=GeoportailFrance_plan">GeoportailFrance_plan</option>
-        <option value="../seemap.html?layer=GeoportailFrance_orthos">GeoportailFrance_orthos</option>
-        <option value="../seemap.html?layer=Stamen_TonerLite">Stamen_TonerLite</option>
-        <option value="../seemap.html?layer=Stamen_Terrain">Stamen_Terrain</option>
-        <option value="../seemap.html?layer=Stamen_Watercolor">Stamen_Watercolor</option>
-        <option value="../seemap.html?layer=Esri_WorldStreetMap">Esri_WorldStreetMap</option>
-        <option value="../seemap.html?layer=Esri_DeLorme">Esri_DeLorme</option>
-        <option value="../seemap.html?layer=Esri_WorldTopoMap">Esri_WorldTopoMap</option>
-        <option value="../seemap.html?layer=Esri_WorldImagery">Esri_WorldImagery</option>
-        <option value="../seemap.html?layer=Esri_WorldTerrain">Esri_WorldTerrain</option>
-        <option value="../seemap.html?layer=Esri_WorldShadedRelief">Esri_WorldShadedRelief</option>
-        <option value="../seemap.html?layer=Esri_OceanBasemap">Esri_OceanBasemap</option>
-        <option value="../seemap.html?layer=Esri_NatGeoWorldMap">Esri_NatGeoWorldMap</option>
-        <option value="../seemap.html?layer=Esri_WorldGrayCanvas">Esri_WorldGrayCanvas</option>
-        <option value="../seemap.html?layer=MtbMap">MtbMap</option>
-        <option value="../seemap.html?layer=NASAGIBS_ViirsEarthAtNight2012">NASAGIBS_ViirsEarthAtNight2012</option>
-        <option value="../seemap.html?layer=USGS_USTopo">USGS_USTopo</option>
-        <option value="../seemap.html?layer=USGS_USImagery">USGS_USImagery</option>
-        <option value="../seemap.html?layer=USGS_USImageryTopo">USGS_USImageryTopo</option>
+        <option value="../../seemap.html">Default</option>
+        <option value="../../seemap.html?layer=OpenStreetMap_Mapnik">OpenStreetMap_Mapnik</option>
+        <option value="../../seemap.html?layer=OpenStreetMap_DE">OpenStreetMap_DE</option>
+        <option value="../../seemap.html?layer=OpenStreetMap_CH">OpenStreetMap_CH</option>
+        <option value="../../seemap.html?layer=OpenStreetMap_France">OpenStreetMap_France</option>
+        <option value="../../seemap.html?layer=OpenStreetMap_HOT">OpenStreetMap_HOT</option>
+        <option value="../../seemap.html?layer=OpenStreetMap_BZH">OpenStreetMap_BZH</option>
+        <option value="../../seemap.html?layer=OPNVKarte">OPNVKarte</option>
+        <option value="../../seemap.html?layer=OpenTopoMap">OpenTopoMap</option>
+        <option value="../../seemap.html?layer=CyclOSM">CyclOSM</option>
+        <option value="../../seemap.html?layer=CartoDB_Voyager">CartoDB_Voyager</option>
+        <option value="../../seemap.html?layer=CartoDB_VoyagerLabelsUnder">CartoDB_VoyagerLabelsUnder</option>
+        <option value="../../seemap.html?layer=CartoDB_Positron">CartoDB_Positron</option>
+        <option value="../../seemap.html?layer=CartoDB_PositronNoLabels">CartoDB_PositronNoLabels</option>
+        <option value="../../seemap.html?layer=CartoDB_DarkMatter">CartoDB_DarkMatter</option>
+        <option value="../../seemap.html?layer=CartoDB_VoyagerNoLabels">CartoDB_VoyagerNoLabels</option>
+        <option value="../../seemap.html?layer=GeoportailFrance_plan">GeoportailFrance_plan</option>
+        <option value="../../seemap.html?layer=GeoportailFrance_orthos">GeoportailFrance_orthos</option>
+        <option value="../../seemap.html?layer=Stamen_TonerLite">Stamen_TonerLite</option>
+        <option value="../../seemap.html?layer=Stamen_Terrain">Stamen_Terrain</option>
+        <option value="../../seemap.html?layer=Stamen_Watercolor">Stamen_Watercolor</option>
+        <option value="../../seemap.html?layer=Esri_WorldStreetMap">Esri_WorldStreetMap</option>
+        <option value="../../seemap.html?layer=Esri_DeLorme">Esri_DeLorme</option>
+        <option value="../../seemap.html?layer=Esri_WorldTopoMap">Esri_WorldTopoMap</option>
+        <option value="../../seemap.html?layer=Esri_WorldImagery">Esri_WorldImagery</option>
+        <option value="../../seemap.html?layer=Esri_WorldTerrain">Esri_WorldTerrain</option>
+        <option value="../../seemap.html?layer=Esri_WorldShadedRelief">Esri_WorldShadedRelief</option>
+        <option value="../../seemap.html?layer=Esri_OceanBasemap">Esri_OceanBasemap</option>
+        <option value="../../seemap.html?layer=Esri_NatGeoWorldMap">Esri_NatGeoWorldMap</option>
+        <option value="../../seemap.html?layer=Esri_WorldGrayCanvas">Esri_WorldGrayCanvas</option>
+        <option value="../../seemap.html?layer=MtbMap">MtbMap</option>
+        <option value="../../seemap.html?layer=NASAGIBS_ViirsEarthAtNight2012">NASAGIBS_ViirsEarthAtNight2012</option>
+        <option value="../../seemap.html?layer=USGS_USTopo">USGS_USTopo</option>
+        <option value="../../seemap.html?layer=USGS_USImagery">USGS_USImagery</option>
+        <option value="../../seemap.html?layer=USGS_USImageryTopo">USGS_USImageryTopo</option>
     </select>
 
     <label for="local-api">API KEY REQUIRED BUT WORKS LOCALLY</label>
     <select id="local-api" onchange="document.querySelector('iframe').src = this.value">
-        <option value="../seemap.html">Default</option>
-        <option value="../seemap.html?layer=Stadia_AlidadeSmooth">Stadia_AlidadeSmooth</option>
-        <option value="../seemap.html?layer=Stadia_AlidadeSmoothDark">Stadia_AlidadeSmoothDark</option>
-        <option value="../seemap.html?layer=Stadia_OSMBright">Stadia_OSMBright</option>
-        <option value="../seemap.html?layer=Stadia_Outdoors">Stadia_Outdoors</option>
+        <option value="../../seemap.html">Default</option>
+        <option value="../../seemap.html?layer=Stadia_AlidadeSmooth">Stadia_AlidadeSmooth</option>
+        <option value="../../seemap.html?layer=Stadia_AlidadeSmoothDark">Stadia_AlidadeSmoothDark</option>
+        <option value="../../seemap.html?layer=Stadia_OSMBright">Stadia_OSMBright</option>
+        <option value="../../seemap.html?layer=Stadia_Outdoors">Stadia_Outdoors</option>
     </select>
 
     <label for="api-required">API KEY REQUIRED</label>
     <select id="api-required" onchange="document.querySelector('iframe').src = this.value">
-        <option value="../seemap.html">Default</option>
-        <option value="../seemap.html?layer=Thunderforest_OpenCycleMap">Thunderforest_OpenCycleMap</option>
-        <option value="../seemap.html?layer=Thunderforest_Transport">Thunderforest_Transport</option>
-        <option value="../seemap.html?layer=Thunderforest_SpinalMap">Thunderforest_SpinalMap</option>
-        <option value="../seemap.html?layer=Thunderforest_Landscape">Thunderforest_Landscape</option>
-        <option value="../seemap.html?layer=Thunderforest_Outdoors">Thunderforest_Outdoors</option>
-        <option value="../seemap.html?layer=Thunderforest_Pioneer">Thunderforest_Pioneer</option>
-        <option value="../seemap.html?layer=Thunderforest_MobileAtlas">Thunderforest_MobileAtlas</option>
-        <option value="../seemap.html?layer=Thunderforest_Neighbourhood">Thunderforest_Neighbourhood</option>
-        <option value="../seemap.html?layer=Jawg_Streets">Jawg_Streets</option>
-        <option value="../seemap.html?layer=Jawg_Terrain">Jawg_Terrain</option>
-        <option value="../seemap.html?layer=Jawg_Sunny">Jawg_Sunny</option>
-        <option value="../seemap.html?layer=Jawg_Dark">Jawg_Dark</option>
-        <option value="../seemap.html?layer=Jawg_Matrix">Jawg_Matrix</option>
+        <option value="../../seemap.html">Default</option>
+        <option value="../../seemap.html?layer=Thunderforest_OpenCycleMap">Thunderforest_OpenCycleMap</option>
+        <option value="../../seemap.html?layer=Thunderforest_Transport">Thunderforest_Transport</option>
+        <option value="../../seemap.html?layer=Thunderforest_SpinalMap">Thunderforest_SpinalMap</option>
+        <option value="../../seemap.html?layer=Thunderforest_Landscape">Thunderforest_Landscape</option>
+        <option value="../../seemap.html?layer=Thunderforest_Outdoors">Thunderforest_Outdoors</option>
+        <option value="../../seemap.html?layer=Thunderforest_Pioneer">Thunderforest_Pioneer</option>
+        <option value="../../seemap.html?layer=Thunderforest_MobileAtlas">Thunderforest_MobileAtlas</option>
+        <option value="../../seemap.html?layer=Thunderforest_Neighbourhood">Thunderforest_Neighbourhood</option>
+        <option value="../../seemap.html?layer=Jawg_Streets">Jawg_Streets</option>
+        <option value="../../seemap.html?layer=Jawg_Terrain">Jawg_Terrain</option>
+        <option value="../../seemap.html?layer=Jawg_Sunny">Jawg_Sunny</option>
+        <option value="../../seemap.html?layer=Jawg_Dark">Jawg_Dark</option>
+        <option value="../../seemap.html?layer=Jawg_Matrix">Jawg_Matrix</option>
     </select>
 </nav>
 <!-- DEMO ONLY -->

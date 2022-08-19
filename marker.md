@@ -2,7 +2,7 @@
 title: Single marker
 description: Adding a single marker on the map through URL GET parameters
 layout: libdoc/page-split
-order: 100
+order: 500
 ---
 
 A marker is defined as follows through URL GET parameters: Latitude, comma, longitude, comma, optional text content for popup.

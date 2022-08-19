@@ -2,7 +2,7 @@
 title: Routing
 description: Get distance and itinerary between multiple markers
 layout: libdoc/page
-order: 100
+order: 800
 ---
 SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leaflet-routing-machine). Routing requires at least 2 markers to work. 
 

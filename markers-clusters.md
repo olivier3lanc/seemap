@@ -2,7 +2,7 @@
 title: Markers clusters
 description: Get beautiful animated marker clustering
 layout: libdoc/page
-order: 100
+order: 700
 ---
 SEEMAP integrates [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.markercluster).
 

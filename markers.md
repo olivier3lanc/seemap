@@ -2,7 +2,7 @@
 title: Multiple markers
 description: Adding multiple a single markers on the map through URL GET parameters
 layout: libdoc/page-split
-order: 100
+order: 600
 ---
 
 Multiple markers can be set just by repeating [single marker](marker.html) process.
