@@ -504,7 +504,15 @@ unlisted: false
             markers: {},
             routeControl: {},
             clusterGroup: L.markerClusterGroup(),
-            addMarker: function (options) {
+            /**
+             * @function addMarker
+             * @description Create a marker on the map
+             * @param {Object} options - Marker data
+             * @param {Float} options.lat - The latitude of the marker
+             * @param {Float} options.lng - The longitude of the marker
+             * @param {String} options.content - The text or HTML of the marker popup
+            */
+            addMarker: function(options) {
                 // Set marker id
                 const id = Object.keys(this.markers).length + 1;
                 let marker_id = 'marker_' + id;
@@ -537,7 +545,7 @@ unlisted: false
                     this.markers[marker_id].bindPopup(options.content);
                 }
             },
-            getSearchParameters: function () {
+            getSearchParameters: function() {
                 return new URLSearchParams(location.search);
             },
             isGetParameter: function (str) {
@@ -547,7 +555,13 @@ unlisted: false
                     return null;
                 }
             },
-            getParameter: function (str) {
+            /**
+             * @function getParameter
+             * @description Get the specified URL search parameter 
+             * @param {String} str - The parameter name
+             * @return {String}
+            */
+            getParameter: function(str) {
                 const str_is_a_get = seemap.isGetParameter(str);
                 let value = '';
                 if (str_is_a_get !== null) {
@@ -555,7 +569,12 @@ unlisted: false
                 }
                 return value;
             },
-            // Returns an object with the settings of the current view
+            
+            /**
+             * @function getCurrentViewSettings
+             * @description Returns an object with all parameters applied for the current view
+             * @return {Object}
+            */
             getCurrentViewSettings: function() {
                 let current_settings = {
                     center: {
@@ -656,6 +675,11 @@ unlisted: false
                 // Return settings
                 return current_settings;
             },
+            
+            /**
+             * @function update
+             * @description Initializes SEEMAP
+            */
             update: function () {
                 if (typeof this.instance == 'object') {
                     this.instance.remove();
@@ -984,6 +1008,12 @@ unlisted: false
                     el_zoom_out_btn.style.backgroundImage = 'url('+userSettings.controlZoomOutIconUrl+')';
                 }
             },
+            
+            /**
+             * @function updatePermalink
+             * @description Create the link to the view currently applied
+             * @return {String}
+            */
             updatePermalink: function() {
                 if (typeof this.instance == 'object') {
                     // SEEMAP FILE URL
@@ -1046,10 +1076,15 @@ unlisted: false
                     return permanent_link;
                 }
             },
-            // Multilanguage text strings
+
+            /**
+             * @function text
+             * @description Returns SEEMAP interface text/message string from its specified id
+             * @param {String} string_id - The id of the interface text element
+             * @return {String}
+            */
             text: function(string_id) {
                 const current_language = this.defaults.language;
-                // console.log(current_language);
                 return userSettings.i18n[current_language][string_id] || '';
             }
         }
