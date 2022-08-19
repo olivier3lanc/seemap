@@ -2,6 +2,7 @@
 title: API
 description: Overridable default parameters through URL GET parameters and Leaflet instance
 layout: libdoc/page
+order: 100
 ---
 * 
 {:toc}

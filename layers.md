@@ -2,6 +2,7 @@
 title: Layers
 description: Set your Leaflet tile provider
 layout: libdoc/page-split
+order: 100
 ---
 
 SEEMAP comes with common [Leaflet tile providers](https://github.com/leaflet-extras/leaflet-providers) that are ready to be used without an API key. Just add the GET parameter `layer=<tileProviderName>` into the URL.
@@ -72,7 +73,7 @@ Presets of paid layers which require API keys are ready to be used: Enter your o
 
 
 ```html
-<iframe src="../seemap.html"></iframe>
+<iframe src="../../seemap.html"></iframe>
 <nav id="selects">
     <label for="no-api-required">NO API KEY REQUIRED</label>
     <select id="no-api-required" onchange="document.querySelector('iframe').src = this.value">

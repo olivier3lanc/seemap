@@ -2,6 +2,7 @@
 title: Autocomplete
 description: Displays a list of places from few typed letters
 layout: libdoc/page
+order: 100
 ---
 
 * 
@@ -18,7 +19,7 @@ SEEMAP integrates [Leaflet.Autocomplete](https://github.com/tomik23/Leaflet.Auto
 
 
 ```html
-<iframe src="../seemap.html"></iframe>
+<iframe src="../../seemap.html"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -42,7 +43,7 @@ You can disable autocomplete features through [API](api.html).
 ```
 
 ```html
-<iframe src="../seemap.html?autocomplete=false"></iframe>
+<iframe src="../../seemap.html?autocomplete=false"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -66,7 +67,7 @@ It is possible to adjust the map zoom level applied when an autocomplete choice 
 ```
 
 ```html
-<iframe src="../seemap.html?autocompleteZoom=false"></iframe>
+<iframe src="../../seemap.html?autocompleteZoom=false"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -82,7 +83,7 @@ It is possible to adjust the map zoom level applied when an autocomplete choice 
 {:.playground title="Autocomplete zoom disabled"}
 
 ```html
-<iframe src="../seemap.html?autocompleteZoom=16"></iframe>
+<iframe src="../../seemap.html?autocompleteZoom=16"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {

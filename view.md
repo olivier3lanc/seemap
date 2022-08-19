@@ -2,6 +2,7 @@
 title: View
 description: Center the view to specific latitude and longitude
 layout: libdoc/page-split
+order: 100
 ---
 
 Discrete from marker and zoom, it is possible to adjust the center of the view on specific latitude and longitude coordinates.
@@ -14,7 +15,7 @@ Discrete from marker and zoom, it is possible to adjust the center of the view o
 * `<lng>` - *mandatory* - Longitude, for ex. *290.99487*
 
 ```html
-<iframe src="../seemap.html?view=-71.5249090,290.99487"></iframe>
+<iframe src="../../seemap.html?view=-71.5249090,290.99487"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {

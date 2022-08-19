@@ -31,7 +31,7 @@ for mobile-friendly interactive maps
 
 
 ```html
-<iframe src="../seemap.html"></iframe>
+<iframe src="../../seemap.html"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {

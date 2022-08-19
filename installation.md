@@ -2,6 +2,7 @@
 title: Installation
 description: How to install SEEMAP
 layout: libdoc/page
+order: 10
 ---
 
 1. [Download seemap.html](seemap.html){: download=""}
@@ -9,7 +10,7 @@ layout: libdoc/page
 3. Use it as src attribute of an `iframe` tag or launch it [directly](seemap.html) from web browser.
 
 ```html
-<iframe src="../seemap.html"></iframe>
+<iframe src="../../seemap.html"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {

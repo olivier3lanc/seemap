@@ -2,6 +2,7 @@
 title: Settings
 description: List and description of all available and editable default settings
 layout: libdoc/page
+order: 10
 ---
 
 Here are the default settings located at the top of the page `seemap.html`, feel free to edit them according to your needs.

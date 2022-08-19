@@ -2,11 +2,12 @@
 title: Languages
 description: SEEMAP available interface languages
 layout: libdoc/page
+order: 100
 ---
 SEEMAP interface can be set with multiple languages. Just like any other parameter, default language can be overridden with the [API](api.html).
 
 ```html
-<iframe src="../seemap.html"></iframe>
+<iframe src="../../seemap.html"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -22,7 +23,7 @@ SEEMAP interface can be set with multiple languages. Just like any other paramet
 {:.playground title="Default language"}
 
 ```html
-<iframe src="../seemap.html?language=fr_FR"></iframe>
+<iframe src="../../seemap.html?language=fr_FR"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {

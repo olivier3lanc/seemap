@@ -2,6 +2,7 @@
 title: Gesture handling
 description: Feature that prevents users from getting trapped on the map when scrolling a long page
 layout: libdoc/page
+order: 100
 ---
 SEEMAP integrates [Leaflet Gesture Handling](https://github.com/elmarquis/Leaflet.GestureHandling) that brings the basic functionality of Google Maps Gesture Handling into Leaflet. Useful for iframe embedded maps, gesture handling prevents users from getting trapped on the map when scrolling a long page. 
 
@@ -13,7 +14,7 @@ SEEMAP integrates [Leaflet Gesture Handling](https://github.com/elmarquis/Leafle
 * If default gesture handling is set to `true`, just add GET parameter `gesture=false` to disable gesture handling.
 
 ```html
-<iframe src="../seemap.html"></iframe>
+<iframe src="../../seemap.html"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -29,7 +30,7 @@ SEEMAP integrates [Leaflet Gesture Handling](https://github.com/elmarquis/Leafle
 {:.playground title="Gesture handling disabled (default)"}
 
 ```html
-<iframe src="../seemap.html?gesture=true"></iframe>
+<iframe src="../../seemap.html?gesture=true"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {

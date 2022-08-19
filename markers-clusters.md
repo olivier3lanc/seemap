@@ -2,6 +2,7 @@
 title: Markers clusters
 description: Get beautiful animated marker clustering
 layout: libdoc/page
+order: 100
 ---
 SEEMAP integrates [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.markercluster).
 
@@ -14,7 +15,7 @@ SEEMAP integrates [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.ma
 
 
 ```html
-<iframe src="../seemap.html?marker=48.852855084244275,2.3482764253351434,Paris&marker=47.05692600913301,2.309900469185777&marker=43.348569315109174,5.374661932049889,Marseille&zoom=2"></iframe>
+<iframe src="../../seemap.html?marker=48.852855084244275,2.3482764253351434,Paris&marker=47.05692600913301,2.309900469185777&marker=43.348569315109174,5.374661932049889,Marseille&zoom=2"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -30,7 +31,7 @@ SEEMAP integrates [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.ma
 {:.playground title="With marker cluster"}
 
 ```html
-<iframe src="../seemap.html?cluster=false&marker=48.852855084244275,2.3482764253351434,Paris&marker=47.05692600913301,2.309900469185777&marker=43.348569315109174,5.374661932049889,Marseille&zoom=2"></iframe>
+<iframe src="../../seemap.html?cluster=false&marker=48.852855084244275,2.3482764253351434,Paris&marker=47.05692600913301,2.309900469185777&marker=43.348569315109174,5.374661932049889,Marseille&zoom=2"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
