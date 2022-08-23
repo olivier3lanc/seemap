@@ -25,7 +25,7 @@ kramdown:
         disable: true
 sass:
     style: compressed
-#exclude: ['/misc']
+exclude: ['/README.md']
 
 # ---------
 # LIBDOC CONFIGURATION
@@ -173,7 +173,7 @@ sidebar:
     additional_links:
         -   url: https://github.com/olivier3lanc/seemap # Local or remote URL
             title: <span class="i-github u-mr-xxs"></span> View on GitHub # Link text
-            order: 10 # Sets the rank of the page link into the sidebar, higher values give lower rank for the page link
+            order: 5 # Sets the rank of the page link into the sidebar, higher values give lower rank for the page link
             # category: Showcase # Add this this link into a category just like pages
         # -   url: https://www.youtube.com/embed/iWowJBRMtpc # Local or remote URL
         #     title: Iframe mode example # Link text

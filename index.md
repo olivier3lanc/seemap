@@ -1,10 +1,12 @@
-# SEEMAP
-
-[Documentation and demos](https://olivier3lanc.github.io/seemap/)
-
-![A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API](meta-image.png)
-
+---
+layout: libdoc/page-split
+permalink: index.html
+unlisted: true
+---
 <abbr title="Standalone EmbEddable Map">SEEMAP</abbr> *for Standalone EmbEddable Map* is **a single HTML file** bundled of useful and popular Leaflet/OpenStreetMap resources in a easy way to embed.
+
+[Download seemap.html](seemap.html){: download=""}
+
 
 * **One single HTML file** <br>Ready to embed via *iframe* tag or directly through the browser, every feature is included.<br><br>
 * **Customizable** <br>Set your own default [settings](https://olivier3lanc.github.io/seemap/settings.html).<br><br>
@@ -30,3 +32,20 @@ for mobile-friendly interactive maps
 * [LeafLet Providers](https://github.com/leaflet-extras/leaflet-providers) An extension to Leaflet that contains configurations for various free and paid tile providers.
 * [Feather Icons](https://feathericons.com/) Simply beautiful open source icons.
 
+Featured example
+
+```html
+<iframe src="../../seemap.html"></iframe>
+<!-- DEMO ONLY -->
+<style>
+    iframe {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+</style>
+```
+{:.playground title="SEEMAP"}
