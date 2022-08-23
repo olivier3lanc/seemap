@@ -781,7 +781,84 @@ layout: libdoc/blank
                     // dragging: !L.Browser.mobile,
                     // tap: !L.Browser.mobile
                 });
+                // When Leaflet is ready
                 this.instance.whenReady(function() {
+                    // Coordinates in URL
+                    const getp_markers = seemap.isGetParameter('marker');
+                    if (getp_markers !== null) {
+                        // Markers
+                        let waypoints = [];
+                        const markers_array_raw = seemap.getSearchParameters();
+                        const marker_all = markers_array_raw.getAll('marker');
+                        const markers_array = [];
+                        const markers_array_coords_only = [];
+                        marker_all.forEach(function (marker_data) {
+                            const marker_data_array = marker_data.split(',');
+                            const lat = marker_data_array[0];
+                            const lng = marker_data_array[1];
+                            const content = marker_data_array[2] || '';
+                            if (lat !== undefined && lng !== undefined) {
+                                seemap.addMarker({
+                                    lat: lat,
+                                    lng: lng,
+                                    content: content
+                                });
+                            }
+                            markers_array_coords_only.push([lat, lng]);
+                            waypoints.push(L.latLng(lat, lng));
+                        });
+
+                        // If a custom view is set throught GET parameters, no map fit
+                        if (map_view_custom_enabled) {
+                            seemap.instance.setView([map_view_lat, map_view_lng]);
+                        }
+                        // Otherwise, no custom view, apply map fit in accordance
+                        else {
+                            if (map_fit) {
+                                seemap.instance.fitBounds(markers_array_coords_only, { animate: false });
+                            }
+                        }
+                        // If a custom zoom level is set through GET parameters
+                        if (map_zoom_level_custom_enabled) {
+                            seemap.instance.setZoom(map_zoom_level);
+                        }
+
+                        // Routing
+                        if (waypoints.length > 1 && map_routing) {
+                            seemap.routeControl = L.Routing.control({
+                                // waypoints: [
+                                //     L.latLng(45.3603179, 1.5041424),
+                                //     L.latLng(46.3279067, 2.5248145)
+                                // ],
+                                waypoints: waypoints,
+                                routeWhileDragging: false,
+                                fitSelectedRoutes: false,
+                                lineOptions: {
+                                    styles: seemap.defaults.routingStyles
+                                },
+                                createMarker: function() { return null; },
+                            }).addTo(seemap.instance);
+
+                            
+                            seemap.routeControl.on('routesfound', function(e) {
+                                const routes = e.routes;
+                                const summary = routes[0].summary;
+                                const total_distance = summary.totalDistance / 1000;
+                                const total_distance_rounded = total_distance.toFixed(3);
+                                const el_top_right_container = document.querySelector('.leaflet-top.leaflet-right');
+                                const el_leaflet_summary = document.querySelector('.leaflet-top.leaflet-right .leaflet-routing-summary');
+                                if (el_leaflet_summary !== null) {
+                                    el_leaflet_summary.remove();
+                                }
+                                if (el_top_right_container !== null) {
+                                    el_top_right_container.insertAdjacentHTML('beforeend', `<ul class="leaflet-routing-summary"><li><strong>${total_distance_rounded}</strong> km</li></ul>`);
+                                }
+                                if (seemap.getParameter('zoom').length > 0) {
+                                    seemap.instance.setZoom(map_zoom_level);
+                                }
+                            });
+                        }
+                    }
                     // Save current settings at start
                     seemap.firstViewSettingsAtStart = seemap.getCurrentViewSettings();
                     // View reset
@@ -909,82 +986,7 @@ layout: libdoc/blank
                     }
                 });
 
-                // Coordinates in URL
-                const getp_markers = this.isGetParameter('marker');
-                if (getp_markers !== null) {
-                    // Markers
-                    let waypoints = [];
-                    const markers_array_raw = this.getSearchParameters();
-                    const marker_all = markers_array_raw.getAll('marker');
-                    const markers_array = [];
-                    const markers_array_coords_only = [];
-                    marker_all.forEach(function (marker_data) {
-                        const marker_data_array = marker_data.split(',');
-                        const lat = marker_data_array[0];
-                        const lng = marker_data_array[1];
-                        const content = marker_data_array[2] || '';
-                        if (lat !== undefined && lng !== undefined) {
-                            seemap.addMarker({
-                                lat: lat,
-                                lng: lng,
-                                content: content
-                            });
-                        }
-                        markers_array_coords_only.push([lat, lng]);
-                        waypoints.push(L.latLng(lat, lng));
-                    });
-
-                    // If a custom view is set throught GET parameters, no map fit
-                    if (map_view_custom_enabled) {
-                        seemap.instance.setView([map_view_lat, map_view_lng]);
-                    }
-                    // Otherwise, no custom view, apply map fit in accordance
-                    else {
-                        if (map_fit) {
-                            seemap.instance.fitBounds(markers_array_coords_only, { animate: false });
-                        }
-                    }
-                    // If a custom zoom level is set through GET parameters
-                    if (map_zoom_level_custom_enabled) {
-                        seemap.instance.setZoom(map_zoom_level);
-                    }
-
-                    // Routing
-                    if (waypoints.length > 1 && map_routing) {
-                        seemap.routeControl = L.Routing.control({
-                            // waypoints: [
-                            //     L.latLng(45.3603179, 1.5041424),
-                            //     L.latLng(46.3279067, 2.5248145)
-                            // ],
-                            waypoints: waypoints,
-                            routeWhileDragging: false,
-                            fitSelectedRoutes: false,
-                            lineOptions: {
-                                styles: seemap.defaults.routingStyles
-                            },
-                            createMarker: function() { return null; },
-                        }).addTo(seemap.instance);
-
-                        
-                        seemap.routeControl.on('routesfound', function(e) {
-                            const routes = e.routes;
-                            const summary = routes[0].summary;
-                            const total_distance = summary.totalDistance / 1000;
-                            const total_distance_rounded = total_distance.toFixed(3);
-                            const el_top_right_container = document.querySelector('.leaflet-top.leaflet-right');
-                            const el_leaflet_summary = document.querySelector('.leaflet-top.leaflet-right .leaflet-routing-summary');
-                            if (el_leaflet_summary !== null) {
-                                el_leaflet_summary.remove();
-                            }
-                            if (el_top_right_container !== null) {
-                                el_top_right_container.insertAdjacentHTML('beforeend', `<ul class="leaflet-routing-summary"><li><strong>${total_distance_rounded}</strong> km</li></ul>`);
-                            }
-                            if (seemap.getParameter('zoom').length > 0) {
-                                seemap.instance.setZoom(map_zoom_level);
-                            }
-                        });
-                    }
-                }
+                
                 // Update permalink on zoomend event
                 this.instance.on('zoomend', function() {
                     seemap.updatePermalink();
