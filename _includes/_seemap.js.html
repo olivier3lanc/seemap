@@ -1,0 +1,905 @@
+<script>
+    const seemap = {
+        defaults: {
+            lat: userSettings.lat,
+            lng: userSettings.lng,
+            zoom: userSettings.zoom,
+            zoomControl: userSettings.zoomControl,
+            viewResetControl: userSettings.viewResetControl,
+            viewResetGoesToFirstView: userSettings.viewResetGoesToFirstView,
+            layer: userSettings.layer,
+            gesture: userSettings.gesture,
+            cluster: userSettings.cluster,
+            routing: userSettings.routing,
+            autocomplete: userSettings.autocomplete,
+            autocompleteZoom: userSettings.autocompleteZoom,
+            controlViewResetControlIconUrl: userSettings.controlViewResetControlIconUrl,
+            controlPermalinkIconUrl: userSettings.controlPermalinkIconUrl,
+            controlZoomInIconUrl: userSettings.controlZoomInIconUrl,
+            controlZoomOutIconUrl: userSettings.controlZoomOutIconUrl,
+            language: userSettings.language,
+            routingStyles: [
+                // Back line
+                {
+                    color: userSettings.routingBackLineColor, 
+                    opacity: userSettings.routingBackLineOpacity, 
+                    weight: userSettings.routingBackLineWeight
+                }, 
+                // Middle line
+                {
+                    color: userSettings.routingMidLineColor, 
+                    opacity: userSettings.routingMidLineOpacity, 
+                    weight: userSettings.routingMidLineWeight
+                }, 
+                // Front line
+                {
+                    color: userSettings.routingFrontLineColor, 
+                    opacity: userSettings.routingFrontLineOpacity, 
+                    weight: userSettings.routingFrontLineWeight
+                }
+            ],
+            fit: userSettings.fit,
+            icon: {
+                iconUrl: userSettings.markerIconUrl,
+                iconSize: userSettings.markerIconSize,
+                iconAnchor: userSettings.markerIconAnchor,
+                popupAnchor: userSettings.markerPopupAnchor,
+                shadowUrl: userSettings.markerShadowUrl,
+                shadowSize: userSettings.markerShadowSize,
+                shadowAnchor: userSettings.markerShadowAnchor
+            },
+            // Object - Available layers that can be set from 'layer' setting
+            layers: {
+                // NO API KEY REQUIRED
+                OpenStreetMap_Mapnik: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }),
+                OpenStreetMap_DE: L.tileLayer('https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }),
+                OpenStreetMap_CH: L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    bounds: [[45, 5], [48, 11]]
+                }),
+                OpenStreetMap_France: L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }),
+                OpenStreetMap_HOT: L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+                }),
+                OpenStreetMap_BZH: L.tileLayer('https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://www.openstreetmap.bzh/" target="_blank">Breton OpenStreetMap Team</a>',
+                    bounds: [[46.2, -5.5], [50, 0.7]]
+                }),
+                OPNVKarte: L.tileLayer('https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: 'Map <a href="https://memomaps.de/">memomaps.de</a> <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }),
+                OpenTopoMap: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 17,
+                    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                }),
+                CyclOSM: L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
+                    maxZoom: 20,
+                    attribution: '<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }),
+                CartoDB_Voyager: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    subdomains: 'abcd',
+                    maxZoom: 20
+                }),
+                CartoDB_VoyagerLabelsUnder: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    subdomains: 'abcd',
+                    maxZoom: 20
+                }),
+                CartoDB_Positron: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    subdomains: 'abcd',
+                    maxZoom: 20
+                }),
+                CartoDB_PositronNoLabels: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    subdomains: 'abcd',
+                    maxZoom: 20
+                }),
+                CartoDB_DarkMatter: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    subdomains: 'abcd',
+                    maxZoom: 20
+                }),
+                CartoDB_VoyagerNoLabels: L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    subdomains: 'abcd',
+                    maxZoom: 20
+                }),
+                GeoportailFrance_plan: L.tileLayer('https://wxs.ign.fr/{apikey}/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+                    attribution: '<a target="_blank" href="https://www.geoportail.gouv.fr/">Geoportail France</a>',
+                    bounds: [[-75, -180], [81, 180]],
+                    minZoom: 2,
+                    maxZoom: 18,
+                    apikey: 'choisirgeoportail',
+                    format: 'image/png',
+                    style: 'normal'
+                }),
+                GeoportailFrance_orthos: L.tileLayer('https://wxs.ign.fr/{apikey}/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+                    attribution: '<a target="_blank" href="https://www.geoportail.gouv.fr/">Geoportail France</a>',
+                    bounds: [[-75, -180], [81, 180]],
+                    minZoom: 2,
+                    maxZoom: 19,
+                    apikey: 'choisirgeoportail',
+                    format: 'image/jpeg',
+                    style: 'normal'
+                }),
+                Stamen_TonerLite: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+                    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    subdomains: 'abcd',
+                    minZoom: 0,
+                    maxZoom: 20,
+                    ext: 'png'
+                }),
+                Stamen_Terrain: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
+                    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    subdomains: 'abcd',
+                    minZoom: 0,
+                    maxZoom: 18,
+                    ext: 'png'
+                }),
+                Stamen_Watercolor: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    subdomains: 'abcd',
+                    minZoom: 1,
+                    maxZoom: 16,
+                    ext: 'jpg'
+                }),
+                Esri_WorldStreetMap: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+                }),
+                Esri_DeLorme: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Specialty/DeLorme_World_Base_Map/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Copyright: &copy;2012 DeLorme',
+                    minZoom: 1,
+                    maxZoom: 11
+                }),
+                Esri_WorldTopoMap: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+                }),
+                Esri_WorldImagery: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+                }),
+                Esri_WorldTerrain: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS',
+                    maxZoom: 13
+                }),
+                Esri_WorldShadedRelief: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+                    maxZoom: 13
+                }),
+                Esri_OceanBasemap: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+                    maxZoom: 13
+                }),
+                Esri_NatGeoWorldMap: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+                    maxZoom: 16
+                }),
+                Esri_WorldGrayCanvas: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+                    maxZoom: 16
+                }),
+                MtbMap: L.tileLayer('http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &amp; USGS'
+                }),
+                NASAGIBS_ViirsEarthAtNight2012: L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
+                    attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
+                    bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
+                    minZoom: 1,
+                    maxZoom: 8,
+                    format: 'jpg',
+                    time: '',
+                    tilematrixset: 'GoogleMapsCompatible_Level'
+                }),
+                USGS_USTopo: L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 20,
+                    attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+                }),
+                USGS_USImagery: L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 20,
+                    attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+                }),
+                USGS_USImageryTopo: L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 20,
+                    attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+                }),
+
+                // API KEY REQUIRED BELOW FOR PRODUCTION - WORKS LOCALLY
+                Stadia_AlidadeSmooth: L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+                    maxZoom: 20,
+                    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                }),
+                Stadia_AlidadeSmoothDark: L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+                    maxZoom: 20,
+                    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                }),
+                Stadia_OSMBright: L.tileLayer('https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png', {
+                    maxZoom: 20,
+                    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                }),
+                Stadia_Outdoors: L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', {
+                    maxZoom: 20,
+                    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                }),
+
+                // API KEY REQUIRED
+                Thunderforest_OpenCycleMap: L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey={apikey}', {
+                    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    apikey: '<your apikey>',
+                    maxZoom: 22
+                }),
+                Thunderforest_Transport: L.tileLayer('https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey={apikey}', {
+                    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    apikey: '<your apikey>',
+                    maxZoom: 22
+                }),
+                Thunderforest_SpinalMap: L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
+                    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    apikey: '<your apikey>',
+                    maxZoom: 22
+                }),
+                Thunderforest_Landscape: L.tileLayer('https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey={apikey}', {
+                    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    apikey: '<your apikey>',
+                    maxZoom: 22
+                }),
+                Thunderforest_Outdoors: L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey={apikey}', {
+                    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    apikey: '<your apikey>',
+                    maxZoom: 22
+                }),
+                Thunderforest_Pioneer: L.tileLayer('https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey={apikey}', {
+                    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    apikey: '<your apikey>',
+                    maxZoom: 22
+                }),
+                Thunderforest_MobileAtlas: L.tileLayer('https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey={apikey}', {
+                    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    apikey: '<your apikey>',
+                    maxZoom: 22
+                }),
+                Thunderforest_Neighbourhood: L.tileLayer('https://{s}.tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey={apikey}', {
+                    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    apikey: '<your apikey>',
+                    maxZoom: 22
+                }),
+                Jawg_Streets: L.tileLayer('https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                    attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    minZoom: 0,
+                    maxZoom: 22,
+                    subdomains: 'abcd',
+                    accessToken: '<your accessToken>'
+                }),
+                Jawg_Terrain: L.tileLayer('https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                    attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    minZoom: 0,
+                    maxZoom: 22,
+                    subdomains: 'abcd',
+                    accessToken: '<your accessToken>'
+                }),
+                Jawg_Sunny: L.tileLayer('https://{s}.tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                    attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    minZoom: 0,
+                    maxZoom: 22,
+                    subdomains: 'abcd',
+                    accessToken: '<your accessToken>'
+                }),
+                Jawg_Dark: L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                    attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    minZoom: 0,
+                    maxZoom: 22,
+                    subdomains: 'abcd',
+                    accessToken: '<your accessToken>'
+                }),
+                Jawg_Matrix: L.tileLayer('https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                    attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    minZoom: 0,
+                    maxZoom: 22,
+                    subdomains: 'abcd',
+                    accessToken: '<your accessToken>'
+                })
+            }
+        },
+        markers: {},
+        routeControl: {},
+        clusterGroup: L.markerClusterGroup(),
+        /**
+         * @function addMarker
+         * @description Create a marker on the map
+         * @param {Object} options - Marker data
+         * @param {Float} options.lat - The latitude of the marker
+         * @param {Float} options.lng - The longitude of the marker
+         * @param {String} options.content - The text or HTML of the marker popup
+        */
+        addMarker: function(options) {
+            // Set marker id
+            const id = Object.keys(this.markers).length + 1;
+            let marker_id = 'marker_' + id;
+            const marker_options = {
+                icon: L.icon(this.defaults.icon)
+            };
+
+            // L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);
+
+            // Render the marker
+            this.markers[marker_id] = L.marker([options.lat, options.lng], marker_options);
+            // Marker cluster from GET or default
+            let map_cluster = this.defaults.cluster;
+            if (this.getParameter('cluster') == 'false') { map_cluster = false };
+            if (this.getParameter('cluster') == 'true') { map_cluster = true };
+            // If marker cluster is enabled
+            if (map_cluster) {
+                // Add to cluster
+                this.clusterGroup.addLayer(this.markers[marker_id]);
+                // Add cluster to map
+                this.instance.addLayer(this.clusterGroup);
+            }
+            // Otherwise add marker to map
+            else {
+                this.markers[marker_id].addTo(this.instance);
+            }
+
+            // If content is set, enable popup
+            if (options.content.length > 0) {
+                this.markers[marker_id].bindPopup(options.content);
+            }
+        },
+        getSearchParameters: function() {
+            return new URLSearchParams(location.search);
+        },
+        isGetParameter: function (str) {
+            try {
+                return seemap.getSearchParameters().get(str);
+            } catch (e) {
+                return null;
+            }
+        },
+        /**
+         * @function getParameter
+         * @description Get the specified URL search parameter 
+         * @param {String} str - The parameter name
+         * @return {String}
+        */
+        getParameter: function(str) {
+            const str_is_a_get = seemap.isGetParameter(str);
+            let value = '';
+            if (str_is_a_get !== null) {
+                value = str_is_a_get;
+            }
+            return value;
+        },
+        
+        /**
+         * @function getCurrentViewSettings
+         * @description Returns an object with all parameters applied for the current view
+         * @return {Object}
+        */
+        getCurrentViewSettings: function() {
+            let current_settings = {
+                center: {
+                    lat: null,
+                    lng: null
+                }
+            };
+            // The view
+            const get_center = this.instance.getCenter();
+            // const north_east = seemap.instance.getBounds()._northEast;
+            // const south_west = seemap.instance.getBounds()._southWest;
+            // const get_center = {
+            //     lat: (north_east.lat + south_west.lat) / 2,
+            //     lng: (north_east.lng + south_west.lng) / 2
+            // }
+            current_settings.center.lat = get_center.lat;
+            current_settings.center.lng = get_center.lng;
+            // console.log(get_center.lat, get_center.lng);
+
+            // Zoom level
+            current_settings.zoom = this.instance.getZoom();
+
+            // Zoom control
+            current_settings.zoomControl = this.defaults.zoomControl;
+            if (this.getParameter('zoomControl') == 'false') { current_settings.zoomControl = false };
+            if (this.getParameter('zoomControl') == 'true') { current_settings.zoomControl = true };
+
+            // View reset control 
+            current_settings.viewResetControl = this.defaults.viewResetControl;
+            if (this.getParameter('viewResetControl') == 'false') { current_settings.viewResetControl = false };
+            if (this.getParameter('viewResetControl') == 'true') { current_settings.viewResetControl = true };
+
+            // View reset behavior 
+            current_settings.viewResetGoesToFirstView = this.defaults.viewResetGoesToFirstView;
+            if (this.getParameter('viewResetGoesToFirstView') == 'false') { current_settings.viewResetGoesToFirstView = false };
+            if (this.getParameter('viewResetGoesToFirstView') == 'true') { current_settings.viewResetGoesToFirstView = true };
+
+            // Marker cluster 
+            current_settings.cluster = this.defaults.cluster;
+            if (this.getParameter('cluster') == 'false') { current_settings.cluster = false };
+            if (this.getParameter('cluster') == 'true') { current_settings.cluster = true };
+
+            // Layer 
+            current_settings.layer = this.defaults.layer;
+            const getp_map_layer = this.getParameter('layer');
+            if (getp_map_layer.length > 0) {
+                if (this.defaults.layers[getp_map_layer] !== undefined) {
+                    current_settings.layer = getp_map_layer;
+                }
+            };
+            // Gesture handling 
+            current_settings.gesture = this.defaults.gesture;
+            if (this.getParameter('gesture') == 'false') { current_settings.gesture = false };
+            if (this.getParameter('gesture') == 'true') { current_settings.gesture = true };
+            // Routing 
+            current_settings.routing = this.defaults.routing;
+            if (this.getParameter('routing') == 'false') { current_settings.routing = false };
+            if (this.getParameter('routing') == 'true') { current_settings.routing = true };
+            // Autocomplete 
+            current_settings.autocomplete = this.defaults.autocomplete;
+            if (this.getParameter('autocomplete') == 'false') { current_settings.autocomplete = false };
+            if (this.getParameter('autocomplete') == 'true') { current_settings.autocomplete = true };
+            // Autocomplete zoom
+            current_settings.autocompleteZoom = this.defaults.autocompleteZoom;
+            const getp_map_autocomplete_zoom = this.getParameter('autocompleteZoom');
+            // If autocomplete zoom GET is a stringified number
+            if (getp_map_autocomplete_zoom.length > 0) { 
+                const parsed_int_getp_map_autocomplete_zoom = parseInt(getp_map_autocomplete_zoom);
+                if (!isNaN(parsed_int_getp_map_autocomplete_zoom)) {
+                    current_settings.autocompleteZoom = parsed_int_getp_map_autocomplete_zoom;
+                } else {
+                    current_settings.autocompleteZoom = null;
+                }
+            };
+            // Fit bounds 
+            current_settings.fit = this.defaults.fit;
+            if (this.getParameter('fit') == 'false') { current_settings.fit = false };
+            if (this.getParameter('fit') == 'true') { current_settings.fit = true };
+            // Markers
+            current_settings.markers = [];
+            Object.keys(this.markers).forEach(function (marker_data) {
+                const marker_lat_lng = seemap.markers[marker_data].getLatLng();
+                const lat = marker_lat_lng.lat;
+                const lng = marker_lat_lng.lng;
+                const popup = seemap.markers[marker_data].getPopup();
+                let content = '';
+                if (popup !== undefined) {
+                    content = popup._content;
+                }
+                current_settings.markers.push({
+                    lat: lat,
+                    lng: lng,
+                    content: content
+                })
+            });
+            // Language 
+            current_settings.language = this.defaults.language;
+            // Return settings
+            return current_settings;
+        },
+        
+        /**
+         * @function update
+         * @description Initializes SEEMAP
+        */
+        update: function () {
+            if (typeof this.instance == 'object') {
+                this.instance.remove();
+            }
+            // View from GET or default
+            let map_view_lat = this.defaults.lat;
+            let map_view_lng = this.defaults.lng;
+            let map_view_custom_enabled = false;
+            const getp_map_view = this.getParameter('view').split(',');
+            // If 2 data
+            if (getp_map_view.length == 2) { 
+                const parsed_int_getp_map_view_lat = parseFloat(getp_map_view[0]);
+                const parsed_int_getp_map_view_lng = parseFloat(getp_map_view[1]);
+                if (!isNaN(parsed_int_getp_map_view_lat) && !isNaN(parsed_int_getp_map_view_lng)) {
+                    map_view_lat = parsed_int_getp_map_view_lat;
+                    map_view_lng = parsed_int_getp_map_view_lng;
+                    map_view_custom_enabled = true;
+                }
+            };
+            // Zoom level from GET or default
+            let map_zoom_level = this.defaults.zoom;
+            let map_zoom_level_custom_enabled = false;
+            const getp_map_zoom_level = this.getParameter('zoom');
+            // If zoom GET is a stringified number
+            if (getp_map_zoom_level.length > 0) { 
+                const parsed_int_getp_map_zoom_level = parseInt(getp_map_zoom_level);
+                if (!isNaN(parsed_int_getp_map_zoom_level)) {
+                    map_zoom_level = parsed_int_getp_map_zoom_level;
+                    map_zoom_level_custom_enabled = true;
+                } else {
+                    map_zoom_level = null;
+                }
+            };
+            // Zoom control from GET or default
+            let map_zoom_control = this.defaults.zoomControl;
+            if (this.getParameter('zoomControl') == 'false') { map_zoom_control = false };
+            if (this.getParameter('zoomControl') == 'true') { map_zoom_control = true };
+            // View reset control from GET or default
+            let map_view_reset_control = this.defaults.viewResetControl;
+            if (this.getParameter('viewResetControl') == 'false') { map_view_reset_control = false };
+            if (this.getParameter('viewResetControl') == 'true') { map_view_reset_control = true };
+            // View reset behavior from GET or default
+            let map_view_reset_control_goes_to_first_view = this.defaults.viewResetGoesToFirstView;
+            if (this.getParameter('viewResetGoesToFirstView') == 'false') { map_view_reset_control_goes_to_first_view = false };
+            if (this.getParameter('viewResetGoesToFirstView') == 'true') { map_view_reset_control_goes_to_first_view = true };
+            // Marker cluster from GET or default
+            let map_cluster = this.defaults.cluster;
+            if (this.getParameter('cluster') == 'false') { map_cluster = false };
+            if (this.getParameter('cluster') == 'true') { map_cluster = true };
+            // Layer from GET or default
+            let map_layer = this.defaults.layer;
+            const getp_map_layer = this.getParameter('layer');
+            if (getp_map_layer.length > 0) {
+                if (this.defaults.layers[getp_map_layer] !== undefined) {
+                    map_layer = getp_map_layer;
+                }
+            };
+            // Gesture handling from GET or default
+            let map_gesture = this.defaults.gesture;
+            if (this.getParameter('gesture') == 'false') { map_gesture = false };
+            if (this.getParameter('gesture') == 'true') { map_gesture = true };
+            // Routing from GET or default
+            let map_routing = this.defaults.routing;
+            if (this.getParameter('routing') == 'false') { map_routing = false };
+            if (this.getParameter('routing') == 'true') { map_routing = true };
+            // Autocomplete from GET or default
+            let map_autocomplete = this.defaults.autocomplete;
+            if (this.getParameter('autocomplete') == 'false') { map_autocomplete = false };
+            if (this.getParameter('autocomplete') == 'true') { map_autocomplete = true };
+            // Autocomplete zoom from GET or default
+            let map_autocomplete_zoom = this.defaults.autocompleteZoom;
+            const getp_map_autocomplete_zoom = this.getParameter('autocompleteZoom');
+            // If autocomplete zoom GET is a stringified number
+            if (getp_map_autocomplete_zoom.length > 0) { 
+                const parsed_int_getp_map_autocomplete_zoom = parseInt(getp_map_autocomplete_zoom);
+                if (!isNaN(parsed_int_getp_map_autocomplete_zoom)) {
+                    map_autocomplete_zoom = parsed_int_getp_map_autocomplete_zoom;
+                } else {
+                    map_autocomplete_zoom = null;
+                }
+            };
+            // Fit bounds from GET or default
+            let map_fit = this.defaults.fit;
+            if (this.getParameter('fit') == 'false') { map_fit = false };
+            if (this.getParameter('fit') == 'true') { map_fit = true };
+            // Language from GET or default
+            const getp_map_language = this.getParameter('language');
+            if (userSettings.i18n[getp_map_language] !== undefined) {
+                this.defaults.language = getp_map_language;
+            };
+            // Init Leaflet
+            this.instance = L.map('mapid', {
+                center: new L.LatLng(map_view_lat, map_view_lng),
+                zoom: map_zoom_level,
+                zoomControl: map_zoom_control,
+                layers: [this.defaults.layers[map_layer]],
+                gestureHandling: map_gesture // requires https://github.com/elmarquis/Leaflet.GestureHandling
+                // dragging: !L.Browser.mobile,
+                // tap: !L.Browser.mobile
+            });
+            // When Leaflet is ready
+            this.instance.whenReady(function() {
+                // Coordinates in URL
+                const getp_markers = seemap.isGetParameter('marker');
+                if (getp_markers !== null) {
+                    // Markers
+                    let waypoints = [];
+                    const markers_array_raw = seemap.getSearchParameters();
+                    const marker_all = markers_array_raw.getAll('marker');
+                    const markers_array = [];
+                    const markers_array_coords_only = [];
+                    marker_all.forEach(function (marker_data) {
+                        const marker_data_array = marker_data.split(',');
+                        const lat = marker_data_array[0];
+                        const lng = marker_data_array[1];
+                        const content = marker_data_array[2] || '';
+                        if (lat !== undefined && lng !== undefined) {
+                            seemap.addMarker({
+                                lat: lat,
+                                lng: lng,
+                                content: content
+                            });
+                        }
+                        markers_array_coords_only.push([lat, lng]);
+                        waypoints.push(L.latLng(lat, lng));
+                    });
+
+                    // If a custom view is set throught GET parameters, no map fit
+                    if (map_view_custom_enabled) {
+                        seemap.instance.setView([map_view_lat, map_view_lng]);
+                    }
+                    // Otherwise, no custom view, apply map fit in accordance
+                    else {
+                        if (map_fit) {
+                            seemap.instance.fitBounds(markers_array_coords_only, { animate: false });
+                        }
+                    }
+                    // If a custom zoom level is set through GET parameters
+                    if (map_zoom_level_custom_enabled) {
+                        seemap.instance.setZoom(map_zoom_level);
+                    }
+
+                    // Routing
+                    if (waypoints.length > 1 && map_routing) {
+                        seemap.routeControl = L.Routing.control({
+                            // waypoints: [
+                            //     L.latLng(45.3603179, 1.5041424),
+                            //     L.latLng(46.3279067, 2.5248145)
+                            // ],
+                            waypoints: waypoints,
+                            routeWhileDragging: false,
+                            fitSelectedRoutes: false,
+                            lineOptions: {
+                                styles: seemap.defaults.routingStyles
+                            },
+                            createMarker: function() { return null; },
+                        }).addTo(seemap.instance);
+
+                        
+                        seemap.routeControl.on('routesfound', function(e) {
+                            const routes = e.routes;
+                            const summary = routes[0].summary;
+                            const total_distance = summary.totalDistance / 1000;
+                            const total_distance_rounded = total_distance.toFixed(3);
+                            const el_top_right_container = document.querySelector('.leaflet-top.leaflet-right');
+                            const el_leaflet_summary = document.querySelector('.leaflet-top.leaflet-right .leaflet-routing-summary');
+                            if (el_leaflet_summary !== null) {
+                                el_leaflet_summary.remove();
+                            }
+                            if (el_top_right_container !== null) {
+                                el_top_right_container.insertAdjacentHTML('beforeend', `<ul class="leaflet-routing-summary"><li><strong>${total_distance_rounded}</strong> km</li></ul>`);
+                            }
+                            if (seemap.getParameter('zoom').length > 0) {
+                                seemap.instance.setZoom(map_zoom_level);
+                            }
+                        });
+                    }
+                }
+                // Save current settings at start
+                seemap.firstViewSettingsAtStart = seemap.getCurrentViewSettings();
+                // View reset
+                if (map_view_reset_control) {
+                    const el_leaflet_control_top_left = document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left');
+                    if (el_leaflet_control_top_left !== null) {
+                        let view_reset_title_label = seemap.text('resetView');
+                        let view_reset_lat = seemap.defaults.lat;
+                        let view_reset_lng = seemap.defaults.lng;
+                        let view_reset_zoom = seemap.defaults.zoom;
+                        if (map_view_reset_control_goes_to_first_view) {
+                            view_reset_lat = seemap.firstViewSettingsAtStart.center.lat;
+                            view_reset_lng = seemap.firstViewSettingsAtStart.center.lng;
+                            view_reset_zoom = seemap.firstViewSettingsAtStart.zoom;
+                        }
+                        el_leaflet_control_top_left.insertAdjacentHTML('afterbegin', `
+                            <div class="leaflet-bar leaflet-control">
+                                <a  class="leaflet-control-zoom-reset"
+                                    href="#"
+                                    title="${view_reset_title_label}"
+                                    role="button"
+                                    aria-label="${view_reset_title_label}"
+                                    aria-disabled="false"
+                                    onclick="seemap.instance.setView([${view_reset_lat}, ${view_reset_lng}], ${view_reset_zoom})"
+                                    style="background-image: url(${userSettings.controlViewResetControlIconUrl})">0</a>
+                            </div>
+                        `);
+                    }
+                }
+                // Autocomplete
+                if (map_autocomplete) {
+                    document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left').insertAdjacentHTML('afterbegin', `
+                        <div class="auto-search-wrapper">
+                            <input type="text" autocomplete="off" id="search" placeholder="${seemap.text('autocompletePlaceholder')}">
+                        </div>
+                    `);
+                    // minimal configure
+                    new Autocomplete("search", {
+                        // default selects the first item in
+                        // the list of results
+                        selectFirst: true,
+
+                        // The number of characters entered should start searching
+                        howManyCharacters: 2,
+
+                        // onSearch
+                        onSearch: ({currentValue}) => {
+                            // You can also use static files
+                            // const api = '../static/search.json'
+                            const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
+                            // const api = `https://api-adresse.data.gouv.fr/search/?q=${encodeURI(currentValue)}`;
+
+                            /**
+                             * Promise
+                             */
+                            return new Promise((resolve) => {
+                                fetch(api)
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                        resolve(data.features);
+                                    })
+                                    .catch((error) => {
+                                        console.error(error);
+                                    });
+                            });
+                        },
+                        // nominatim GeoJSON format parse this part turns json into the list of
+                        // records that appears when you type.
+                        onResults: ({ matches }) => {
+                            return matches
+                                .map((el) => {
+                                return `
+                                    <li>${el.properties.label || el.properties.display_name}</li>`;
+                                })
+                                .join('');
+                        },
+
+                        // we add an action to enter or click
+                        onSubmit: ({
+                            object
+                        }) => {
+                            // remove all layers from the map
+                            // seemap.instance.eachLayer(function (layer) {
+                            //     if (!!layer.toGeoJSON) {
+                            //         seemap.instance.removeLayer(layer);
+                            //     }
+                            // });
+
+                            const {
+                                display_name
+                            } = object.properties;
+                            const [lng, lat] = object.geometry.coordinates;
+                            // console.log(object.properties);
+                            // const marker = L.marker([lng, lat], {
+                            //     title: display_name,
+                            // });
+
+                            // marker.addTo(seemap.instance).bindPopup(display_name);
+                            // seemap.addMarker({lat: lat, lng: lng, content: display_name});
+                            map_zoom_level = seemap.instance.getZoom();
+                            if (typeof map_autocomplete_zoom == 'number') {
+                                map_zoom_level = map_autocomplete_zoom;
+                            }
+                            seemap.instance.setView([lat, lng], map_zoom_level);
+                        },
+
+                        // get index and data from li element after
+                        // hovering over li with the mouse or using
+                        // arrow keys ↓ | ↑
+                        onSelectedItem: ({
+                            index,
+                            element,
+                            object
+                        }) => {
+                            // console.log("onSelectedItem:", index, element, object);
+                        },
+
+                        // the method presents no results element
+                        noResults: ({
+                            currentValue,
+                            template
+                        }) =>
+                        template(`<li>No results found: "${currentValue}"</li>`),
+                    });
+                }
+            });
+
+            
+            // Update permalink on zoomend event
+            this.instance.on('zoomend', function() {
+                seemap.updatePermalink();
+            });
+            // Update permalink on moveend event
+            this.instance.on('moveend', function() {
+                seemap.updatePermalink();
+            });
+            // Multilanguage on zoom control buttons
+            const el_zoom_in_btn = document.querySelector('.leaflet-control-zoom-in');
+            if (el_zoom_in_btn !== null) {
+                el_zoom_in_btn.setAttribute('title', seemap.text('zoomIn'));
+                el_zoom_in_btn.setAttribute('aria-label', seemap.text('zoomIn'));
+                // Icon
+                el_zoom_in_btn.style.backgroundImage = 'url('+userSettings.controlZoomInIconUrl+')';
+            }
+            const el_zoom_out_btn = document.querySelector('.leaflet-control-zoom-out');
+            if (el_zoom_out_btn !== null) {
+                el_zoom_out_btn.setAttribute('title', seemap.text('zoomOut'));
+                el_zoom_out_btn.setAttribute('aria-label', seemap.text('zoomOut'));
+                // Icon
+                el_zoom_out_btn.style.backgroundImage = 'url('+userSettings.controlZoomOutIconUrl+')';
+            }
+        },
+        
+        /**
+         * @function updatePermalink
+         * @description Create the link to the view currently applied
+         * @return {String}
+        */
+        updatePermalink: function() {
+            if (typeof this.instance == 'object') {
+                // SEEMAP FILE URL
+                let permanent_link = location.origin+location.pathname;
+                // CURRENT VIEW SETTINGS
+                const current_view_settings = this.getCurrentViewSettings();
+                // The view
+                permanent_link += '?view='+current_view_settings.center.lat+','+current_view_settings.center.lng;
+                // Zoom level
+                permanent_link += '&zoom='+current_view_settings.zoom;
+                // Zoom control
+                permanent_link += '&zoomControl='+current_view_settings.zoomControl;
+                // Zoom reset control
+                permanent_link += '&viewResetControl='+current_view_settings.viewResetControl;
+                // Zoom reset behavior
+                permanent_link += '&viewResetGoesToFirstView='+current_view_settings.viewResetGoesToFirstView;
+                // Layer
+                permanent_link += '&layer='+current_view_settings.layer;
+                // Gesture
+                permanent_link += '&gesture=false';
+                // Fit
+                permanent_link += '&fit=false';
+                // Marker cluster
+                permanent_link += '&cluster='+current_view_settings.cluster;
+                // Routing
+                permanent_link += '&routing='+current_view_settings.routing;
+                // Autocomplete
+                permanent_link += '&autocomplete='+current_view_settings.autocomplete;
+                // Autocomplete zoom
+                permanent_link += '&autocompleteZoom='+current_view_settings.autocompleteZoom;
+                // Language
+                permanent_link += '&language='+current_view_settings.language;
+                // Markers
+                current_view_settings.markers.forEach(function(marker_data) {
+                    permanent_link += '&marker='+marker_data.lat+','+marker_data.lng;
+                    if (marker_data.content.length > 0) {
+                        permanent_link += ','+marker_data.content;
+                    }
+                });
+                const el_seemap_permalink = document.querySelector('#seemap-permalink');
+                if (el_seemap_permalink === null) {
+                    document.querySelector('.leaflet-control-container > .leaflet-top.leaflet-left').insertAdjacentHTML('beforeend', `
+                        <div class="leaflet-bar leaflet-control">
+                            <a  class="leaflet-control-permalink"
+                                href="${permanent_link}"
+                                id="seemap-permalink"
+                                title="${this.text('permalink')}"
+                                role="button"
+                                aria-label="${this.text('permalink')}"
+                                aria-disabled="false"
+                                target="_blank"
+                                style="background-image: url(${userSettings.controlPermalinkIconUrl})">P</a>
+                        </div>
+                        
+                    `);
+                } else {
+                    el_seemap_permalink.href = permanent_link;
+                }
+                // console.log(permanent_link);
+                return permanent_link;
+            }
+        },
+
+        /**
+         * @function text
+         * @description Returns SEEMAP interface text/message string from its specified id
+         * @param {String} string_id - The id of the interface text element
+         * @return {String}
+        */
+        text: function(string_id) {
+            const current_language = this.defaults.language;
+            return userSettings.i18n[current_language][string_id] || '';
+        }
+    }
+    seemap.update();
+</script>
