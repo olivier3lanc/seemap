@@ -15,8 +15,8 @@ Here are the default settings located at the top of the page `seemap.html`, feel
 | zoomControl | *true* | *Boolean* | Enable or disable map zoom control |
 | viewResetControl | *true* | *Boolean* | Enable or disable map view reset control |
 | viewResetGoesToFirstView | *true* | *Boolean* | If true, the destination of view reset is the first view, if false, destination is based on user settings (lat, lng, zoom) |
-| layer | *CartoDB_Voyager* | *String* | Default tile provider applied, [view all available](layers.html) |
-| gesture | *true* | *Boolean* | Enable or disable gesture handling |
+| layer | *OpenStreetMap_Mapnik* | *String* | Default tile provider applied, [view all available](layers.html) |
+| gesture | *false* | *Boolean* | Enable or disable gesture handling |
 | fit | *true* | *Boolean* | Enable or disable automatic fit to the view of markers bounds |
 | cluster | *true* | *Boolean* | Enable or disable marker cluster |
 | routing | *false* | *Boolean* | Enable or disable routing by default - Requires at least 2 markers |
