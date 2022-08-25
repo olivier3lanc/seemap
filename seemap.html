@@ -5,6 +5,9 @@ layout: libdoc/blank
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.metadata.lang | default: 'en' }}" dir="ltr" itemscope itemtype="https://schema.org/WebPage" prefix="og:http://ogp.me/ns#">
 <head>
+    <!-- USER SETTINGS -->
+    <!-- Feel free to edit default SEEMAP settings to fit your needs -->
+    {% include _seemap-user-settings.js.html %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -65,7 +68,6 @@ layout: libdoc/blank
     {% include _leaflet-marker-cluster.js.html %}
     {% include _leaflet-routing-machine.js.html %}
     {% include _leaflet-autocomplete.js.html %}
-    {% include _seemap-user-settings.js.html %}
     {% include _seemap.js.html %}
 </body>
 
