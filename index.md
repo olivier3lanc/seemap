@@ -26,12 +26,13 @@ unlisted: true
 * **Routing Machine** <br>Easy way to get distance and itinerary between multiple markers.
 * **Autocomplete** <br>OpenStreetMap search engine available into a simple autocompletion list.
 
-## Bundle
+## Credits
 
-SEEMAP concatenates the great following resources:
+List of libraries and resources SEEMAP could not exist without!
 
 * [Leaflet.js](https://leafletjs.com/) an open-source JavaScript library
 for mobile-friendly interactive maps
+* [OpenStreetMap](https://www.openstreetmap.org) OpenStreetMap is the free wiki world map.
 * [Leaflet Gesture Handling](https://github.com/elmarquis/Leaflet.GestureHandling) Brings the basic functionality of Google Maps Gesture Handling into Leaflet. Prevents users from getting trapped on the map when scrolling a long page. 
 * [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.markercluster) Provides Beautiful Animated Marker Clustering functionality for Leaflet, a JS library for interactive maps.
 * [Leaflet Routing Machine](https://github.com/perliedman/leaflet-routing-machine) or [Official website](https://www.liedman.net/leaflet-routing-machine/) Provides Beautiful Animated Marker Clustering functionality for Leaflet, a JS library for interactive maps.
