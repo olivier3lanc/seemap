@@ -5,7 +5,16 @@ unlisted: true
 ---
 <abbr title="Standalone EmbEddable Map">SEEMAP</abbr> *for Standalone EmbEddable Map* is **a single HTML file** bundled of useful and popular Leaflet/OpenStreetMap resources in a easy way to embed.
 
-[Download seemap.html](seemap.html){: download=""}
+| Description |  |
+| :- | :- |
+| Download link to the latest version of SEEMAP | **[Download](seemap.html){: download="" title="Download the latest version of seemap.html"}** |
+| Uncompressed page size | **1.6Mb** |
+| Compressed page size (through HTTP2 or ZIP) | **190Kb** |
+| Typical embed size through an iframe (with tiles) | **500Kb** |
+| PageSpeed Insights test on mobile | [Test now](https://pagespeed.web.dev/report?url=https%3A%2F%2Folivier3lanc.github.io%2Fseemap%2Fseemap.html&form_factor=mobile) |
+| PageSpeed Insights test on desktop | [Test now](https://pagespeed.web.dev/report?url=https%3A%2F%2Folivier3lanc.github.io%2Fseemap%2Fseemap.html&form_factor=desktop) |
+
+<br>
 
 * **One single HTML file** <br>Ready to embed via *iframe* tag or directly through the browser, every feature is included.
 * **Customizable** <br>Set your own default [settings](https://olivier3lanc.github.io/seemap/settings.html).
