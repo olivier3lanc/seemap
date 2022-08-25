@@ -1,4 +1,4 @@
-# SEEMAP
+# <abbr title="Standalone EmbEddable Map">SEEMAP</abbr>
 
 [Documentation and demos](https://olivier3lanc.github.io/seemap/)
 
@@ -6,17 +6,29 @@
 
 <abbr title="Standalone EmbEddable Map">SEEMAP</abbr> *for Standalone EmbEddable Map* is **a single HTML file** bundled of useful and popular Leaflet/OpenStreetMap resources in a easy way to embed.
 
-* **One single HTML file** <br>Ready to embed via *iframe* tag or directly through the browser, every feature is included.<br><br>
+* **One single HTML file** <br>Ready to embed via *iframe* tag or directly through the browser, every feature is included. [Learn more](https://olivier3lanc.github.io/seemap/)<br><br>
 * **Customizable** <br>Set your own default [settings](https://olivier3lanc.github.io/seemap/settings.html).<br><br>
 * **API through URL GET parameters** <br>Override your default parameters through [URL GET parameters](https://olivier3lanc.github.io/seemap/api.html).<br><br>
 * **View** <br>Set a default [view](https://olivier3lanc.github.io/seemap/view.html) and override the map geographical center through [API](https://olivier3lanc.github.io/seemap/api.html)<br><br>
-* **Markers** <br>Add as much markers with latitude and longitude through URL GET parameters.<br><br>
-* **Marker clusters** <br>When markers density is to high, provides beautiful animated marker clustering.<br><br>
-* **Gesture handling** <br>Brings the basic functionality of Google Maps Gesture Handling into Leaflet. Prevents users from getting trapped on the map when scrolling a long page. <br><br>
-* **Routing Machine** <br>Easy way to get distance and itinerary between multiple markers.<br><br>
-* **Autocomplete** <br>OpenStreetMap search engine available into a simple autocompletion list.
+* **Markers** <br>Add as much markers with latitude and longitude through URL GET parameters. [Learn more](https://olivier3lanc.github.io/seemap/markers.html)<br><br>
+* **Marker clusters** <br>When markers density is to high, provides beautiful animated marker clustering. [Learn more](https://olivier3lanc.github.io/seemap/markers-clusters.html)<br><br>
+* **Gesture handling** <br>Brings the basic functionality of Google Maps Gesture Handling into Leaflet. Prevents users from getting trapped on the map when scrolling a long page. [Learn more](https://olivier3lanc.github.io/seemap/gesture-handling.html)<br><br>
+* **Routing Machine** <br>Easy way to get distance and itinerary between multiple markers. [Learn more](https://olivier3lanc.github.io/seemap/routing.html)<br><br>
+* **Autocomplete** <br>OpenStreetMap search engine available into a simple autocompletion list. [Learn more](https://olivier3lanc.github.io/seemap/autocomplete.html)<br><br>
+
+## Quick start
+
+[Documentation](https://olivier3lanc.github.io/seemap/installation.html)
+
+Just include SEEMAP as an iframe as follows:
+
+```html
+<iframe src="path/to/seemap.html"></iframe>
+```
 
 ## Bundle
+
+[Documentation](https://olivier3lanc.github.io/seemap/)
 
 SEEMAP concatenates the great following resources:
 

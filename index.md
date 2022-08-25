@@ -7,15 +7,14 @@ unlisted: true
 
 [Download seemap.html](seemap.html){: download=""}
 
-
-* **One single HTML file** <br>Ready to embed via *iframe* tag or directly through the browser, every feature is included.<br><br>
-* **Customizable** <br>Set your own default [settings](https://olivier3lanc.github.io/seemap/settings.html).<br><br>
-* **API through URL GET parameters** <br>Override your default parameters through [URL GET parameters](https://olivier3lanc.github.io/seemap/api.html).<br><br>
-* **View** <br>Set a default [view](https://olivier3lanc.github.io/seemap/view.html) and override the map geographical center through [API](https://olivier3lanc.github.io/seemap/api.html)<br><br>
-* **Markers** <br>Add as much markers with latitude and longitude through URL GET parameters.<br><br>
-* **Marker clusters** <br>When markers density is to high, provides beautiful animated marker clustering.<br><br>
-* **Gesture handling** <br>Brings the basic functionality of Google Maps Gesture Handling into Leaflet. Prevents users from getting trapped on the map when scrolling a long page. <br><br>
-* **Routing Machine** <br>Easy way to get distance and itinerary between multiple markers.<br><br>
+* **One single HTML file** <br>Ready to embed via *iframe* tag or directly through the browser, every feature is included.
+* **Customizable** <br>Set your own default [settings](https://olivier3lanc.github.io/seemap/settings.html).
+* **API through URL GET parameters** <br>Override your default parameters through [URL GET parameters](https://olivier3lanc.github.io/seemap/api.html).
+* **View** <br>Set a default [view](https://olivier3lanc.github.io/seemap/view.html) and override the map geographical center through [API](https://olivier3lanc.github.io/seemap/api.html)
+* **Markers** <br>Add as much markers with latitude and longitude through URL GET parameters.
+* **Marker clusters** <br>When markers density is to high, provides beautiful animated marker clustering.
+* **Gesture handling** <br>Brings the basic functionality of Google Maps Gesture Handling into Leaflet. Prevents users from getting trapped on the map when scrolling a long page. 
+* **Routing Machine** <br>Easy way to get distance and itinerary between multiple markers.
 * **Autocomplete** <br>OpenStreetMap search engine available into a simple autocompletion list.
 
 ## Bundle
@@ -35,6 +34,7 @@ for mobile-friendly interactive maps
 Featured example
 
 ```html
+<!-- Include SEEMAP as an iframe tag -->
 <iframe src="../../seemap.html"></iframe>
 <!-- DEMO ONLY -->
 <style>
