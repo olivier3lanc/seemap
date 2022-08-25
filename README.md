@@ -1,4 +1,4 @@
-# <abbr title="Standalone EmbEddable Map">SEEMAP</abbr>
+# SEEMAP
 
 [Documentation and demos](https://olivier3lanc.github.io/seemap/)
 
