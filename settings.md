@@ -5,7 +5,22 @@ layout: libdoc/page
 order: 10
 ---
 
-Here are the default settings located at the top of the page `seemap.html`, feel free to edit them according to your needs.
+For convenience, SEEMAP settings are located at the top of the page `seemap.html`, feel free to edit them according to your needs.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        const userSettings = {
+            lat: 46.3396952, // Float or null - Default latitude
+            lng: 2.6072057, // Float or null - Default longitude
+            zoom: 4, // Integer or null - Default map zoom level
+            //...
+            //...
+        }
+    </script>
+```
 
 | Name | Default | Type | Description |
 | :- | :- | :- | :- |
