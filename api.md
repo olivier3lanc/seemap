@@ -56,10 +56,12 @@ Create a marker on the map.
 /**
   * @function addMarker
   * @description Create a marker on the map
-  * @param {Object} options - Marker data
-  * @param {Float} options.lat - The latitude of the marker
-  * @param {Float} options.lng - The longitude of the marker
-  * @param {String} options.content - The text or HTML of the marker popup
+  * @param {Object} options - Mandatory - Marker data
+  * @param {Float} options.lat - Mandatory - The latitude of the marker
+  * @param {Float} options.lng - Mandatory - The longitude of the marker
+  * @param {String} options.content - Optional - The text or HTML of the marker popup
+  * @param {Boolean} options.clusterable - Optional - Sets whether or not the marker has to be clustered (if marker cluster is enabled)
+  * @param {Boolean} options.permalinkable - Optional - Sets whether or not the marker has to be enabled in permalink
 */
 seemap.addMarker(options)
 ```
@@ -68,9 +70,9 @@ Example of a marker creation:
 
 ```javascript
 seemap.addMarker({
-  lat: 45.12047878,
-  lng: 2.389058,
-  content: 'I am the marker popup content!'
+  lat: 45.12047878, // Mandatory
+  lng: 2.389058, // Mandatory
+  content: 'I am the marker popup content!' // Optional
 })
 ```
 

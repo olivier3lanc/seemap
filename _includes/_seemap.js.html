@@ -318,10 +318,12 @@
         /**
          * @function addMarker
          * @description Create a marker on the map
-         * @param {Object} options - Marker data
-         * @param {Float} options.lat - The latitude of the marker
-         * @param {Float} options.lng - The longitude of the marker
-         * @param {String} options.content - The text or HTML of the marker popup
+         * @param {Object} options - Mandatory - Marker data
+         * @param {Float} options.lat - Mandatory - The latitude of the marker
+         * @param {Float} options.lng - Mandatory - The longitude of the marker
+         * @param {String} options.content - Optional - The text or HTML of the marker popup
+         * @param {Boolean} options.clusterable - Optional - Sets whether or not the marker has to be clustered (if marker cluster is enabled)
+         * @param {Boolean} options.permalinkable - Optional - Sets whether or not the marker has to be enabled in permalink
         */
         addMarker: function(options) {
             // Set marker id
@@ -339,6 +341,10 @@
             let map_cluster = this.defaults.cluster;
             if (this.getParameter('cluster') == 'false') { map_cluster = false };
             if (this.getParameter('cluster') == 'true') { map_cluster = true };
+            // If force disabling marker cluster
+            if (options.clusterable == false) {
+                map_cluster = false;
+            }
             // If marker cluster is enabled
             if (map_cluster) {
                 // Add to cluster
@@ -350,10 +356,16 @@
             else {
                 this.markers[marker_id].addTo(this.instance);
             }
-
             // If content is set, enable popup
             if (options.content.length > 0) {
                 this.markers[marker_id].bindPopup(options.content);
+            }
+            // Sets whether the marker is elligible for permalink
+            // By default, a marker is elligible for permalink
+            if (options.permalinkable == false) {
+                this.markers[marker_id].permalinkable = false;
+            } else {
+                this.markers[marker_id].permalinkable = true;
             }
         },
         getSearchParameters: function() {
@@ -471,6 +483,7 @@
                 const lat = marker_lat_lng.lat;
                 const lng = marker_lat_lng.lng;
                 const popup = seemap.markers[marker_data].getPopup();
+                const permalinkable = seemap.markers[marker_data].permalinkable;
                 let content = '';
                 if (popup !== undefined) {
                     content = popup._content;
@@ -478,7 +491,8 @@
                 current_settings.markers.push({
                     lat: lat,
                     lng: lng,
-                    content: content
+                    content: content,
+                    permalinkable: permalinkable
                 })
             });
             // Language 
@@ -653,19 +667,27 @@
                         seemap.routeControl.on('routesfound', function(e) {
                             const routes = e.routes;
                             const summary = routes[0].summary;
-                            const total_distance = summary.totalDistance / 1000;
-                            const total_distance_rounded = total_distance.toFixed(3);
-                            const el_top_right_container = document.querySelector('.leaflet-top.leaflet-right');
-                            const el_leaflet_summary = document.querySelector('.leaflet-top.leaflet-right .leaflet-routing-summary');
-                            if (el_leaflet_summary !== null) {
-                                el_leaflet_summary.remove();
-                            }
-                            if (el_top_right_container !== null) {
-                                el_top_right_container.insertAdjacentHTML('beforeend', `<ul class="leaflet-routing-summary"><li><strong>${total_distance_rounded}</strong> km</li></ul>`);
-                            }
+                            const total_distance_in_km = summary.totalDistance / 1000;
+                            const total_distance_in_mi = summary.totalDistance / 1000 / 1.609344;
+                            const total_distance_rounded_in_km = total_distance_in_km.toFixed(3);
+                            const total_distance_rounded_in_mi = total_distance_in_mi.toFixed(3);
                             if (seemap.getParameter('zoom').length > 0) {
                                 seemap.instance.setZoom(map_zoom_level);
                             }
+                            const route_coordinates_length = routes[0].coordinates.length;
+                            const route_midpoint_index = parseInt(route_coordinates_length / 2);
+                            const route_midpoint = routes[0].coordinates[route_midpoint_index];
+                            const nf = Intl.NumberFormat();
+                            seemap.addMarker({
+                                lat: route_midpoint.lat,
+                                lng: route_midpoint.lng,
+                                content: `Distance:<br><strong>${nf.format(total_distance_in_km)} km<br>${nf.format(total_distance_rounded_in_mi)} mi</strong>`,
+                                clusterable: false,
+                                permalinkable: false
+                            });
+                            const current_markers_keys = Object.keys(seemap.markers);
+                            const current_markers_last_key =  current_markers_keys[current_markers_keys.length - 1];
+                            seemap.markers[current_markers_last_key].openPopup();
                         });
                     }
                 }
@@ -861,9 +883,12 @@
                 permanent_link += '&language='+current_view_settings.language;
                 // Markers
                 current_view_settings.markers.forEach(function(marker_data) {
-                    permanent_link += '&marker='+marker_data.lat+','+marker_data.lng;
-                    if (marker_data.content.length > 0) {
-                        permanent_link += ','+marker_data.content;
+                    // Add it only if marker is elligible for permalink
+                    if (marker_data.permalinkable) {
+                        permanent_link += '&marker='+marker_data.lat+','+marker_data.lng;
+                        if (marker_data.content.length > 0) {
+                            permanent_link += ','+marker_data.content;
+                        }
                     }
                 });
                 const el_seemap_permalink = document.querySelector('#seemap-permalink');
