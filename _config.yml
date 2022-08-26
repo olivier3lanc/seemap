@@ -184,6 +184,34 @@ sidebar:
             title: OpenStreetMap
             order: 1010
             category: Links
+        -   url: https://github.com/Leaflet/Leaflet.markercluster
+            title: Leaflet Marker Cluster
+            order: 1020
+            category: Links
+        -   url: https://github.com/perliedman/leaflet-routing-machine
+            title: Leaflet Routing Machine
+            order: 1020
+            category: Links
+        -   url: https://map.project-osrm.org/
+            title: Open Source Routing Machine
+            order: 1020
+            category: Links
+        -   url: https://github.com/tomik23/Leaflet.Autocomplete
+            title: Leaflet Autocomplete
+            order: 1020
+            category: Links
+        -   url: https://nominatim.openstreetmap.org/ui/search.html
+            title: OSM search engine
+            order: 1020
+            category: Links
+        -   url: https://github.com/leaflet-extras/leaflet-providers
+            title: Leaflet Tile Providers
+            order: 1020
+            category: Links
+        -   url: https://feathericons.com/
+            title: Feather Icons
+            order: 1020
+            category: Links
         # Example URL
         # -   url: https://olivier3lanc.github.io/Scroll-Btween/
         #     title: Scroll Btween
