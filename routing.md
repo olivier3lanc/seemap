@@ -4,7 +4,7 @@ description: Get distance and itinerary between multiple markers
 layout: libdoc/page
 order: 800
 ---
-SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leaflet-routing-machine). Routing requires at least 2 markers to work. 
+SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leaflet-routing-machine) based on [OSRM - Open Source Routing Machine](http://map.project-osrm.org). Routing requires at least 2 markers to work. 
 
 ```html
 <SEEMAP_FILE_URL>?routing=<true or false>
@@ -14,7 +14,7 @@ SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leafle
 * If default routing is set to `true`, just add GET parameter `routing=false` to disable routing.
 
 ```html
-<iframe src="../../seemap.html?routing=true&marker=48.852855084244275,2.3482764253351434,Paris&marker=43.348569315109174,5.374661932049889,Marseille&marker=41.892069845070736,12.514922686644816,Rome&marker=41.84400446089234,12.564361163207316,Rome 2"></iframe>
+<iframe src="../../seemap.html?routing=true&marker=48.852855084244275,2.3482764253351434,Paris&marker=44.742734018656435,-0.5371049978895037,Bordeaux&marker=41.892069845070736,12.514922686644816,Rome&marker=41.84400446089234,12.564361163207316,Rome 2"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
@@ -30,7 +30,7 @@ SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leafle
 {:.playground title="With routing"}
 
 ```html
-<iframe src="../../seemap.html?marker=48.852855084244275,2.3482764253351434,Paris&marker=47.05692600913301,2.309900469185777&marker=43.348569315109174,5.374661932049889,Marseille"></iframe>
+<iframe src="../../seemap.html?&marker=48.852855084244275,2.3482764253351434,Paris&marker=44.742734018656435,-0.5371049978895037,Bordeaux&marker=41.892069845070736,12.514922686644816,Rome&marker=41.84400446089234,12.564361163207316,Rome 2"></iframe>
 <!-- DEMO ONLY -->
 <style>
     iframe {
