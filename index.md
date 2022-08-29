@@ -26,7 +26,13 @@ unlisted: true
 * **Routing Machine** <br>Easy way to get distance and itinerary between multiple markers.
 * **Autocomplete** <br>OpenStreetMap search engine available into a simple autocompletion list.
 
-Featured example
+## Use cases
+
+As a web developer/designer/redactor, you have multiple project onto which quickly embed map without reinstall and configure Leaflet and common plugins each time.
+
+As a web developer/designer/redactor, you have one or multiple coordinates to quickly place on an embedded map.
+
+The following code is the featured example:
 
 ```html
 <!-- Include SEEMAP as an iframe tag -->

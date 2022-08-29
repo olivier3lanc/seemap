@@ -28,6 +28,12 @@
 * **Routing Machine** <br>Easy way to get distance and itinerary between multiple markers. [Learn more](https://olivier3lanc.github.io/seemap/routing.html)<br><br>
 * **Autocomplete** <br>OpenStreetMap search engine available into a simple autocompletion list. [Learn more](https://olivier3lanc.github.io/seemap/autocomplete.html)<br><br>
 
+## Use cases
+
+As a web developer/designer/redactor, you have multiple project onto which quickly embed map without reinstall and configure Leaflet and common plugins each time.
+
+As a web developer/designer/redactor, you have one or multiple coordinates to quickly place on an embedded map.
+
 ## Quick start
 
 [Installation](https://olivier3lanc.github.io/seemap/installation.html) | [Settings](https://olivier3lanc.github.io/seemap/settings.html)
