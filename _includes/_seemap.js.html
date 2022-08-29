@@ -663,7 +663,6 @@
                             createMarker: function() { return null; },
                         }).addTo(seemap.instance);
 
-                        
                         seemap.routeControl.on('routesfound', function(e) {
                             const routes = e.routes;
                             const summary = routes[0].summary;
@@ -678,16 +677,17 @@
                             const route_midpoint_index = parseInt(route_coordinates_length / 2);
                             const route_midpoint = routes[0].coordinates[route_midpoint_index];
                             const nf = Intl.NumberFormat();
-                            seemap.addMarker({
-                                lat: route_midpoint.lat,
-                                lng: route_midpoint.lng,
-                                content: `Distance:<br><strong>${nf.format(total_distance_in_km)} km<br>${nf.format(total_distance_rounded_in_mi)} mi</strong>`,
-                                clusterable: false,
-                                permalinkable: false
-                            });
                             const current_markers_keys = Object.keys(seemap.markers);
                             const current_markers_last_key =  current_markers_keys[current_markers_keys.length - 1];
-                            seemap.markers[current_markers_last_key].openPopup();
+                            const popup_content = `${seemap.text('distance')}:<br><strong>${nf.format(total_distance_in_km)} km<br>${nf.format(total_distance_rounded_in_mi)} mi</strong>`;
+                            seemap.instance.openPopup(
+                                popup_content, { 
+                                    lat: route_midpoint.lat, 
+                                    lng: route_midpoint.lng
+                                }, {
+                                    autoPan: false,
+                                    closeOnClick: false
+                            });
                         });
                     }
                 }
