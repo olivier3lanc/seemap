@@ -4,8 +4,7 @@ description: Get distance and itinerary between multiple markers
 layout: libdoc/page
 order: 800
 ---
-SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leaflet-routing-machine) based on [OSRM - Open Source Routing Machine](http://map.project-osrm.org). Routing requires at least 2 markers to work. 
-
+SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leaflet-routing-machine) based on [OSRM](http://map.project-osrm.org) (Open Source Routing Machine). Routing requires at least 2 markers to work. **Important note:** SEEMAP use default settings for Leaflet Routing Machine, please respect the [usage policy of OSRM](https://github.com/Project-OSRM/osrm-backend/wiki/Api-usage-policy) or use any other routing machine.
 ```html
 <SEEMAP_FILE_URL>?routing=<true or false>
 ```
@@ -44,4 +43,5 @@ SEEMAP integrates [Leaflet Routing Machine](https://github.com/perliedman/leafle
 </style>
 ```
 {:.playground title="No routing"}
+
 
