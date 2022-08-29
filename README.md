@@ -8,6 +8,7 @@
 
 | Description |  |
 | :- | :- |
+| Download latest release | [Download](seemap.html) |
 | Installation and usage | [Download page](https://olivier3lanc.github.io/seemap/installation.html) |
 | Settings | [Settings](https://olivier3lanc.github.io/seemap/settings.html) |
 | Uncompressed page size | **1.6Mb** |
