@@ -27,6 +27,8 @@
 * **Gesture handling** <br>Brings the basic functionality of Google Maps Gesture Handling into Leaflet. Prevents users from getting trapped on the map when scrolling a long page. [Learn more](https://olivier3lanc.github.io/seemap/gesture-handling.html)<br><br>
 * **Routing Machine** <br>Easy way to get distance and itinerary between multiple markers. [Learn more](https://olivier3lanc.github.io/seemap/routing.html)<br><br>
 * **Autocomplete** <br>OpenStreetMap search engine available into a simple autocompletion list. [Learn more](https://olivier3lanc.github.io/seemap/autocomplete.html)<br><br>
+* **Permalink** <br>Permalink control button allows visitors to always get the direct link to the current view, useful to share the map view [Learn more](https://olivier3lanc.github.io/seemap/permalink.html)<br><br>
+* **Reset view** <br>Reset view control button allows visitors to go back to the very first view of their current session, or to the SEEMAP's default settings [Learn more](https://olivier3lanc.github.io/seemap/reset-view.html)<br><br>
 
 ## Use cases
 
