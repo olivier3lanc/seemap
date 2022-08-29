@@ -827,6 +827,8 @@
             this.instance.on('moveend', function() {
                 seemap.updatePermalink();
             });
+            // Update permalink at start
+            seemap.updatePermalink();
             // Multilanguage on zoom control buttons
             const el_zoom_in_btn = document.querySelector('.leaflet-control-zoom-in');
             if (el_zoom_in_btn !== null) {
