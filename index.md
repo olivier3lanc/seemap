@@ -3,7 +3,7 @@ layout: libdoc/page-split
 permalink: index.html
 unlisted: true
 ---
-**Embed maps easily with a single HTML file**. A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API. <abbr title="Standalone EmbEddable Map">SEEMAP</abbr> *for Standalone EmbEddable Map* is **a single HTML file** bundled of useful and popular Leaflet/OpenStreetMap resources in a easy way to embed.
+A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API. <abbr title="Standalone EmbEddable Map">SEEMAP</abbr> *for Standalone EmbEddable Map* is **a single HTML file** bundled of useful and popular Leaflet/OpenStreetMap resources in a easy way to embed.
 
 | Description |  |
 | :- | :- |
