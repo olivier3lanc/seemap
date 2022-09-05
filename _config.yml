@@ -8,7 +8,7 @@ remote_theme: olivier3lanc/Jekyll-LibDoc
 #   - jekyll-remote-theme
 title: SEEMAP # title of the documentation
 description: >- # Description of the docs. (>- means to ignore newlines until next param)
-  A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API
+  Embed maps easily with a single HTML file
 # IMPORTANT: on Github Pages deploys, url and baseurl must be commented or set to proper settings, otherwise links and resources URL are wrong
 # url: http://192.168.1.54 # the base hostname & protocol for your site, e.g. http://example.com
 # baseurl: /map-embed/_site # the subpath of your site, e.g. /blog
