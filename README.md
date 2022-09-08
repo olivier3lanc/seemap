@@ -12,8 +12,8 @@ A single HTML map file bundled with customizable popular Leaflet plugins, map pr
 
 | Description |  |
 | :- | :- |
-| Download latest release | [Download](seemap.html) |
-| Installation and usage | [Download page](https://olivier3lanc.github.io/seemap/installation.html) |
+| Download latest release | [Download](https://github.com/olivier3lanc/seemap/releases) |
+| Installation and usage | [Installation](https://olivier3lanc.github.io/seemap/installation.html) |
 | Settings | [Settings](https://olivier3lanc.github.io/seemap/settings.html) |
 | Uncompressed page size | **1.6Mb** |
 | Compressed page size (through HTTP2 or ZIP) | **190Kb** |
