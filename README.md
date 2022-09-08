@@ -2,6 +2,8 @@
 
 **Embed maps easily with a single HTML file** 
 
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/olivier3lanc/seemap)](https://github.com/olivier3lanc/seemap/releases)
+
 [Documentation and demos](https://olivier3lanc.github.io/seemap/)
 
 ![A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API](meta-image.png)
@@ -10,12 +12,12 @@ A single HTML map file bundled with customizable popular Leaflet plugins, map pr
 
 | Description |  |
 | :- | :- |
-| Download latest release | [Download](seemap.html) |
-| Installation and usage | [Download page](https://olivier3lanc.github.io/seemap/installation.html) |
+| Download latest release | [Download](https://github.com/olivier3lanc/seemap/releases) |
+| Installation and usage | [Installation](https://olivier3lanc.github.io/seemap/installation.html) |
 | Settings | [Settings](https://olivier3lanc.github.io/seemap/settings.html) |
 | Uncompressed page size | **1.6Mb** |
 | Compressed page size (through HTTP2 or ZIP) | **190Kb** |
-| Typical embed size through an iframe (with tiles) | **500Kb** |
+| Typical embed size through an iframe (with tiles) | **500Kb** |
 | PageSpeed Insights test on mobile | [Test now](https://pagespeed.web.dev/report?url=https%3A%2F%2Folivier3lanc.github.io%2Fseemap%2Fseemap.html&form_factor=mobile) |
 | PageSpeed Insights test on desktop | [Test now](https://pagespeed.web.dev/report?url=https%3A%2F%2Folivier3lanc.github.io%2Fseemap%2Fseemap.html&form_factor=desktop) |
 
