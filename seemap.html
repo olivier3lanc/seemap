@@ -50,6 +50,8 @@
         i18n: {
             en_GB: {
                 autocompletePlaceholder: 'Enter the city name',
+                autocompleteDirectLinkTooltip: 'Get the direct link to this point',
+                autocompleteDirectLinkText: 'Direct link',
                 resetView: 'Reset to the first view',
                 permalink: 'Direct link to the current view',
                 zoomIn: 'Zoom in',
@@ -58,6 +60,8 @@
             },
             fr_FR: {
                 autocompletePlaceholder: 'Nom de la ville',
+                autocompleteDirectLinkTooltip: 'Lien direct vers ce point',
+                autocompleteDirectLinkText: 'Lien direct',
                 resetView: 'Réinitialiser la vue d\'origine',
                 permalink: 'Lien direct vers la vue actuelle',
                 zoomIn: 'Zoomer',
@@ -71,9 +75,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SEEMAP</title>
-    <meta name="description" content="A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API">
+    <meta name="description" content="Embed maps easily with a single HTML file">
     <meta itemprop="name" content="SEEMAP">
-    <meta name="description" itemprop="description" content="A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API">
+    <meta name="description" itemprop="description" content="Embed maps easily with a single HTML file">
     <meta name="application-name" content="SEEMAP">
     <meta name="author" content="Olivier 3lanc">
 
@@ -91,13 +95,13 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="SEEMAP">
-    <meta property="og:description" content="A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API">
+    <meta property="og:description" content="Embed maps easily with a single HTML file">
     <meta property="og:image" content="https://i.imgur.com/V8yndCM.png">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SEEMAP">
-    <meta name="twitter:description" content="A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API">
+    <meta name="twitter:description" content="Embed maps easily with a single HTML file">
     <meta name="twitter:image" content="https://i.imgur.com/V8yndCM.png">
 
     <!-- iOS -->
@@ -29651,7 +29655,15 @@
                         const marker_data_array = marker_data.split(',');
                         const lat = marker_data_array[0];
                         const lng = marker_data_array[1];
-                        const content = marker_data_array[2] || '';
+                        let content = marker_data_array[2] || '';
+                        if (marker_data_array.length >= 4) {
+                            for (let index = 3; index < marker_data_array.length; index++) {
+                                content += marker_data_array[index];
+                                if (index != marker_data_array.length - 1) {
+                                    content += ', ';
+                                }
+                            }
+                        }
                         if (lat !== undefined && lng !== undefined) {
                             seemap.addMarker({
                                 lat: lat,
@@ -29771,7 +29783,8 @@
                         onSearch: ({currentValue}) => {
                             // You can also use static files
                             // const api = '../static/search.json'
-                            const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
+                            // const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
+                            const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=${encodeURI(currentValue)}`;
                             // const api = `https://api-adresse.data.gouv.fr/search/?q=${encodeURI(currentValue)}`;
 
                             /**
@@ -29819,13 +29832,46 @@
                             //     title: display_name,
                             // });
 
-                            // marker.addTo(seemap.instance).bindPopup(display_name);
-                            // seemap.addMarker({lat: lat, lng: lng, content: display_name});
+                            // Apply different zoom only if applicable
                             map_zoom_level = seemap.instance.getZoom();
                             if (typeof map_autocomplete_zoom == 'number') {
                                 map_zoom_level = map_autocomplete_zoom;
                             }
                             seemap.instance.setView([lat, lng], map_zoom_level);
+
+                            // Build popup with special link to this point
+                            let autocomplete_link = location.origin+location.pathname;
+                            const current_view_settings = seemap.getCurrentViewSettings();
+                            autocomplete_link += '?view='+current_view_settings.center.lat+','+current_view_settings.center.lng;
+                            autocomplete_link += '&zoom='+current_view_settings.zoom;
+                            autocomplete_link += '&zoomControl='+current_view_settings.zoomControl;
+                            autocomplete_link += '&viewResetControl='+current_view_settings.viewResetControl;
+                            autocomplete_link += '&viewResetGoesToFirstView='+current_view_settings.viewResetGoesToFirstView;
+                            autocomplete_link += '&layer='+current_view_settings.layer;
+                            autocomplete_link += '&gesture=false';
+                            autocomplete_link += '&fit=false';
+                            autocomplete_link += '&cluster='+current_view_settings.cluster;
+                            autocomplete_link += '&routing='+current_view_settings.routing;
+                            autocomplete_link += '&autocomplete='+current_view_settings.autocomplete;
+                            autocomplete_link += '&autocompleteZoom='+current_view_settings.autocompleteZoom;
+                            autocomplete_link += '&language='+current_view_settings.language;
+                            autocomplete_link += '&marker='+lat+','+lng+','+encodeURI(display_name);
+                            const popup_content = `
+                                ${display_name}<hr style="border-top: none;"><sup style="opacity:0.5">${lat}, ${lng}</sup><br>
+                                <a  href="${autocomplete_link}"
+                                    title="${seemap.text('autocompleteDirectLinkTooltip')}"
+                                    aria-label="${seemap.text('autocompleteDirectLinkTooltip')}"
+                                    aria-disabled="false"
+                                    target="_blank"><img src="${userSettings.markerIconUrl}" alt="Marker" style="height:1em"> ${seemap.text('autocompleteDirectLinkText')}</a>
+                            `;
+                            seemap.instance.openPopup(
+                                popup_content, { 
+                                    lat: lat, 
+                                    lng: lng
+                                }, {
+                                    autoPan: true,
+                                    closeOnClick: false
+                            });
                         },
 
                         // get index and data from li element after

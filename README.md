@@ -2,6 +2,8 @@
 
 **Embed maps easily with a single HTML file** 
 
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/olivier3lanc/seemap)](https://github.com/olivier3lanc/seemap/releases)
+
 [Documentation and demos](https://olivier3lanc.github.io/seemap/)
 
 ![A single HTML map file bundled with customizable popular Leaflet plugins, map providers and its own API](meta-image.png)
